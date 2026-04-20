@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>我的生活</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f2f2f7;
+    --bg3: #e5e5ea;
+    --text: #000000;
+    --text2: #3c3c43cc;
+    --text3: #3c3c4399;
+    --border: #3c3c4320;
+    --border2: #3c3c4340;
+    --accent: #000000;
+    --danger: #ff3b30;
+    --warn: #ff9500;
+    --ok: #34c759;
+    --info: #007aff;
+    --r: 14px;
+    --r2: 20px;
+    --font: -apple-system, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --bg2: #1c1c1e;
+      --bg3: #2c2c2e;
+      --text: #ffffff;
+      --text2: #ebebf599;
+      --text3: #ebebf560;
+      --border: #ffffff15;
+      --border2: #ffffff25;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    font-family: var(--font);
+    background: var(--bg2);
+    color: var(--text);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app {
+    max-width: 430px;
+    margin: 0 auto;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Status bar */
+  .status {
+    background: var(--bg);
+    padding: env(safe-area-inset-top, 14px) 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: calc(env(safe-area-inset-top, 14px) + 28px);
+  }
+  .status-time { font-size: 17px; font-weight: 600; letter-spacing: -.3px; }
+  .status-icons { font-size: 13px; color: var(--text2); }
+
+  /* Header */
+  .header {
+    padding: 6px 20px 14px;
+    background: var(--bg);
+  }
+  .header-greeting { font-size: 15px; color: var(--text3); margin-bottom: 3px; }
+  .header-title { font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
+
+  /* Tab bar top */
+  .tabs {
+    display: flex;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 10px 14px 12px;
+    font-size: 15px;
+    color: var(--text3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -0.5px;
+    font-family: var(--font);
+    white-space: nowrap;
+    transition: color .15s;
+  }
+  .tab.on {
+    color: var(--text);
+    border-bottom-color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Scroll body */
+  .body {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .pages {
+    display: flex;
+    height: 100%;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .pg {
+    flex-shrink: 0;
+    width: 100vw;
+    max-width: 430px;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 90px);
+  }
+
+  /* Bottom nav */
+  .nav {
+    display: flex;
+    background: var(--bg);
+    border-top: 0.5px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    flex-shrink: 0;
+  }
+  .ni {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 10px 0 8px;
+    cursor: pointer;
+    color: var(--text3);
+    font-size: 10px;
+    font-family: var(--font);
+    transition: color .15s;
+  }
+  .ni.on { color: var(--text); }
+  .ni svg { width: 24px; height: 24px; }
+
+  /* Section */
+  .sec { margin-top: 28px; }
+  .sec-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg2);
+    border-radius: var(--r2);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-wh {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* Stat grid */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .stat {
+    background: var(--bg2);
+    border-radius: var(--r2);
+    padding: 16px;
+  }
+  .stat-val { font-size: 28px; font-weight: 700; letter-spacing: -.5px; line-height: 1; }
+  .stat-lbl { font-size: 13px; color: var(--text2); margin-top: 5px; }
+  .stat-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+  /* Row items */
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .row:last-child { border-bottom: none; }
+  .row-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+  }
+  .row-body { flex: 1; min-width: 0; }
+  .row-title { font-size: 16px; font-weight: 500; }
+  .row-sub { font-size: 13px; color: var(--text3); margin-top: 2px; }
+  .row-right { font-size: 14px; color: var(--text3); flex-shrink: 0; }
+
+  /* Pills */
+  .pill {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-family: var(--font);
+  }
+  .pill-ok   { background: #34c75920; color: #25a244; }
+  .pill-warn { background: #ff950020; color: #c97400; }
+  .pill-danger { background: #ff3b3020; color: #d63028; }
+  .pill-muted { background: var(--bg2); color: var(--text3); }
+
+  /* Member row */
+  .mem-row { display: flex; gap: 14px; margin-bottom: 20px; margin-top: 20px; }
+  .mem { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+  .mem-av {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 600;
+    border: 2.5px solid transparent;
+    transition: border-color .15s;
+  }
+  .mem-av.on { border-color: var(--text); }
+  .mem-name { font-size: 12px; color: var(--text3); }
+
+  /* Metrics */
+  .metric-2 {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .metric-box {
+    background: var(--bg2);
+    border-radius: var(--r);
+    padding: 14px;
+  }
+  .metric-box .lbl { font-size: 13px; color: var(--text3); }
+  .metric-box .val { font-size: 22px; font-weight: 700; letter-spacing: -.3px; margin-top: 3px; }
+  .metric-box .unit { font-size: 11px; color: var(--text3); font-weight: 400; }
+  .metric-box .tr { font-size: 13px; margin-top: 4px; font-weight: 500; }
+  .tr-up { color: var(--danger); }
+  .tr-dn { color: var(--ok); }
+  .tr-fl { color: var(--text3); }
+
+  /* Ring */
+  .ring-wrap { display: flex; gap: 18px; align-items: center; }
+  .ring-labels { flex: 1; }
+  .rl { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 0.5px solid var(--border); font-size: 14px; }
+  .rl:last-child { border-bottom: none; }
+  .rl-k { color: var(--text2); }
+  .rl-v { font-weight: 600; }
+
+  /* Bar chart */
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 72px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bar-fill { width: 100%; border-radius: 4px 4px 0 0; min-height: 4px; }
+  .bar-day { font-size: 11px; color: var(--text3); }
+
+  /* Sport selector */
+  .sport-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .sp {
+    flex: 1;
+    padding: 10px 4px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r);
+    text-align: center;
+    font-size: 14px;
+    color: var(--text2);
+    cursor: pointer;
+    background: var(--bg);
+    font-family: var(--font);
+    transition: all .15s;
+  }
+  .sp.on {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    font-weight: 600;
+  }
+  .sp-ic { font-size: 20px; display: block; margin-bottom: 3px; }
+
+  /* Inputs */
+  .inp-grp { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .inp-lbl { font-size: 14px; color: var(--text2); font-weight: 500; }
+  .inp {
+    width: 100%; padding: 12px 14px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r);
+    font-size: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    -webkit-appearance: none;
+  }
+  .inp:focus { outline: none; border-color: var(--text); }
+  .inp-2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-bottom: 12px; }
+  .btn {
+    width: 100%; padding: 14px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--r);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    -webkit-appearance: none;
+    transition: opacity .15s;
+  }
+  .btn:active { opacity: .7; }
+  .btn-ghost {
+    width: 100%; padding: 13px;
+    background: transparent;
+    color: var(--text);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: opacity .15s;
+  }
+  .btn-ghost:active { opacity: .6; }
+
+  /* Voice */
+  .voice-center { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 0 16px; }
+  .vbtn {
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    background: var(--text);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .1s, background .2s;
+  }
+  .vbtn:active { transform: scale(.94); }
+  .vbtn svg { width: 28px; height: 28px; fill: var(--bg); }
+  .vbtn.rec { background: var(--danger); animation: pulse 1.2s infinite; }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255,59,48,.4); }
+    70%  { box-shadow: 0 0 0 14px rgba(255,59,48,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+  }
+  .vhint { font-size: 14px; color: var(--text3); }
+  .vtext {
+    width: 100%;
+    background: var(--bg2);
+    border-radius: var(--r);
+    padding: 14px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    min-height: 60px;
+  }
+  .vtags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+  .vtag {
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--bg2);
+    color: var(--text2);
+    font-family: var(--font);
+  }
+  .v-acts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-top: 12px; }
+
+  /* Feed */
+  .feed-item { padding: 14px 0; border-bottom: 0.5px solid var(--border); }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .feed-av {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600;
+  }
+  .feed-name { font-size: 15px; font-weight: 600; }
+  .feed-time { font-size: 12px; color: var(--text3); margin-top: 1px; }
+  .feed-text { font-size: 15px; line-height: 1.65; color: var(--text); }
+
+  /* Todo */
+  .todo-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-bottom: 0.5px solid var(--border); }
+  .todo-item:last-child { border-bottom: none; }
+  .check {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border2);
+    flex-shrink: 0; margin-top: 1px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: all .15s;
+  }
+  .check.done { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .todo-body { flex: 1; }
+  .todo-title { font-size: 16px; font-weight: 500; line-height: 1.4; }
+  .todo-title.done { text-decoration: line-through; color: var(--text3); }
+  .todo-time { font-size: 13px; color: var(--text3); margin-top: 3px; }
+
+  /* AI note */
+  .ai-note {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.65;
+    padding: 14px;
+    background: var(--bg2);
+    border-radius: var(--r);
+  }
+
+  /* Parse grid */
+  .parse-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 10px; }
+  .parse-cell { background: var(--bg2); border-radius: var(--r); padding: 12px; }
+  .parse-k { font-size: 12px; color: var(--text3); margin-bottom: 4px; }
+  .parse-v { font-size: 15px; font-weight: 600; }
+
+  /* Coros */
+  .coros-strip {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px;
+    background: var(--bg2);
+    border-radius: var(--r2);
+    margin-bottom: 12px;
+  }
+  .coros-ic {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .coros-ttl { font-size: 15px; font-weight: 600; }
+  .coros-sub { font-size: 13px; color: var(--text3); margin-top: 2px; }
+  .coros-btn {
+    font-size: 14px; font-weight: 600;
+    padding: 7px 16px;
+    border: 1.5px solid var(--border2);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--info);
+    cursor: pointer;
+    font-family: var(--font);
+    border-color: var(--info);
+  }
+
+  /* Chart */
+  .chart-svg { width: 100%; height: 100px; display: block; margin-top: 6px; }
+
+  /* Margin top for first section */
+  .pg > .stat-row:first-child,
+  .pg > .mem-row:first-child,
+  .pg > .sec:first-child {
+    margin-top: 20px;
+  }
+
+  /* Scrollbar hide */
+  .pg::-webkit-scrollbar { display: none; }
+  .pg { scrollbar-width: none; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Status -->
+  <div class="status">
+    <span class="status-time" id="clock">09:41</span>
+    <span class="status-icons">●●● 100%</span>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-greeting" id="greeting">早上好</div>
+    <div class="header-title">我的生活</div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <div class="tab on" onclick="sw(0,this)">概览</div>
+    <div class="tab" onclick="sw(1,this)">运动</div>
+    <div class="tab" onclick="sw(2,this)">动态</div>
+    <div class="tab" onclick="sw(3,this)">待办</div>
+    <div class="tab" onclick="sw(4,this)">体检</div>
+    <div class="tab" onclick="sw(5,this)">提醒</div>
+  </div>
+
+  <!-- Pages -->
+  <div class="body">
+  <div class="pages" id="pages">
+
+  <!-- PAGE 0: 概览 -->
+  <div class="pg">
+    <div class="stat-row" style="margin-top:20px;">
+      <div class="stat"><div class="stat-val">8,432</div><div class="stat-lbl">今日步数</div><div class="stat-sub">目标 12,000</div></div>
+      <div class="stat"><div class="stat-val">2</div><div class="stat-lbl">待办事项</div><div class="stat-sub">今日到期</div></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-val">5.8</div><div class="stat-lbl">血糖 mmol/L</div><div class="stat-sub">持续关注</div></div>
+      <div class="stat"><div class="stat-val">5天</div><div class="stat-lbl">本周运动</div><div class="stat-sub">状态良好</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">今日待办</div>
+      <div class="card-wh">
+        <div class="todo-item"><div class="check done">✓</div><div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div></div>
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div><span class="pill pill-warn">紧急</span></div>
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">最新动态</div>
+      <div class="card-wh">
+        <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div></div><div class="feed-text">今早健走完，天气很好。最近胆固醇偏高，今天午饭要少油少盐。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 1: 运动 -->
+  <div class="pg">
+    <div class="sec" style="margin-top:20px;">
+      <div class="coros-strip">
+        <div class="coros-ic">⌚</div>
+        <div style="flex:1;"><div class="coros-ttl">高驰手表同步</div><div class="coros-sub">通过 Strava 自动导入</div></div>
+        <button class="coros-btn" onclick="alert('正式版本将引导登录 Strava，授权后自动同步高驰数据。')">连接</button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">今日概览</div>
+      <div class="card">
+        <div class="ring-wrap">
+          <div style="position:relative;width:84px;height:84px;flex-shrink:0;">
+            <svg viewBox="0 0 84 84" width="84" height="84">
+              <circle cx="42" cy="42" r="34" fill="none" stroke="#e5e5ea" stroke-width="8"/>
+              <circle cx="42" cy="42" r="34" fill="none" stroke="#000" stroke-width="8" stroke-dasharray="142 71" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 42 42)"/>
+            </svg>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+              <div style="font-size:17px;font-weight:700;">67%</div>
+            </div>
+          </div>
+          <div class="ring-labels">
+            <div class="rl"><span class="rl-k">步数</span><span class="rl-v">8,432 步</span></div>
+            <div class="rl"><span class="rl-k">热量</span><span class="rl-v">412 kcal</span></div>
+            <div class="rl"><span class="rl-k">时长</span><span class="rl-v">68 分钟</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">本周运动（分钟）</div>
+      <div class="card">
+        <div class="bars">
+          <div class="bar-col"><div class="bar-fill" style="height:42px;background:#000;opacity:.3;"></div><div class="bar-day">一</div></div>
+          <div class="bar-col"><div class="bar-fill" style="height:58px;background:#000;opacity:.4;"></div><div class="bar-day">二</div></div>
+          <div class="bar-col"><div class="bar-fill" style="height:4px;background:#e5e5ea;"></div><div class="bar-day">三</div></div>
+          <div class="bar-col"><div class="bar-fill" style="height:48px;background:#000;opacity:.4;"></div><div class="bar-day">四</div></div>
+          <div class="bar-col"><div class="bar-fill" style="height:64px;background:#000;opacity:.55;"></div><div class="bar-day">五</div></div>
+          <div class="bar-col"><div class="bar-fill" style="height:68px;background:#000;opacity:.65;"></div><div class="bar-day">六</div></div>
+          <div class="bar-col"><div class="bar-fill" style="height:56px;background:#000;"></div><div class="bar-day" style="color:#000;font-weight:700;">今</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">记录运动</div>
+      <div class="card-wh">
+        <div class="sport-tabs">
+          <div class="sp on" onclick="selSp(this)"><span class="sp-ic">🚶</span>健走</div>
+          <div class="sp" onclick="selSp(this)"><span class="sp-ic">🏃</span>跑步</div>
+          <div class="sp" onclick="selSp(this)"><span class="sp-ic">💪</span>哑铃</div>
+        </div>
+        <div class="inp-grp"><span class="inp-lbl">时长（分钟）</span><input class="inp" type="number" placeholder="40" id="dur" inputmode="numeric"/></div>
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">步数</span><input class="inp" type="number" placeholder="6000" id="stp" inputmode="numeric"/></div>
+          <div class="inp-grp"><span class="inp-lbl">训练部位</span><input class="inp" type="text" placeholder="胸+背" id="mus"/></div>
+        </div>
+        <button class="btn" onclick="addEx()">保存记录</button>
+      </div>
+      <div class="sec-label">今日明细</div>
+      <div class="card-wh" id="exlog">
+        <div class="row"><div class="row-icon">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">07:20 · 40 分钟 · 4,200 步</div></div><div class="row-right">230 kcal</div></div>
+        <div class="row"><div class="row-icon">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">18:30 · 28 分钟 · 胸+背</div></div><div class="row-right">182 kcal</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: 动态 -->
+  <div class="pg">
+    <div class="sec" style="margin-top:20px;">
+      <div class="sec-label">语音记录</div>
+      <div class="card-wh">
+        <div class="voice-center">
+          <button class="vbtn" id="vbtn" onclick="togV()">
+            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6 9a1 1 0 0 1 2 0 8 8 0 0 1-7 7.938V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 1 1 2 0 6 6 0 0 0 12 0z"/></svg>
+          </button>
+          <span class="vhint" id="vhint">按下开始录音</span>
+        </div>
+        <div class="vtext" id="vtxt" style="display:none;"></div>
+        <div class="vtags" id="vtgs" style="display:none;"></div>
+        <div class="v-acts" id="vacts" style="display:none;">
+          <button class="btn-ghost" onclick="clrV()">重新录制</button>
+          <button class="btn" onclick="pubV()">发布动态</button>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">我的动态</div>
+      <div class="card-wh" id="feed">
+        <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div></div><div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭少油少盐。</div></div>
+        <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">昨天 21:30</div></div></div><div class="feed-text">哑铃训练完成，练了胸和背，状态不错，继续坚持。</div></div>
+        <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">4月17日</div></div></div><div class="feed-text">陪父亲复查，血压控制还可以，医生建议继续低盐饮食，下月随访。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: 待办 -->
+  <div class="pg">
+    <div class="sec" style="margin-top:20px;">
+      <div class="sec-label">语音添加待办</div>
+      <div class="card-wh">
+        <div class="voice-center">
+          <button class="vbtn" id="tbtn" onclick="togT()">
+            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6 9a1 1 0 0 1 2 0 8 8 0 0 1-7 7.938V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 1 1 2 0 6 6 0 0 0 12 0z"/></svg>
+          </button>
+          <span class="vhint" id="thint">说出待办，我来提醒你</span>
+        </div>
+        <div class="vtext" id="ttxt" style="display:none;"></div>
+        <div class="parse-grid" id="tparse" style="display:none;"></div>
+        <div class="v-acts" id="tacts" style="display:none;">
+          <button class="btn-ghost" onclick="clrT()">重新录制</button>
+          <button class="btn" onclick="addTodo()">添加待办</button>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">今日</div>
+      <div class="card-wh" id="td-today">
+        <div class="todo-item"><div class="check done">✓</div><div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div><span class="pill pill-ok">运动</span></div>
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div><span class="pill pill-warn">紧急</span></div>
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">本周</div>
+      <div class="card-wh" id="td-week">
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">整理工厂用电统计表</div><div class="todo-time">周五前</div></div><span class="pill pill-muted">工作</span></div>
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">购买哑铃配重片</div><div class="todo-time">本周内</div></div></div>
+        <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">和妻子讨论夏季度假计划</div><div class="todo-time">周末</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 4: 体检 -->
+  <div class="pg">
+    <div class="mem-row">
+      <div class="mem" onclick="selM(this,0)"><div class="mem-av on">我</div><span class="mem-name">本人</span></div>
+      <div class="mem" onclick="selM(this,1)"><div class="mem-av">妻</div><span class="mem-name">妻子</span></div>
+      <div class="mem" onclick="selM(this,2)"><div class="mem-av">父</div><span class="mem-name">父亲</span></div>
+      <div class="mem" onclick="selM(this,3)"><div class="mem-av">母</div><span class="mem-name">母亲</span></div>
+    </div>
+    <div id="mc">
+      <div class="sec-label">本人 · 2024年12月</div>
+      <div class="metric-2">
+        <div class="metric-box"><div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr tr-up">↑ 较去年 +0.3</div></div>
+        <div class="metric-box"><div class="lbl">血压</div><div class="val">118/76</div><div class="tr tr-fl">→ 稳定</div></div>
+        <div class="metric-box"><div class="lbl">总胆固醇</div><div class="val">6.2 <span class="unit">mmol/L</span></div><div class="tr tr-up" style="font-weight:700;">↑ 偏高</div></div>
+        <div class="metric-box"><div class="lbl">BMI</div><div class="val">24.1</div><div class="tr tr-dn">↓ -0.5</div></div>
+      </div>
+      <div class="sec-label" style="margin-top:20px;">历年血糖趋势</div>
+      <div class="card" style="padding-bottom:10px;">
+        <svg class="chart-svg" viewBox="0 0 300 90" preserveAspectRatio="none">
+          <line x1="0" y1="30" x2="300" y2="30" stroke="#e5e5ea" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="293" y="28" font-size="9" fill="#8e8e93" text-anchor="end" font-family="-apple-system,sans-serif">参考上限</text>
+          <polyline points="20,65 80,58 140,52 200,44 260,35 300,30" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="300" cy="30" r="4" fill="#000"/>
+          <text x="20" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2020</text>
+          <text x="80" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2021</text>
+          <text x="140" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2022</text>
+          <text x="200" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2023</text>
+          <text x="260" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2024</text>
+          <text x="293" y="27" font-size="10" fill="#000" font-weight="700" text-anchor="end" font-family="-apple-system,sans-serif">5.8</text>
+        </svg>
+      </div>
+      <div class="sec-label" style="margin-top:20px;">AI 解读</div>
+      <div class="ai-note">总胆固醇 6.2 偏高，建议减少动物脂肪摄入，增加有氧运动。血糖有上升趋势，需持续关注。其余指标良好。</div>
+      <button class="btn" style="margin-top:14px;">+ 上传体检报告</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5: 提醒 -->
+  <div class="pg">
+    <div class="sec" style="margin-top:20px;">
+      <div class="sec-label">体检提醒</div>
+      <div class="card-wh">
+        <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">还有 <strong>23 天</strong> · 5月12日</div></div><span class="pill pill-warn">即将到期</span></div>
+        <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">还有 198 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
+        <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">还有 210 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
+        <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">母亲</div><div class="row-sub">还有 168 天 · 10月</div></div><span class="pill pill-ok">正常</span></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">运动目标</div>
+      <div class="card-wh">
+        <div class="row"><div class="row-icon">🚶</div><div class="row-body"><div class="row-title">每日健走</div><div class="row-sub">12,000 步 · 今日 70%</div></div><span class="pill pill-warn">未达标</span></div>
+        <div class="row"><div class="row-icon">💪</div><div class="row-body"><div class="row-title">本周哑铃</div><div class="row-sub">目标 3 次 · 已 2 次</div></div><span class="pill pill-ok">进行中</span></div>
+        <div class="row"><div class="row-icon">🏃</div><div class="row-body"><div class="row-title">本周跑步</div><div class="row-sub">目标 2 次 · 已 0 次</div></div><span class="pill pill-danger">待完成</span></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">异常指标</div>
+      <div class="card-wh">
+        <div class="row"><div class="row-body"><div class="row-title">本人 · 总胆固醇</div><div class="row-sub">6.2 mmol/L · 连续两年偏高</div></div><span class="pill pill-danger">偏高</span></div>
+        <div class="row"><div class="row-body"><div class="row-title">父亲 · 血压</div><div class="row-sub">138/88 mmHg · 临界偏高</div></div><span class="pill pill-warn">关注</span></div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="nav">
+    <div class="ni on" onclick="sw(0,null,true)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>概览</span>
+    </div>
+    <div class="ni" onclick="sw(1,null,true)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <span>运动</span>
+    </div>
+    <div class="ni" onclick="sw(2,null,true)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>动态</span>
+    </div>
+    <div class="ni" onclick="sw(3,null,true)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span>待办</span>
+    </div>
+    <div class="ni" onclick="sw(4,null,true)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <span>体检</span>
+    </div>
+    <div class="ni" onclick="sw(5,null,true)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>提醒</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Clock & greeting
+function tick(){
+  const n=new Date();
+  const h=n.getHours(),m=n.getMinutes();
+  document.getElementById('clock').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  const g=h<6?'深夜好':h<11?'早上好':h<13?'上午好':h<18?'下午好':h<22?'晚上好':'夜深了';
+  document.getElementById('greeting').textContent=g;
+}
+tick(); setInterval(tick,10000);
+
+// Tab switch
+let cur=0;
+function sw(i){
+  cur=i;
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  document.querySelectorAll('.ni').forEach((t,j)=>t.classList.toggle('on',j===i));
+  const W=Math.min(window.innerWidth,430);
+  document.getElementById('pages').style.transform=`translateX(-${i*W}px)`;
+}
+window.addEventListener('resize',()=>sw(cur));
+
+// Touch swipe
+let sx=0,sy=0;
+document.getElementById('pages').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+document.getElementById('pages').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-sx;
+  const dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){
+    if(dx<0&&cur<5)sw(cur+1);
+    else if(dx>0&&cur>0)sw(cur-1);
+  }
+},{passive:true});
+
+// Toggle check
+function tgl(el){
+  el.classList.toggle('done');
+  el.textContent=el.classList.contains('done')?'✓':'';
+  const t=el.parentElement.querySelector('.todo-title');
+  if(t)t.classList.toggle('done');
+}
+
+// Sport selector
+function selSp(c){document.querySelectorAll('.sp').forEach(x=>x.classList.remove('on'));c.classList.add('on');}
+
+// Add exercise
+function addEx(){
+  const sp=document.querySelector('.sp.on').textContent.trim();
+  const dur=document.getElementById('dur').value||'--';
+  const stp=document.getElementById('stp').value;
+  const mus=document.getElementById('mus').value;
+  const em={'🚶健走':'🚶','🏃跑步':'🏃','💪哑铃':'💪'};
+  const ic=em[sp]||'🏃';
+  const sub=stp?`${stp} 步`:mus?mus:'';
+  const kcal=Math.round((parseInt(dur)||0)*4);
+  const log=document.getElementById('exlog');
+  const row=document.createElement('div');row.className='row';
+  row.innerHTML=`<div class="row-icon">${ic}</div><div class="row-body"><div class="row-title">${sp.replace(/[🚶🏃💪]/g,'').trim()}</div><div class="row-sub">刚刚 · ${dur} 分钟${sub?' · '+sub:''}</div></div><div class="row-right">${kcal} kcal</div>`;
+  log.appendChild(row);
+  ['dur','stp','mus'].forEach(id=>document.getElementById(id).value='');
+}
+
+// Voice note
+const vS=[
+  {t:'今天跑了5公里，配速5分30秒，感觉状态很好，继续保持！',tags:['运动','跑步']},
+  {t:'下午和朋友聊了光伏投资，工厂屋顶安装很有必要，可以节省电费。',tags:['工作','记录']},
+  {t:'父亲今天头晕，量了血压138/90，叮嘱他下周去复查。',tags:['家人健康']},
+];
+let vi=0,vRec=false;
+function togV(){
+  if(!vRec){
+    vRec=true;
+    document.getElementById('vbtn').classList.add('rec');
+    document.getElementById('vhint').textContent='录音中… 再次点击停止';
+    ['vtxt','vtgs','vacts'].forEach(id=>document.getElementById(id).style.display='none');
+  }else{
+    vRec=false;
+    document.getElementById('vbtn').classList.remove('rec');
+    document.getElementById('vhint').textContent='识别完成';
+    const s=vS[vi++%vS.length];
+    const tx=document.getElementById('vtxt');tx.style.display='block';tx.textContent=s.t;
+    const tg=document.getElementById('vtgs');tg.style.display='flex';tg.innerHTML=s.tags.map(t=>`<span class="vtag">${t}</span>`).join('');
+    document.getElementById('vacts').style.display='grid';
+  }
+}
+function clrV(){
+  vRec=false;
+  document.getElementById('vbtn').classList.remove('rec');
+  document.getElementById('vhint').textContent='按下开始录音';
+  ['vtxt','vtgs','vacts'].forEach(id=>document.getElementById(id).style.display='none');
+}
+function pubV(){
+  const txt=document.getElementById('vtxt').textContent;
+  const now=new Date();
+  const timeStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const fd=document.getElementById('feed');
+  const item=document.createElement('div');item.className='feed-item';
+  item.innerHTML=`<div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 ${timeStr}</div></div></div><div class="feed-text">${txt}</div>`;
+  fd.insertBefore(item,fd.firstChild);
+  clrV();
+}
+
+// Todo voice
+const tS=[
+  {t:'明天下午三点提醒我给工厂报修空调',p:{title:'工厂报修空调',time:'明天 15:00',pri:'普通',tag:'工作'}},
+  {t:'这周五之前记得给母亲买钙片和鱼油',p:{title:'给母亲买钙片和鱼油',time:'本周五前',pri:'普通',tag:'家人'}},
+  {t:'下周一上午和合作伙伴开会，提前准备项目方案',p:{title:'准备项目方案',time:'下周一上午',pri:'紧急',tag:'工作'}},
+];
+let ti=0,tRec=false,tParsed=null;
+function togT(){
+  if(!tRec){
+    tRec=true;
+    document.getElementById('tbtn').classList.add('rec');
+    document.getElementById('thint').textContent='录音中… 再次点击停止';
+    ['ttxt','tparse','tacts'].forEach(id=>document.getElementById(id).style.display='none');
+  }else{
+    tRec=false;
+    document.getElementById('tbtn').classList.remove('rec');
+    document.getElementById('thint').textContent='AI 解析完成';
+    const s=tS[ti++%tS.length];tParsed=s.p;
+    const tx=document.getElementById('ttxt');tx.style.display='block';tx.textContent=s.t;
+    const pg=document.getElementById('tparse');pg.style.display='grid';
+    const pc=s.p.pri==='紧急'?'pill-warn':'pill-ok';
+    pg.innerHTML=`<div class="parse-cell"><div class="parse-k">事项</div><div class="parse-v">${s.p.title}</div></div><div class="parse-cell"><div class="parse-k">时间</div><div class="parse-v">${s.p.time}</div></div><div class="parse-cell"><div class="parse-k">优先级</div><div class="parse-v"><span class="pill ${pc}">${s.p.pri}</span></div></div><div class="parse-cell"><div class="parse-k">分类</div><div class="parse-v">${s.p.tag}</div></div>`;
+    document.getElementById('tacts').style.display='grid';
+  }
+}
+function clrT(){
+  tRec=false;tParsed=null;
+  document.getElementById('tbtn').classList.remove('rec');
+  document.getElementById('thint').textContent='说出待办，我来提醒你';
+  ['ttxt','tparse','tacts'].forEach(id=>document.getElementById(id).style.display='none');
+}
+function addTodo(){
+  if(!tParsed)return;
+  const list=document.getElementById('td-today');
+  const item=document.createElement('div');item.className='todo-item';
+  const pc=tParsed.pri==='紧急'?'pill-warn':'pill-ok';
+  item.innerHTML=`<div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">${tParsed.title}</div><div class="todo-time">${tParsed.time}</div></div><span class="pill ${pc}">${tParsed.tag}</span>`;
+  list.appendChild(item);clrT();
+}
+
+// Member data
+const mds=[
+  {name:'本人',label:'2024年12月',bc:'pill-warn',badge:'1项偏高',ms:[{l:'空腹血糖',v:'5.8',u:'mmol/L',tr:'↑ 较去年 +0.3',tc:'tr-up'},{l:'血压',v:'118/76',u:'',tr:'→ 稳定',tc:'tr-fl'},{l:'总胆固醇',v:'6.2',u:'mmol/L',tr:'↑ 偏高',tc:'tr-up'},{l:'BMI',v:'24.1',u:'',tr:'↓ -0.5',tc:'tr-dn'}],ai:'总胆固醇偏高，建议减少动物脂肪，增加有氧运动。血糖需持续关注。'},
+  {name:'妻子',label:'2024年11月',bc:'pill-ok',badge:'指标正常',ms:[{l:'空腹血糖',v:'4.9',u:'mmol/L',tr:'→ 稳定',tc:'tr-fl'},{l:'血压',v:'110/70',u:'',tr:'↓ 改善',tc:'tr-dn'},{l:'血红蛋白',v:'125',u:'g/L',tr:'→ 正常',tc:'tr-fl'},{l:'BMI',v:'21.3',u:'',tr:'→ 稳定',tc:'tr-fl'}],ai:'各项指标均正常，请保持当前生活习惯。'},
+  {name:'父亲',label:'2024年11月',bc:'pill-danger',badge:'需要关注',ms:[{l:'血压',v:'138/88',u:'mmHg',tr:'↑ 临界',tc:'tr-up'},{l:'血糖',v:'6.8',u:'mmol/L',tr:'↑ 偏高',tc:'tr-up'},{l:'尿酸',v:'420',u:'μmol/L',tr:'↑ 偏高',tc:'tr-up'},{l:'BMI',v:'26.4',u:'',tr:'↑ 超重',tc:'tr-up'}],ai:'血压血糖尿酸均偏高，建议低盐低糖饮食，及时就医。'},
+  {name:'母亲',label:'2024年10月',bc:'pill-warn',badge:'1项偏低',ms:[{l:'血红蛋白',v:'105',u:'g/L',tr:'↓ 偏低',tc:'tr-up'},{l:'血压',v:'112/72',u:'',tr:'→ 稳定',tc:'tr-fl'},{l:'血糖',v:'5.2',u:'mmol/L',tr:'→ 正常',tc:'tr-fl'},{l:'BMI',v:'22.8',u:'',tr:'→ 稳定',tc:'tr-fl'}],ai:'血红蛋白轻度偏低，建议增加铁质摄入，必要时就医检查。'}
+];
+function selM(chip,idx){
+  document.querySelectorAll('.mem-av').forEach(a=>a.classList.remove('on'));
+  chip.querySelector('.mem-av').classList.add('on');
+  const d=mds[idx];
+  document.getElementById('mc').innerHTML=`
+    <div class="sec-label">${d.name} · ${d.label}</div>
+    <div class="metric-2">${d.ms.map(m=>`<div class="metric-box"><div class="lbl">${m.l}</div><div class="val">${m.v} <span class="unit">${m.u}</span></div><div class="tr ${m.tc}">${m.tr}</div></div>`).join('')}</div>
+    <div class="sec-label" style="margin-top:20px;">AI 解读</div>
+    <div class="ai-note">${d.ai}</div>
+    <button class="btn" style="margin-top:14px;">+ 上传体检报告</button>`;
+}
+</script>
+</body>
+</html>
