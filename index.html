@@ -8,203 +8,246 @@
 <title>我的生活</title>
 <style>
 :root {
-  --bg:#fff;--bg2:#f2f2f7;--bg3:#e5e5ea;
-  --text:#000;--text2:rgba(60,60,67,.7);--text3:rgba(60,60,67,.5);
-  --border:rgba(60,60,67,.12);--border2:rgba(60,60,67,.25);
-  --danger:#ff3b30;--warn:#ff9500;--ok:#34c759;--info:#007aff;
-  --r:14px;--r2:20px;
-  --font:-apple-system,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  /* 多巴胺主色板 */
+  --c1: #FF6B6B;   /* 珊瑚红 */
+  --c2: #FF9F43;   /* 阳光橙 */
+  --c3: #FECA57;   /* 明黄 */
+  --c4: #48DBFB;   /* 天蓝 */
+  --c5: #FF9FF3;   /* 粉紫 */
+  --c6: #1DD1A1;   /* 翡翠绿 */
+  --c7: #A29BFE;   /* 薰衣草紫 */
+
+  /* 浅色填充版（用于背景card） */
+  --c1l: #FFF0F0;
+  --c2l: #FFF4E6;
+  --c3l: #FFFBE6;
+  --c4l: #E8FBFF;
+  --c5l: #FFF0FD;
+  --c6l: #E8FDF6;
+  --c7l: #F0EEFF;
+
+  /* 深色文字版（用于badge文字） */
+  --c1d: #C0392B;
+  --c2d: #D35400;
+  --c3d: #B7770D;
+  --c4d: #0984A8;
+  --c5d: #9B59B6;
+  --c6d: #0D8A6A;
+  --c7d: #5B4FCF;
+
+  /* 基础色 */
+  --bg: #FFFFFF;
+  --bg2: #F8F8FC;
+  --bg3: #EFEFEF;
+  --text: #1A1A2E;
+  --text2: rgba(26,26,46,.65);
+  --text3: rgba(26,26,46,.4);
+  --border: rgba(26,26,46,.08);
+  --border2: rgba(26,26,46,.15);
+
+  --r: 16px;
+  --r2: 22px;
+  --font: -apple-system,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
 }
+
 @media(prefers-color-scheme:dark){
-  :root{--bg:#000;--bg2:#1c1c1e;--bg3:#2c2c2e;--text:#fff;
-    --text2:rgba(235,235,245,.6);--text3:rgba(235,235,245,.38);
-    --border:rgba(255,255,255,.1);--border2:rgba(255,255,255,.2);}
+  :root{
+    --bg:#16162A;--bg2:#1E1E35;--bg3:#2A2A45;
+    --text:#F0F0FF;--text2:rgba(240,240,255,.65);--text3:rgba(240,240,255,.4);
+    --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15);
+    --c1l:#2D1A1A;--c2l:#2D2010;--c3l:#2D2800;--c4l:#0A2530;--c5l:#2D1030;--c6l:#0A2820;--c7l:#1A1535;
+  }
 }
+
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height:100%;overflow:hidden;}
+
 .app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;}
 
-/* Status */
-.status{background:var(--bg);padding:env(safe-area-inset-top,14px) 20px 0;display:flex;justify-content:space-between;align-items:center;min-height:calc(env(safe-area-inset-top,14px) + 28px);}
-.status-time{font-size:17px;font-weight:600;letter-spacing:-.3px;}
+/* Status bar */
+.status{padding:env(safe-area-inset-top,14px) 20px 0;display:flex;justify-content:space-between;align-items:center;min-height:calc(env(safe-area-inset-top,14px)+28px);background:var(--bg);}
+.status-time{font-size:17px;font-weight:700;letter-spacing:-.3px;}
 .status-icons{font-size:13px;color:var(--text2);}
 
-/* Header */
-.header{padding:6px 20px 14px;background:var(--bg);}
-.header-greeting{font-size:15px;color:var(--text3);margin-bottom:3px;}
-.header-title{font-size:28px;font-weight:700;letter-spacing:-.5px;}
+/* Header — 渐变彩色 */
+.header{padding:8px 20px 18px;background:var(--bg);position:relative;overflow:hidden;}
+.header-deco{position:absolute;top:-30px;right:-20px;width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--c3),var(--c2));opacity:.15;pointer-events:none;}
+.header-deco2{position:absolute;top:10px;right:60px;width:70px;height:70px;border-radius:50%;background:var(--c4);opacity:.12;pointer-events:none;}
+.header-greeting{font-size:15px;color:var(--text3);margin-bottom:4px;position:relative;}
+.header-title{font-size:28px;font-weight:800;letter-spacing:-.6px;position:relative;background:linear-gradient(90deg,var(--c1),var(--c7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 /* Body */
 .body{flex:1;overflow:hidden;position:relative;}
-.pages{display:flex;height:100%;transition:transform .3s cubic-bezier(.4,0,.2,1);}
-.pg{flex-shrink:0;width:100vw;max-width:430px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(env(safe-area-inset-bottom,0px) + 88px);scrollbar-width:none;}
+.pages{display:flex;height:100%;transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.pg{flex-shrink:0;width:100vw;max-width:430px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(env(safe-area-inset-bottom,0px)+88px);scrollbar-width:none;}
 .pg::-webkit-scrollbar{display:none;}
 
-/* Nav */
+/* Bottom nav */
 .nav{display:flex;background:var(--bg);border-top:.5px solid var(--border);padding-bottom:env(safe-area-inset-bottom,0px);flex-shrink:0;}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:10px;font-family:var(--font);transition:color .15s;}
-.ni.on{color:var(--text);}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:10px;font-family:var(--font);transition:color .2s;}
+.ni.on{color:var(--c1);}
 .ni svg{width:24px;height:24px;}
+.ni-dot{width:5px;height:5px;border-radius:50%;margin-top:1px;background:transparent;transition:background .2s;}
+.ni.on .ni-dot{background:var(--c1);}
 
-/* Sections */
+/* Section */
 .sec{margin-top:24px;}
 .sec:first-child{margin-top:20px;}
-.sec-label{font-size:13px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding:0 4px;}
+.sec-label{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 2px;}
 
 /* Cards */
 .card{background:var(--bg2);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
 .card-wh{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
 
-/* Stats */
+/* Colorful stat cards */
 .stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px;}
-.stat{background:var(--bg2);border-radius:var(--r2);padding:16px;}
-.stat-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1;}
-.stat-lbl{font-size:13px;color:var(--text2);margin-top:5px;}
-.stat-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.stat{border-radius:var(--r2);padding:18px 16px;position:relative;overflow:hidden;}
+.stat-icon{position:absolute;top:10px;right:12px;font-size:28px;opacity:.25;}
+.stat-val{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1;}
+.stat-lbl{font-size:13px;font-weight:600;margin-top:6px;opacity:.85;}
+.stat-sub{font-size:11px;margin-top:2px;opacity:.65;}
 
-/* Rows */
+/* Colorful row icons */
 .row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);}
 .row:last-child{border-bottom:none;}
-.row-icon{width:38px;height:38px;border-radius:10px;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;}
+.row-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:19px;}
 .row-body{flex:1;min-width:0;}
-.row-title{font-size:16px;font-weight:500;}
+.row-title{font-size:16px;font-weight:600;}
 .row-sub{font-size:13px;color:var(--text3);margin-top:2px;}
 .row-right{font-size:14px;color:var(--text3);flex-shrink:0;}
 
 /* Pills */
-.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;}
-.pill-ok{background:#34c75920;color:#25a244;}
-.pill-warn{background:#ff950020;color:#c97400;}
-.pill-danger{background:#ff3b3020;color:#d63028;}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.pill-ok{background:var(--c6l);color:var(--c6d);}
+.pill-warn{background:var(--c2l);color:var(--c2d);}
+.pill-danger{background:var(--c1l);color:var(--c1d);}
 .pill-muted{background:var(--bg2);color:var(--text3);}
+.pill-blue{background:var(--c4l);color:var(--c4d);}
+.pill-purple{background:var(--c7l);color:var(--c7d);}
 
 /* Members */
 .mem-row{display:flex;gap:14px;margin-top:20px;margin-bottom:20px;}
 .mem{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
-.mem-av{width:52px;height:52px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;border:2.5px solid transparent;transition:border-color .15s;}
-.mem-av.on{border-color:var(--text);}
-.mem-name{font-size:12px;color:var(--text3);}
+.mem-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:3px solid transparent;transition:all .2s;}
+.mem-name{font-size:12px;color:var(--text3);font-weight:500;}
 
 /* Metrics */
 .metric-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
-.mbox{background:var(--bg2);border-radius:var(--r);padding:14px;}
-.mbox .lbl{font-size:13px;color:var(--text3);}
-.mbox .val{font-size:22px;font-weight:700;letter-spacing:-.3px;margin-top:3px;}
-.mbox .unit{font-size:11px;color:var(--text3);font-weight:400;}
-.mbox .tr{font-size:13px;margin-top:4px;font-weight:500;}
-.trup{color:var(--danger);}
-.trdn{color:var(--ok);}
-.trfl{color:var(--text3);}
+.mbox{border-radius:var(--r);padding:14px;position:relative;overflow:hidden;}
+.mbox .lbl{font-size:12px;font-weight:600;opacity:.75;}
+.mbox .val{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-top:4px;}
+.mbox .unit{font-size:11px;font-weight:500;opacity:.6;}
+.mbox .tr{font-size:13px;margin-top:4px;font-weight:600;}
 
 /* Ring */
 .ring-wrap{display:flex;gap:18px;align-items:center;}
 .ring-labels{flex:1;}
-.rl{display:flex;justify-content:space-between;padding:5px 0;border-bottom:.5px solid var(--border);font-size:14px;}
+.rl{display:flex;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--border);font-size:14px;}
 .rl:last-child{border-bottom:none;}
 .rl-k{color:var(--text2);}
-.rl-v{font-weight:600;}
+.rl-v{font-weight:700;}
 
 /* Bars */
 .bars{display:flex;align-items:flex-end;gap:6px;height:72px;}
 .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.bfill{width:100%;border-radius:4px 4px 0 0;min-height:4px;}
+.bfill{width:100%;border-radius:6px 6px 0 0;min-height:4px;}
 .bday{font-size:11px;color:var(--text3);}
 
 /* Sport tabs */
 .sport-tabs{display:flex;gap:8px;margin-bottom:16px;}
-.sp{flex:1;padding:10px 4px;border:.5px solid var(--border2);border-radius:var(--r);text-align:center;font-size:14px;color:var(--text2);cursor:pointer;background:var(--bg);font-family:var(--font);transition:all .15s;}
-.sp.on{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:600;}
+.sp{flex:1;padding:10px 4px;border:.5px solid var(--border2);border-radius:var(--r);text-align:center;font-size:14px;color:var(--text2);cursor:pointer;background:var(--bg);font-family:var(--font);transition:all .2s;}
+.sp.on{border-color:transparent;font-weight:700;}
 .sp-ic{font-size:20px;display:block;margin-bottom:3px;}
 
 /* Inputs */
 .inp-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
-.inp-lbl{font-size:14px;color:var(--text2);font-weight:500;}
-.inp{width:100%;padding:12px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;}
-.inp:focus{outline:none;border-color:var(--text);}
+.inp-lbl{font-size:14px;color:var(--text2);font-weight:600;}
+.inp{width:100%;padding:13px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;transition:border-color .2s;}
+.inp:focus{outline:none;border-color:var(--c7);}
 .inp-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
-textarea.inp{resize:none;line-height:1.5;}
-.btn{width:100%;padding:14px;background:var(--text);color:var(--bg);border:none;border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font);-webkit-appearance:none;transition:opacity .15s;}
-.btn:active{opacity:.7;}
-.btn-ghost{width:100%;padding:13px;background:transparent;color:var(--text);border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;font-weight:500;cursor:pointer;font-family:var(--font);transition:opacity .15s;}
+.btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);-webkit-appearance:none;transition:opacity .15s,transform .1s;background:linear-gradient(135deg,var(--c1),var(--c7));color:#fff;}
+.btn:active{opacity:.85;transform:scale(.98);}
+.btn-ghost{width:100%;padding:14px;background:transparent;color:var(--text);border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font);transition:opacity .15s;}
 .btn-ghost:active{opacity:.6;}
 
-/* Voice area */
+/* Voice */
 .voice-wrap{margin-bottom:14px;}
-.voice-label{font-size:14px;font-weight:500;color:var(--text2);margin-bottom:10px;}
-.voice-row{display:flex;gap:10px;align-items:flex-start;}
-.vbtn{width:52px;height:52px;border-radius:50%;background:var(--text);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .1s,background .2s;}
+.voice-label{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:10px;}
+.voice-row{display:flex;gap:12px;align-items:flex-start;}
+.vbtn{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .1s;background:linear-gradient(135deg,var(--c7),var(--c5));}
 .vbtn:active{transform:scale(.92);}
-.vbtn svg{width:22px;height:22px;fill:var(--bg);}
-.vbtn.rec{background:var(--danger);animation:pulse 1.2s infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,48,.4);}70%{box-shadow:0 0 0 12px rgba(255,59,48,0);}100%{box-shadow:0 0 0 0 rgba(255,59,48,0);}}
+.vbtn svg{width:22px;height:22px;fill:#fff;}
+.vbtn.rec{background:linear-gradient(135deg,var(--c1),var(--c2));animation:pulse 1.2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.45);}70%{box-shadow:0 0 0 14px rgba(255,107,107,0);}100%{box-shadow:0 0 0 0 rgba(255,107,107,0);}}
 .voice-right{flex:1;display:flex;flex-direction:column;gap:8px;}
-.vtextarea{width:100%;padding:12px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:15px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;resize:none;line-height:1.6;min-height:80px;}
-.vtextarea:focus{outline:none;border-color:var(--text);}
+.vtextarea{width:100%;padding:12px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:15px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;resize:none;line-height:1.6;min-height:80px;transition:border-color .2s;}
+.vtextarea:focus{outline:none;border-color:var(--c7);}
 .vtextarea::placeholder{color:var(--text3);}
 .vhint-text{font-size:12px;color:var(--text3);}
-.vtags{display:flex;gap:7px;flex-wrap:wrap;}
-.vtag{font-size:13px;padding:4px 12px;border-radius:20px;background:var(--bg2);color:var(--text2);}
-.v-acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;}
+.v-acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px;}
 
 /* Feed */
 .feed-item{padding:14px 0;border-bottom:.5px solid var(--border);}
 .feed-item:last-child{border-bottom:none;}
 .feed-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.feed-av{width:34px;height:34px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;}
-.feed-name{font-size:15px;font-weight:600;}
+.feed-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;}
+.feed-name{font-size:15px;font-weight:700;}
 .feed-time{font-size:12px;color:var(--text3);margin-top:1px;}
-.feed-text{font-size:15px;line-height:1.65;}
+.feed-text{font-size:15px;line-height:1.65;color:var(--text);}
 
 /* Todo */
 .todo-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);}
 .todo-item:last-child{border-bottom:none;}
-.check{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;}
-.check.done{background:var(--text);border-color:var(--text);color:var(--bg);}
+.check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:all .2s;}
+.check.done{background:linear-gradient(135deg,var(--c6),var(--c4));border-color:transparent;color:#fff;}
 .todo-body{flex:1;}
-.todo-title{font-size:16px;font-weight:500;line-height:1.4;}
+.todo-title{font-size:16px;font-weight:600;line-height:1.4;}
 .todo-title.done{text-decoration:line-through;color:var(--text3);}
 .todo-time{font-size:13px;color:var(--text3);margin-top:3px;}
 
 /* AI note */
-.ai-note{font-size:15px;color:var(--text2);line-height:1.65;padding:14px;background:var(--bg2);border-radius:var(--r);}
+.ai-note{font-size:15px;color:var(--text2);line-height:1.65;padding:14px 16px;background:var(--c7l);border-radius:var(--r);border-left:3px solid var(--c7);}
 
-/* Parse grid */
+/* Parse */
 .parse-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px;}
-.parse-cell{background:var(--bg2);border-radius:var(--r);padding:12px;}
-.parse-k{font-size:12px;color:var(--text3);margin-bottom:4px;}
-.parse-v{font-size:15px;font-weight:600;}
+.parse-cell{border-radius:var(--r);padding:12px;}
+.parse-k{font-size:12px;font-weight:600;margin-bottom:4px;opacity:.7;}
+.parse-v{font-size:15px;font-weight:700;}
 
 /* Chart */
 .chart-svg{width:100%;height:100px;display:block;margin-top:6px;}
 
-/* Coros */
-.coros-strip{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg2);border-radius:var(--r2);margin-bottom:12px;}
-.coros-ic{width:40px;height:40px;border-radius:12px;background:var(--bg);border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;}
-.coros-ttl{font-size:15px;font-weight:600;}
-.coros-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.coros-btn{font-size:14px;font-weight:600;padding:7px 16px;border:1.5px solid var(--info);border-radius:20px;background:transparent;color:var(--info);cursor:pointer;font-family:var(--font);}
-
 /* Upload */
-.upload-area{border:1.5px dashed var(--border2);border-radius:var(--r2);padding:28px 20px;text-align:center;cursor:pointer;transition:background .15s;margin-bottom:12px;}
-.upload-area:active{background:var(--bg2);}
+.upload-area{border:2px dashed var(--border2);border-radius:var(--r2);padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px;}
+.upload-area:active,.upload-area:hover{background:var(--c7l);border-color:var(--c7);}
 .upload-icon{font-size:36px;margin-bottom:10px;}
-.upload-title{font-size:16px;font-weight:600;margin-bottom:4px;}
+.upload-title{font-size:16px;font-weight:700;margin-bottom:4px;}
 .upload-sub{font-size:13px;color:var(--text3);}
-.upload-file-list{margin-bottom:12px;}
 .upload-file-item{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--r);margin-bottom:8px;}
 .upload-file-ic{font-size:22px;flex-shrink:0;}
-.upload-file-name{font-size:14px;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.upload-file-name{font-size:14px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .upload-file-size{font-size:12px;color:var(--text3);}
-.upload-status{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#34c75910;border-radius:var(--r);font-size:14px;color:#25a244;font-weight:500;}
+.upload-status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c6l);border-radius:var(--r);font-size:14px;color:var(--c6d);font-weight:600;}
 
-/* History list */
+/* History */
 .hist-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);cursor:pointer;}
 .hist-item:last-child{border-bottom:none;}
-.hist-ic{width:38px;height:38px;background:var(--bg2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.hist-ic{width:40px;height:40px;background:var(--c4l);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
 .hist-body{flex:1;}
-.hist-title{font-size:15px;font-weight:500;}
+.hist-title{font-size:15px;font-weight:600;}
 .hist-sub{font-size:13px;color:var(--text3);margin-top:2px;}
 .hist-arr{font-size:18px;color:var(--text3);}
+
+/* Coros */
+.coros-strip{display:flex;align-items:center;gap:12px;padding:16px;background:linear-gradient(135deg,var(--c4l),var(--c7l));border-radius:var(--r2);margin-bottom:12px;border:.5px solid rgba(72,219,251,.3);}
+.coros-ic{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--c4),var(--c7));display:flex;align-items:center;justify-content:center;font-size:21px;}
+.coros-ttl{font-size:15px;font-weight:700;color:var(--c4d);}
+.coros-sub{font-size:13px;color:var(--text3);margin-top:2px;}
+.coros-btn{font-size:14px;font-weight:700;padding:8px 16px;border:none;border-radius:20px;background:linear-gradient(135deg,var(--c4),var(--c7));color:#fff;cursor:pointer;font-family:var(--font);}
+
+/* Section header divider */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sec-more{font-size:13px;color:var(--c7);font-weight:600;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -216,7 +259,9 @@ textarea.inp{resize:none;line-height:1.5;}
 </div>
 
 <div class="header">
-  <div class="header-greeting" id="greeting">早上好</div>
+  <div class="header-deco"></div>
+  <div class="header-deco2"></div>
+  <div class="header-greeting" id="greeting">早上好 👋</div>
   <div class="header-title" id="page-title">我的生活</div>
 </div>
 
@@ -227,26 +272,64 @@ textarea.inp{resize:none;line-height:1.5;}
 <div class="pg">
   <div class="sec">
     <div class="stat-row">
-      <div class="stat"><div class="stat-val">8,432</div><div class="stat-lbl">今日步数</div><div class="stat-sub">目标 12,000</div></div>
-      <div class="stat"><div class="stat-val">2</div><div class="stat-lbl">待办事项</div><div class="stat-sub">今日到期</div></div>
+      <div class="stat" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);color:#fff;">
+        <div class="stat-icon">🚶</div>
+        <div class="stat-val">8,432</div>
+        <div class="stat-lbl">今日步数</div>
+        <div class="stat-sub">目标 12,000 步</div>
+      </div>
+      <div class="stat" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);color:#fff;">
+        <div class="stat-icon">✅</div>
+        <div class="stat-val">2</div>
+        <div class="stat-lbl">待办事项</div>
+        <div class="stat-sub">今日到期</div>
+      </div>
     </div>
     <div class="stat-row">
-      <div class="stat"><div class="stat-val">5.8</div><div class="stat-lbl">血糖 mmol/L</div><div class="stat-sub">持续关注</div></div>
-      <div class="stat"><div class="stat-val">5天</div><div class="stat-lbl">本周运动</div><div class="stat-sub">状态良好</div></div>
+      <div class="stat" style="background:linear-gradient(135deg,#48DBFB,#1DD1A1);color:#fff;">
+        <div class="stat-icon">🩸</div>
+        <div class="stat-val">5.8</div>
+        <div class="stat-lbl">血糖 mmol/L</div>
+        <div class="stat-sub">持续关注</div>
+      </div>
+      <div class="stat" style="background:linear-gradient(135deg,#FECA57,#FF9F43);color:#fff;">
+        <div class="stat-icon">💪</div>
+        <div class="stat-val">5天</div>
+        <div class="stat-lbl">本周运动</div>
+        <div class="stat-sub">状态良好</div>
+      </div>
     </div>
   </div>
+
   <div class="sec">
-    <div class="sec-label">今日待办</div>
+    <div class="sec-header"><div class="sec-label">今日待办</div><span class="sec-more">查看全部</span></div>
     <div class="card-wh">
-      <div class="todo-item"><div class="check done">✓</div><div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div><span class="pill pill-warn">紧急</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div></div>
+      <div class="todo-item">
+        <div class="check done">✓</div>
+        <div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div>
+      </div>
+      <div class="todo-item">
+        <div class="check" onclick="tgl(this)"></div>
+        <div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div>
+        <span class="pill pill-warn">紧急</span>
+      </div>
+      <div class="todo-item">
+        <div class="check" onclick="tgl(this)"></div>
+        <div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div>
+      </div>
     </div>
   </div>
+
   <div class="sec">
-    <div class="sec-label">最新动态</div>
+    <div class="sec-header"><div class="sec-label">最新动态</div><span class="sec-more">查看全部</span></div>
     <div class="card-wh">
-      <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div></div><div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭要少油少盐。</div></div>
+      <div class="feed-item">
+        <div class="feed-top">
+          <div class="feed-av" style="background:linear-gradient(135deg,var(--c1),var(--c2));">我</div>
+          <div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div>
+        </div>
+        <div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭要少油少盐。</div>
+      </div>
     </div>
   </div>
 </div>
@@ -259,57 +342,63 @@ textarea.inp{resize:none;line-height:1.5;}
       <div style="flex:1;"><div class="coros-ttl">高驰手表同步</div><div class="coros-sub">通过 Strava 自动导入</div></div>
       <button class="coros-btn" onclick="alert('正式版本将引导登录 Strava，授权后自动同步高驰运动数据。')">连接</button>
     </div>
+  </div>
+
+  <div class="sec">
     <div class="sec-label">今日概览</div>
-    <div class="card">
+    <div class="card" style="background:linear-gradient(135deg,#F8F0FF,#E8F8FF);">
       <div class="ring-wrap">
         <div style="position:relative;width:84px;height:84px;flex-shrink:0;">
           <svg viewBox="0 0 84 84" width="84" height="84">
-            <circle cx="42" cy="42" r="34" fill="none" stroke="var(--bg3)" stroke-width="8"/>
-            <circle cx="42" cy="42" r="34" fill="none" stroke="var(--text)" stroke-width="8" stroke-dasharray="142 71" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 42 42)"/>
+            <circle cx="42" cy="42" r="34" fill="none" stroke="#E0D0FF" stroke-width="9"/>
+            <circle cx="42" cy="42" r="34" fill="none" stroke="url(#rg)" stroke-width="9" stroke-dasharray="142 71" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 42 42)"/>
+            <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#A29BFE"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
           </svg>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;"><div style="font-size:17px;font-weight:700;">67%</div></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;"><div style="font-size:18px;font-weight:800;color:#A29BFE;">67%</div></div>
         </div>
         <div class="ring-labels">
-          <div class="rl"><span class="rl-k">步数</span><span class="rl-v">8,432 步</span></div>
-          <div class="rl"><span class="rl-k">热量</span><span class="rl-v">412 kcal</span></div>
-          <div class="rl"><span class="rl-k">时长</span><span class="rl-v">68 分钟</span></div>
+          <div class="rl"><span class="rl-k">步数</span><span class="rl-v" style="color:var(--c1);">8,432 步</span></div>
+          <div class="rl"><span class="rl-k">热量</span><span class="rl-v" style="color:var(--c2);">412 kcal</span></div>
+          <div class="rl"><span class="rl-k">时长</span><span class="rl-v" style="color:var(--c6);">68 分钟</span></div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="sec">
     <div class="sec-label">本周运动（分钟）</div>
     <div class="card">
       <div class="bars">
-        <div class="bcol"><div class="bfill" style="height:42px;background:var(--text);opacity:.25;"></div><div class="bday">一</div></div>
-        <div class="bcol"><div class="bfill" style="height:58px;background:var(--text);opacity:.35;"></div><div class="bday">二</div></div>
+        <div class="bcol"><div class="bfill" style="height:42px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.5;"></div><div class="bday">一</div></div>
+        <div class="bcol"><div class="bfill" style="height:58px;background:linear-gradient(to top,var(--c4),var(--c7));opacity:.65;"></div><div class="bday">二</div></div>
         <div class="bcol"><div class="bfill" style="height:4px;background:var(--bg3);"></div><div class="bday">三</div></div>
-        <div class="bcol"><div class="bfill" style="height:48px;background:var(--text);opacity:.35;"></div><div class="bday">四</div></div>
-        <div class="bcol"><div class="bfill" style="height:64px;background:var(--text);opacity:.5;"></div><div class="bday">五</div></div>
-        <div class="bcol"><div class="bfill" style="height:68px;background:var(--text);opacity:.6;"></div><div class="bday">六</div></div>
-        <div class="bcol"><div class="bfill" style="height:56px;background:var(--text);"></div><div class="bday" style="color:var(--text);font-weight:700;">今</div></div>
+        <div class="bcol"><div class="bfill" style="height:48px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.65;"></div><div class="bday">四</div></div>
+        <div class="bcol"><div class="bfill" style="height:64px;background:linear-gradient(to top,var(--c2),var(--c1));opacity:.8;"></div><div class="bday">五</div></div>
+        <div class="bcol"><div class="bfill" style="height:68px;background:linear-gradient(to top,var(--c1),var(--c5));opacity:.85;"></div><div class="bday">六</div></div>
+        <div class="bcol"><div class="bfill" style="height:56px;background:linear-gradient(to top,var(--c7),var(--c1));"></div><div class="bday" style="color:var(--c7);font-weight:800;">今</div></div>
       </div>
     </div>
   </div>
+
   <div class="sec">
     <div class="sec-label">记录运动</div>
     <div class="card-wh">
       <div class="sport-tabs">
-        <div class="sp on" onclick="selSp(this)"><span class="sp-ic">🚶</span>健走</div>
-        <div class="sp" onclick="selSp(this)"><span class="sp-ic">🏃</span>跑步</div>
-        <div class="sp" onclick="selSp(this)"><span class="sp-ic">💪</span>哑铃</div>
+        <div class="sp on" onclick="selSp(this,'--c1','--c2')"><span class="sp-ic">🚶</span>健走</div>
+        <div class="sp" onclick="selSp(this,'--c4','--c6')"><span class="sp-ic">🏃</span>跑步</div>
+        <div class="sp" onclick="selSp(this,'--c7','--c5')"><span class="sp-ic">💪</span>哑铃</div>
       </div>
       <div class="inp-grp"><span class="inp-lbl">时长（分钟）</span><input class="inp" type="number" placeholder="40" id="dur" inputmode="numeric"/></div>
       <div class="inp-2">
         <div class="inp-grp"><span class="inp-lbl">步数</span><input class="inp" type="number" placeholder="6000" id="stp" inputmode="numeric"/></div>
         <div class="inp-grp"><span class="inp-lbl">训练部位</span><input class="inp" type="text" placeholder="胸+背" id="mus"/></div>
       </div>
-      <button class="btn" onclick="addEx()">保存记录</button>
+      <button class="btn" onclick="addEx()">保存记录 ✓</button>
     </div>
     <div class="sec-label">今日明细</div>
     <div class="card-wh" id="exlog">
-      <div class="row"><div class="row-icon">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">07:20 · 40 分钟 · 4,200 步</div></div><div class="row-right">230 kcal</div></div>
-      <div class="row"><div class="row-icon">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">18:30 · 28 分钟 · 胸+背</div></div><div class="row-right">182 kcal</div></div>
+      <div class="row"><div class="row-icon" style="background:var(--c1l);">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">07:20 · 40 分钟 · 4,200 步</div></div><div class="row-right" style="color:var(--c1);font-weight:700;">230 kcal</div></div>
+      <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">18:30 · 28 分钟 · 胸+背</div></div><div class="row-right" style="color:var(--c7);font-weight:700;">182 kcal</div></div>
     </div>
   </div>
 </div>
@@ -320,30 +409,39 @@ textarea.inp{resize:none;line-height:1.5;}
     <div class="sec-label">记录动态</div>
     <div class="card-wh">
       <div class="voice-wrap">
-        <div class="voice-label">语音 / 文字输入</div>
+        <div class="voice-label">🎙 语音 / 文字输入</div>
         <div class="voice-row">
           <button class="vbtn" id="vbtn" onclick="togV()">
             <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6 9a1 1 0 0 1 2 0 8 8 0 0 1-7 7.938V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 1 1 2 0 6 6 0 0 0 12 0z"/></svg>
           </button>
           <div class="voice-right">
-            <textarea class="vtextarea" id="vtxtarea" placeholder="点击麦克风语音输入，或直接在此输入文字…" rows="3"></textarea>
-            <div class="vhint-text" id="vhint">💡 微信中请长按麦克风图标录音，松开后文字会自动填入</div>
+            <textarea class="vtextarea" id="vtxtarea" placeholder="点麦克风语音输入，或直接在此输入文字…" rows="3"></textarea>
+            <div class="vhint-text" id="vhint">💡 微信中请直接在文本框输入，或使用微信键盘语音功能</div>
           </div>
         </div>
       </div>
-      <div class="vtags" id="vtgs"></div>
-      <div class="v-acts" style="margin-top:12px;">
+      <div class="v-acts">
         <button class="btn-ghost" onclick="clrV()">清空</button>
-        <button class="btn" onclick="pubV()">发布动态</button>
+        <button class="btn" onclick="pubV()">发布 🚀</button>
       </div>
     </div>
   </div>
+
   <div class="sec">
-    <div class="sec-label">我的动态</div>
+    <div class="sec-header"><div class="sec-label">我的动态</div></div>
     <div class="card-wh" id="feed">
-      <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div></div><div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭要少油少盐。</div></div>
-      <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">昨天 21:30</div></div></div><div class="feed-text">哑铃训练完成，练了胸和背，状态不错，继续坚持。</div></div>
-      <div class="feed-item"><div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">4月17日</div></div></div><div class="feed-text">陪父亲复查，血压控制还可以，医生建议继续低盐饮食，下月随访。</div></div>
+      <div class="feed-item">
+        <div class="feed-top"><div class="feed-av" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div></div>
+        <div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭要少油少盐。</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-top"><div class="feed-av" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);">我</div><div><div class="feed-name">本人</div><div class="feed-time">昨天 21:30</div></div></div>
+        <div class="feed-text">哑铃训练完成，练了胸和背，状态不错，继续坚持！💪</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-top"><div class="feed-av" style="background:linear-gradient(135deg,#48DBFB,#1DD1A1);">我</div><div><div class="feed-name">本人</div><div class="feed-time">4月17日</div></div></div>
+        <div class="feed-text">陪父亲复查，血压控制还可以，医生建议继续低盐饮食，下月随访。</div>
+      </div>
     </div>
   </div>
 </div>
@@ -354,38 +452,40 @@ textarea.inp{resize:none;line-height:1.5;}
     <div class="sec-label">添加待办</div>
     <div class="card-wh">
       <div class="voice-wrap">
-        <div class="voice-label">语音 / 文字输入</div>
+        <div class="voice-label">🎙 语音 / 文字输入</div>
         <div class="voice-row">
           <button class="vbtn" id="tbtn" onclick="togT()">
             <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6 9a1 1 0 0 1 2 0 8 8 0 0 1-7 7.938V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 1 1 2 0 6 6 0 0 0 12 0z"/></svg>
           </button>
           <div class="voice-right">
-            <textarea class="vtextarea" id="ttxtarea" placeholder="说出或输入待办内容，AI 自动提取时间和优先级…" rows="3"></textarea>
-            <div class="vhint-text" id="thint">例如：明天下午3点提醒我给工厂报修空调</div>
+            <textarea class="vtextarea" id="ttxtarea" placeholder="说出或输入待办，AI 自动提取时间和优先级…" rows="3"></textarea>
+            <div class="vhint-text" id="thint">例：明天下午3点提醒我给工厂报修空调</div>
           </div>
         </div>
       </div>
       <div class="parse-grid" id="tparse" style="display:none;"></div>
       <div class="v-acts" style="margin-top:12px;">
         <button class="btn-ghost" onclick="clrT()">清空</button>
-        <button class="btn" onclick="parseAndAdd()">AI 解析并添加</button>
+        <button class="btn" onclick="parseAndAdd()">AI 解析添加 ✨</button>
       </div>
     </div>
   </div>
+
   <div class="sec">
-    <div class="sec-label">今日</div>
+    <div class="sec-header"><div class="sec-label">今日</div></div>
     <div class="card-wh" id="td-today">
       <div class="todo-item"><div class="check done">✓</div><div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div><span class="pill pill-ok">运动</span></div>
       <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div><span class="pill pill-warn">紧急</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div></div>
+      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div><span class="pill pill-purple">运动</span></div>
     </div>
   </div>
+
   <div class="sec">
-    <div class="sec-label">本周</div>
+    <div class="sec-header"><div class="sec-label">本周</div></div>
     <div class="card-wh" id="td-week">
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">整理工厂用电统计表</div><div class="todo-time">周五前</div></div><span class="pill pill-muted">工作</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">购买哑铃配重片</div><div class="todo-time">本周内</div></div></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">和妻子讨论夏季度假计划</div><div class="todo-time">周末</div></div></div>
+      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">整理工厂用电统计表</div><div class="todo-time">周五前</div></div><span class="pill pill-blue">工作</span></div>
+      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">购买哑铃配重片</div><div class="todo-time">本周内</div></div><span class="pill pill-muted">生活</span></div>
+      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">和妻子讨论夏季度假计划</div><div class="todo-time">周末</div></div><span class="pill pill-warn">生活</span></div>
     </div>
   </div>
 </div>
@@ -393,32 +493,53 @@ textarea.inp{resize:none;line-height:1.5;}
 <!-- 4 体检 -->
 <div class="pg">
   <div class="mem-row">
-    <div class="mem" onclick="selM(this,0)"><div class="mem-av on">我</div><span class="mem-name">本人</span></div>
-    <div class="mem" onclick="selM(this,1)"><div class="mem-av">妻</div><span class="mem-name">妻子</span></div>
-    <div class="mem" onclick="selM(this,2)"><div class="mem-av">父</div><span class="mem-name">父亲</span></div>
-    <div class="mem" onclick="selM(this,3)"><div class="mem-av">母</div><span class="mem-name">母亲</span></div>
+    <div class="mem" onclick="selM(this,0)">
+      <div class="mem-av on" style="background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border-color:var(--c1);">我</div>
+      <span class="mem-name">本人</span>
+    </div>
+    <div class="mem" onclick="selM(this,1)">
+      <div class="mem-av" style="background:linear-gradient(135deg,var(--c4),var(--c6));color:#fff;">妻</div>
+      <span class="mem-name">妻子</span>
+    </div>
+    <div class="mem" onclick="selM(this,2)">
+      <div class="mem-av" style="background:linear-gradient(135deg,var(--c7),var(--c5));color:#fff;">父</div>
+      <span class="mem-name">父亲</span>
+    </div>
+    <div class="mem" onclick="selM(this,3)">
+      <div class="mem-av" style="background:linear-gradient(135deg,var(--c3),var(--c2));color:#fff;">母</div>
+      <span class="mem-name">母亲</span>
+    </div>
   </div>
   <div id="mc">
     <div class="sec-label">本人 · 2024年12月</div>
     <div class="metric-2">
-      <div class="mbox"><div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr trup">↑ 较去年 +0.3</div></div>
-      <div class="mbox"><div class="lbl">血压</div><div class="val">118/76</div><div class="tr trfl">→ 稳定</div></div>
-      <div class="mbox"><div class="lbl">总胆固醇</div><div class="val">6.2 <span class="unit">mmol/L</span></div><div class="tr trup" style="font-weight:700;">↑ 偏高</div></div>
-      <div class="mbox"><div class="lbl">BMI</div><div class="val">24.1</div><div class="tr trdn">↓ -0.5</div></div>
+      <div class="mbox" style="background:linear-gradient(135deg,var(--c4l),#dff6ff);color:var(--c4d);">
+        <div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);">↑ 较去年 +0.3</div>
+      </div>
+      <div class="mbox" style="background:linear-gradient(135deg,var(--c6l),#d5fdf0);color:var(--c6d);">
+        <div class="lbl">血压</div><div class="val">118/76</div><div class="tr" style="color:var(--c6d);">→ 稳定</div>
+      </div>
+      <div class="mbox" style="background:linear-gradient(135deg,var(--c1l),#ffe8e8);color:var(--c1d);">
+        <div class="lbl">总胆固醇</div><div class="val">6.2 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);font-weight:800;">↑ 偏高</div>
+      </div>
+      <div class="mbox" style="background:linear-gradient(135deg,var(--c7l),#ede8ff);color:var(--c7d);">
+        <div class="lbl">BMI</div><div class="val">24.1</div><div class="tr" style="color:var(--c6d);">↓ -0.5</div>
+      </div>
     </div>
     <div class="sec-label" style="margin-top:20px;">历年血糖趋势</div>
-    <div class="card" style="padding-bottom:10px;">
+    <div class="card" style="background:linear-gradient(135deg,#f0f8ff,#e8f4ff);padding-bottom:10px;">
       <svg class="chart-svg" viewBox="0 0 300 90" preserveAspectRatio="none">
-        <line x1="0" y1="30" x2="300" y2="30" stroke="var(--bg3)" stroke-width="1" stroke-dasharray="5,4"/>
-        <text x="293" y="27" font-size="9" fill="var(--text3)" text-anchor="end" font-family="-apple-system,sans-serif">参考上限</text>
-        <polyline points="20,65 80,58 140,52 200,44 260,35 300,30" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="300" cy="30" r="4" fill="var(--text)"/>
-        <text x="20" y="82" font-size="9" fill="var(--text3)" text-anchor="middle" font-family="-apple-system,sans-serif">2020</text>
-        <text x="80" y="82" font-size="9" fill="var(--text3)" text-anchor="middle" font-family="-apple-system,sans-serif">2021</text>
-        <text x="140" y="82" font-size="9" fill="var(--text3)" text-anchor="middle" font-family="-apple-system,sans-serif">2022</text>
-        <text x="200" y="82" font-size="9" fill="var(--text3)" text-anchor="middle" font-family="-apple-system,sans-serif">2023</text>
-        <text x="260" y="82" font-size="9" fill="var(--text3)" text-anchor="middle" font-family="-apple-system,sans-serif">2024</text>
-        <text x="293" y="27" font-size="10" fill="var(--text)" font-weight="700" text-anchor="end" font-family="-apple-system,sans-serif">5.8</text>
+        <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#A29BFE"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
+        <line x1="0" y1="30" x2="300" y2="30" stroke="#FFB3B3" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <text x="293" y="27" font-size="9" fill="#FF6B6B" text-anchor="end" font-family="-apple-system,sans-serif" font-weight="700">参考上限</text>
+        <polyline points="20,65 80,58 140,52 200,44 260,35 300,30" fill="none" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="300" cy="30" r="5" fill="#48DBFB" stroke="#fff" stroke-width="2"/>
+        <text x="20" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2020</text>
+        <text x="80" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2021</text>
+        <text x="140" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2022</text>
+        <text x="200" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2023</text>
+        <text x="260" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2024</text>
+        <text x="290" y="26" font-size="10" fill="#48DBFB" font-weight="800" text-anchor="end" font-family="-apple-system,sans-serif">5.8</text>
       </svg>
     </div>
     <div class="sec-label" style="margin-top:20px;">AI 解读</div>
@@ -427,13 +548,13 @@ textarea.inp{resize:none;line-height:1.5;}
     <div class="sec-label" style="margin-top:24px;">上传体检报告</div>
     <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
     <div class="upload-area" onclick="document.getElementById('file-input').click()">
-      <div class="upload-icon">📄</div>
+      <div class="upload-icon">📋</div>
       <div class="upload-title">点击上传体检报告</div>
       <div class="upload-sub">支持 PDF、JPG、PNG 格式</div>
     </div>
-    <div class="upload-file-list" id="file-list"></div>
+    <div id="file-list"></div>
 
-    <div class="sec-label" style="margin-top:4px;">历史报告</div>
+    <div class="sec-label" style="margin-top:8px;">历史报告</div>
     <div class="card-wh">
       <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">本人 · 年度体检</div><div class="hist-sub">2024年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
       <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">本人 · 年度体检</div><div class="hist-sub">2023年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
@@ -447,25 +568,27 @@ textarea.inp{resize:none;line-height:1.5;}
   <div class="sec">
     <div class="sec-label">体检提醒</div>
     <div class="card-wh">
-      <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">还有 <strong>23 天</strong> · 5月12日</div></div><span class="pill pill-warn">即将到期</span></div>
-      <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">还有 198 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
-      <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">还有 210 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
-      <div class="row"><div class="row-icon">👤</div><div class="row-body"><div class="row-title">母亲</div><div class="row-sub">还有 168 天 · 10月</div></div><span class="pill pill-ok">正常</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c1l);">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">还有 <strong style="color:var(--c1);">23 天</strong> · 5月12日</div></div><span class="pill pill-warn">即将到期</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c6l);">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">还有 198 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c4l);">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">还有 210 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c7l);">👤</div><div class="row-body"><div class="row-title">母亲</div><div class="row-sub">还有 168 天 · 10月</div></div><span class="pill pill-ok">正常</span></div>
     </div>
   </div>
+
   <div class="sec">
     <div class="sec-label">运动目标</div>
     <div class="card-wh">
-      <div class="row"><div class="row-icon">🚶</div><div class="row-body"><div class="row-title">每日健走</div><div class="row-sub">12,000 步 · 今日 70%</div></div><span class="pill pill-warn">未达标</span></div>
-      <div class="row"><div class="row-icon">💪</div><div class="row-body"><div class="row-title">本周哑铃</div><div class="row-sub">目标 3 次 · 已完成 2 次</div></div><span class="pill pill-ok">进行中</span></div>
-      <div class="row"><div class="row-icon">🏃</div><div class="row-body"><div class="row-title">本周跑步</div><div class="row-sub">目标 2 次 · 已完成 0 次</div></div><span class="pill pill-danger">待完成</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c2l);">🚶</div><div class="row-body"><div class="row-title">每日健走</div><div class="row-sub">12,000 步 · 今日 70%</div></div><span class="pill pill-warn">未达标</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">本周哑铃</div><div class="row-sub">目标 3 次 · 已完成 2 次</div></div><span class="pill pill-ok">进行中</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c1l);">🏃</div><div class="row-body"><div class="row-title">本周跑步</div><div class="row-sub">目标 2 次 · 已完成 0 次</div></div><span class="pill pill-danger">待完成</span></div>
     </div>
   </div>
+
   <div class="sec">
     <div class="sec-label">异常指标</div>
     <div class="card-wh">
-      <div class="row"><div class="row-body"><div class="row-title">本人 · 总胆固醇</div><div class="row-sub">6.2 mmol/L · 连续两年偏高</div></div><span class="pill pill-danger">偏高</span></div>
-      <div class="row"><div class="row-body"><div class="row-title">父亲 · 血压</div><div class="row-sub">138/88 mmHg · 临界偏高</div></div><span class="pill pill-warn">关注</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c1l);">⚠️</div><div class="row-body"><div class="row-title">本人 · 总胆固醇</div><div class="row-sub">6.2 mmol/L · 连续两年偏高</div></div><span class="pill pill-danger">偏高</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c2l);">📊</div><div class="row-body"><div class="row-title">父亲 · 血压</div><div class="row-sub">138/88 mmHg · 临界偏高</div></div><span class="pill pill-warn">关注</span></div>
     </div>
   </div>
 </div>
@@ -476,76 +599,86 @@ textarea.inp{resize:none;line-height:1.5;}
 <!-- Bottom Nav -->
 <div class="nav">
   <div class="ni on" onclick="sw(0)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span>概览</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>概览</span><div class="ni-dot"></div>
   </div>
   <div class="ni" onclick="sw(1)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-    <span>运动</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <span>运动</span><div class="ni-dot"></div>
   </div>
   <div class="ni" onclick="sw(2)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <span>动态</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>动态</span><div class="ni-dot"></div>
   </div>
   <div class="ni" onclick="sw(3)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-    <span>待办</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    <span>待办</span><div class="ni-dot"></div>
   </div>
   <div class="ni" onclick="sw(4)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-    <span>体检</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span>体检</span><div class="ni-dot"></div>
   </div>
   <div class="ni" onclick="sw(5)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-    <span>提醒</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    <span>提醒</span><div class="ni-dot"></div>
   </div>
 </div>
 
 </div>
-
 <script>
-// Clock
+const navColors=['#FF6B6B','#FF9F43','#A29BFE','#48DBFB','#1DD1A1','#FECA57'];
 const titles=['我的生活','运动记录','语音动态','待办日程','体检档案','健康提醒'];
+const gradients=[
+  'linear-gradient(90deg,#FF6B6B,#A29BFE)',
+  'linear-gradient(90deg,#FF9F43,#FECA57)',
+  'linear-gradient(90deg,#A29BFE,#FF9FF3)',
+  'linear-gradient(90deg,#48DBFB,#A29BFE)',
+  'linear-gradient(90deg,#1DD1A1,#48DBFB)',
+  'linear-gradient(90deg,#FECA57,#FF6B6B)',
+];
+
 function tick(){
   const n=new Date(),h=n.getHours(),m=n.getMinutes();
   document.getElementById('clock').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-  document.getElementById('greeting').textContent=h<6?'深夜好':h<11?'早上好':h<13?'上午好':h<18?'下午好':h<22?'晚上好':'夜深了';
+  const emojis=['🌙','🌅','☀️','🌤️','🌇','🌃'];
+  const ei=h<6?0:h<8?1:h<12?2:h<17?3:h<20?4:5;
+  const words=['深夜好','早上好','上午好','下午好','傍晚好','晚上好'];
+  document.getElementById('greeting').textContent=`${words[ei]} ${emojis[ei]}`;
 }
 tick();setInterval(tick,10000);
 
-// Nav
 let cur=0;
 function sw(i){
   cur=i;
-  document.querySelectorAll('.ni').forEach((t,j)=>t.classList.toggle('on',j===i));
-  document.getElementById('page-title').textContent=titles[i];
+  document.querySelectorAll('.ni').forEach((t,j)=>{
+    t.classList.toggle('on',j===i);
+    t.style.color=j===i?navColors[i]:'';
+    const dot=t.querySelector('.ni-dot');
+    if(dot)dot.style.background=j===i?navColors[i]:'transparent';
+  });
+  const titleEl=document.getElementById('page-title');
+  titleEl.textContent=titles[i];
+  titleEl.style.backgroundImage=gradients[i];
   const W=Math.min(window.innerWidth,430);
   document.getElementById('pages').style.transform=`translateX(-${i*W}px)`;
 }
 window.addEventListener('resize',()=>sw(cur));
 
-// Swipe
 let sx=0,sy=0;
 const pgs=document.getElementById('pages');
 pgs.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
 pgs.addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-  if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){
-    if(dx<0&&cur<5)sw(cur+1);
-    else if(dx>0&&cur>0)sw(cur-1);
-  }
+  if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){if(dx<0&&cur<5)sw(cur+1);else if(dx>0&&cur>0)sw(cur-1);}
 },{passive:true});
 
-// Checks
 function tgl(el){
   el.classList.toggle('done');el.textContent=el.classList.contains('done')?'✓':'';
   const t=el.parentElement.querySelector('.todo-title');if(t)t.classList.toggle('done');
 }
 
-// Sport
-function selSp(c){document.querySelectorAll('.sp').forEach(x=>x.classList.remove('on'));c.classList.add('on');}
+function selSp(c){document.querySelectorAll('.sp').forEach(x=>{x.classList.remove('on');x.style.background='';x.style.color='';x.style.borderColor='';});c.classList.add('on');c.style.background='linear-gradient(135deg,var(--c7),var(--c5))';c.style.color='#fff';c.style.borderColor='transparent';}
 
-// Exercise
 function addEx(){
   const sp=document.querySelector('.sp.on').textContent.trim();
   const dur=document.getElementById('dur').value||'--';
@@ -554,91 +687,88 @@ function addEx(){
   const ic=em[sp]||'🏃',sub=stp?`${stp} 步`:mus||'';
   const kcal=Math.round((parseInt(dur)||0)*4);
   const row=document.createElement('div');row.className='row';
-  row.innerHTML=`<div class="row-icon">${ic}</div><div class="row-body"><div class="row-title">${sp.replace(/[🚶🏃💪]/g,'').trim()}</div><div class="row-sub">刚刚 · ${dur} 分钟${sub?' · '+sub:''}</div></div><div class="row-right">${kcal} kcal</div>`;
+  row.innerHTML=`<div class="row-icon" style="background:var(--c7l);">${ic}</div><div class="row-body"><div class="row-title">${sp.replace(/[🚶🏃💪]/g,'').trim()}</div><div class="row-sub">刚刚 · ${dur} 分钟${sub?' · '+sub:''}</div></div><div class="row-right" style="color:var(--c7);font-weight:700;">${kcal} kcal</div>`;
   document.getElementById('exlog').appendChild(row);
   ['dur','stp','mus'].forEach(id=>document.getElementById(id).value='');
 }
 
-// Voice note — textarea-based, works in WeChat
 let vRec=false;
 function togV(){
   const btn=document.getElementById('vbtn'),ta=document.getElementById('vtxtarea'),hint=document.getElementById('vhint');
   if(!vRec){
-    // Try Web Speech API (Chrome/Safari desktop, some Android)
-    if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
+    if('webkitSpeechRecognition'in window||'SpeechRecognition'in window){
       const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-      const r=new SR();r.lang='zh-CN';r.interimResults=false;r.maxAlternatives=1;
-      vRec=true;btn.classList.add('rec');hint.textContent='正在录音，说完后自动识别…';
+      const r=new SR();r.lang='zh-CN';r.interimResults=false;
+      vRec=true;btn.classList.add('rec');hint.textContent='🔴 录音中，说完后自动识别…';
       r.start();
-      r.onresult=e=>{const t=e.results[0][0].transcript;ta.value+=(ta.value?'\n':'')+t;};
-      r.onerror=()=>{hint.textContent='录音失败，请直接在文本框输入';};
-      r.onend=()=>{vRec=false;btn.classList.remove('rec');hint.textContent='识别完成，可继续修改后发布';};
+      r.onresult=e=>{ta.value+=(ta.value?'\n':'')+e.results[0][0].transcript;};
+      r.onerror=()=>{hint.textContent='识别失败，请直接在文本框输入';};
+      r.onend=()=>{vRec=false;btn.classList.remove('rec');hint.textContent='✅ 识别完成，可修改后发布';};
     }else{
-      // WeChat fallback: toggle visual only, user types manually
-      vRec=true;btn.classList.add('rec');
-      hint.textContent='当前环境不支持自动识别 — 请直接在文本框手动输入内容';
-      setTimeout(()=>{vRec=false;btn.classList.remove('rec');},1500);
+      btn.classList.add('rec');
+      hint.textContent='⚠️ 当前环境不支持语音识别，请直接输入文字';
+      setTimeout(()=>{btn.classList.remove('rec');},1000);
     }
   }else{
     vRec=false;btn.classList.remove('rec');hint.textContent='可继续修改后发布';
   }
 }
-function clrV(){document.getElementById('vtxtarea').value='';document.getElementById('vtgs').innerHTML='';document.getElementById('vhint').textContent='💡 微信中请长按麦克风图标录音，松开后文字会自动填入';}
+function clrV(){document.getElementById('vtxtarea').value='';document.getElementById('vhint').textContent='💡 微信中请直接在文本框输入，或使用微信键盘语音功能';}
 function pubV(){
   const txt=document.getElementById('vtxtarea').value.trim();
   if(!txt){alert('请先输入内容');return;}
   const n=new Date(),ts=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+  const grads=['linear-gradient(135deg,#FF6B6B,#FF9F43)','linear-gradient(135deg,#A29BFE,#FF9FF3)','linear-gradient(135deg,#48DBFB,#1DD1A1)','linear-gradient(135deg,#FECA57,#FF9F43)'];
+  const g=grads[Math.floor(Math.random()*grads.length)];
   const item=document.createElement('div');item.className='feed-item';
-  item.innerHTML=`<div class="feed-top"><div class="feed-av">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 ${ts}</div></div></div><div class="feed-text">${txt}</div>`;
+  item.innerHTML=`<div class="feed-top"><div class="feed-av" style="background:${g};">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 ${ts}</div></div></div><div class="feed-text">${txt}</div>`;
   document.getElementById('feed').insertBefore(item,document.getElementById('feed').firstChild);
   clrV();
 }
 
-// Todo voice — same pattern
 const tSamples=[
-  {t:'明天下午三点提醒我给工厂报修空调',p:{title:'工厂报修空调',time:'明天 15:00',pri:'普通',tag:'工作'}},
-  {t:'这周五之前记得给母亲买钙片和鱼油',p:{title:'给母亲买钙片和鱼油',time:'本周五前',pri:'普通',tag:'家人'}},
-  {t:'下周一上午和合作伙伴开会，提前准备项目方案',p:{title:'准备项目方案',time:'下周一上午',pri:'紧急',tag:'工作'}},
+  {t:'明天下午三点提醒我给工厂报修空调',p:{title:'工厂报修空调',time:'明天 15:00',pri:'普通',tag:'工作',pc:'pill-blue'}},
+  {t:'这周五之前记得给母亲买钙片和鱼油',p:{title:'给母亲买钙片和鱼油',time:'本周五前',pri:'普通',tag:'家人',pc:'pill-ok'}},
+  {t:'下周一上午和合作伙伴开会，提前准备项目方案',p:{title:'准备项目方案',time:'下周一上午',pri:'紧急',tag:'工作',pc:'pill-warn'}},
 ];
 let tRec=false,tIdx=0;
 function togT(){
   const btn=document.getElementById('tbtn'),ta=document.getElementById('ttxtarea'),hint=document.getElementById('thint');
   if(!tRec){
-    if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
+    if('webkitSpeechRecognition'in window||'SpeechRecognition'in window){
       const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
       const r=new SR();r.lang='zh-CN';r.interimResults=false;
-      tRec=true;btn.classList.add('rec');hint.textContent='正在录音，说完自动识别…';
+      tRec=true;btn.classList.add('rec');hint.textContent='🔴 录音中…';
       r.start();
       r.onresult=e=>{ta.value=e.results[0][0].transcript;};
-      r.onerror=()=>{hint.textContent='录音失败，请直接在文本框输入待办内容';};
-      r.onend=()=>{tRec=false;btn.classList.remove('rec');hint.textContent='识别完成，点击「AI 解析并添加」';};
+      r.onerror=()=>{hint.textContent='识别失败，请直接输入';};
+      r.onend=()=>{tRec=false;btn.classList.remove('rec');hint.textContent='✅ 识别完成，点击 AI 解析添加';};
     }else{
-      tRec=true;btn.classList.add('rec');
-      hint.textContent='当前环境不支持自动识别 — 请直接在文本框输入待办内容';
-      setTimeout(()=>{tRec=false;btn.classList.remove('rec');},1500);
+      btn.classList.add('rec');
+      hint.textContent='⚠️ 请直接在文本框输入待办内容';
+      setTimeout(()=>{btn.classList.remove('rec');},1000);
     }
   }else{
-    tRec=false;btn.classList.remove('rec');hint.textContent='输入完成，点击「AI 解析并添加」';
+    tRec=false;btn.classList.remove('rec');hint.textContent='输入完成，点击 AI 解析添加';
   }
 }
-function clrT(){document.getElementById('ttxtarea').value='';document.getElementById('tparse').style.display='none';document.getElementById('thint').textContent='例如：明天下午3点提醒我给工厂报修空调';}
+function clrT(){document.getElementById('ttxtarea').value='';document.getElementById('tparse').style.display='none';document.getElementById('thint').textContent='例：明天下午3点提醒我给工厂报修空调';}
 function parseAndAdd(){
   const txt=document.getElementById('ttxtarea').value.trim();
   if(!txt){alert('请先输入待办内容');return;}
-  // Simple rule-based parse (real version calls AI API)
   const s=tSamples[tIdx++%tSamples.length];
   const pg=document.getElementById('tparse');pg.style.display='grid';
-  const pc=s.p.pri==='紧急'?'pill-warn':'pill-ok';
-  pg.innerHTML=`<div class="parse-cell"><div class="parse-k">事项</div><div class="parse-v">${s.p.title}</div></div><div class="parse-cell"><div class="parse-k">时间</div><div class="parse-v">${s.p.time}</div></div><div class="parse-cell"><div class="parse-k">优先级</div><div class="parse-v"><span class="pill ${pc}">${s.p.pri}</span></div></div><div class="parse-cell"><div class="parse-k">分类</div><div class="parse-v">${s.p.tag}</div></div>`;
+  const cellColors=[['#E8F4FF','#0984A8'],['#E8FDF6','#0D8A6A'],['#FFF4E6','#D35400'],['#F0EEFF','#5B4FCF']];
+  const cc=cellColors;
+  pg.innerHTML=`<div class="parse-cell" style="background:${cc[0][0]};color:${cc[0][1]};"><div class="parse-k">事项</div><div class="parse-v">${s.p.title}</div></div><div class="parse-cell" style="background:${cc[1][0]};color:${cc[1][1]};"><div class="parse-k">时间</div><div class="parse-v">${s.p.time}</div></div><div class="parse-cell" style="background:${cc[2][0]};color:${cc[2][1]};"><div class="parse-k">优先级</div><div class="parse-v"><span class="pill ${s.p.pc}">${s.p.pri}</span></div></div><div class="parse-cell" style="background:${cc[3][0]};color:${cc[3][1]};"><div class="parse-k">分类</div><div class="parse-v">${s.p.tag}</div></div>`;
   const list=document.getElementById('td-today');
   const item=document.createElement('div');item.className='todo-item';
-  item.innerHTML=`<div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">${s.p.title}</div><div class="todo-time">${s.p.time}</div></div><span class="pill ${pc}">${s.p.tag}</span>`;
+  item.innerHTML=`<div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">${s.p.title}</div><div class="todo-time">${s.p.time}</div></div><span class="pill ${s.p.pc}">${s.p.tag}</span>`;
   list.appendChild(item);
   document.getElementById('ttxtarea').value='';
-  setTimeout(()=>{pg.style.display='none';document.getElementById('thint').textContent='已添加到今日待办 ✓';setTimeout(()=>document.getElementById('thint').textContent='例如：明天下午3点提醒我给工厂报修空调',2500);},1200);
+  setTimeout(()=>{pg.style.display='none';document.getElementById('thint').textContent='✅ 已添加到今日待办';setTimeout(()=>document.getElementById('thint').textContent='例：明天下午3点提醒我给工厂报修空调',2500);},1500);
 }
 
-// File upload
 function handleFiles(files){
   const list=document.getElementById('file-list');
   Array.from(files).forEach(f=>{
@@ -646,46 +776,45 @@ function handleFiles(files){
     const size=f.size>1024*1024?(f.size/1024/1024).toFixed(1)+' MB':(f.size/1024).toFixed(0)+' KB';
     const ic=ext==='PDF'?'📄':'🖼️';
     const item=document.createElement('div');item.className='upload-file-item';
-    item.innerHTML=`<div class="upload-file-ic">${ic}</div><div style="flex:1;min-width:0;"><div class="upload-file-name">${f.name}</div><div class="upload-file-size">${ext} · ${size}</div></div>`;
+    item.innerHTML=`<div class="upload-file-ic">${ic}</div><div style="flex:1;min-width:0;"><div class="upload-file-name">${f.name}</div><div class="upload-file-size">${ext} · ${size}</div></div><span class="pill pill-blue">上传中…</span>`;
     list.appendChild(item);
-    // Simulate upload progress then success
     setTimeout(()=>{
+      const tag=item.querySelector('.pill');if(tag){tag.className='pill pill-ok';tag.textContent='✓ 成功';}
       const status=document.createElement('div');status.className='upload-status';
-      status.innerHTML=`✓ &nbsp;${f.name} 上传成功，AI 解析中…`;
+      status.innerHTML=`✨ <strong>${f.name}</strong> 上传成功，AI 解析中…`;
       list.appendChild(status);
-      setTimeout(()=>{status.textContent='✓ 解析完成，指标已录入档案';},2000);
+      setTimeout(()=>{status.innerHTML='✅ 解析完成，指标已录入档案';},2000);
     },1200);
   });
 }
 
-// Member data
 const mds=[
-  {name:'本人',label:'2024年12月',ms:[{l:'空腹血糖',v:'5.8',u:'mmol/L',tr:'↑ 较去年 +0.3',tc:'trup'},{l:'血压',v:'118/76',u:'',tr:'→ 稳定',tc:'trfl'},{l:'总胆固醇',v:'6.2',u:'mmol/L',tr:'↑ 偏高',tc:'trup'},{l:'BMI',v:'24.1',u:'',tr:'↓ -0.5',tc:'trdn'}],ai:'总胆固醇偏高，建议减少动物脂肪，增加有氧运动。血糖需持续关注。'},
-  {name:'妻子',label:'2024年11月',ms:[{l:'空腹血糖',v:'4.9',u:'mmol/L',tr:'→ 稳定',tc:'trfl'},{l:'血压',v:'110/70',u:'',tr:'↓ 改善',tc:'trdn'},{l:'血红蛋白',v:'125',u:'g/L',tr:'→ 正常',tc:'trfl'},{l:'BMI',v:'21.3',u:'',tr:'→ 稳定',tc:'trfl'}],ai:'各项指标均正常，请保持当前生活习惯。'},
-  {name:'父亲',label:'2024年11月',ms:[{l:'血压',v:'138/88',u:'mmHg',tr:'↑ 临界',tc:'trup'},{l:'血糖',v:'6.8',u:'mmol/L',tr:'↑ 偏高',tc:'trup'},{l:'尿酸',v:'420',u:'μmol/L',tr:'↑ 偏高',tc:'trup'},{l:'BMI',v:'26.4',u:'',tr:'↑ 超重',tc:'trup'}],ai:'血压血糖尿酸均偏高，建议低盐低糖饮食，及时就医。'},
-  {name:'母亲',label:'2024年10月',ms:[{l:'血红蛋白',v:'105',u:'g/L',tr:'↓ 偏低',tc:'trup'},{l:'血压',v:'112/72',u:'',tr:'→ 稳定',tc:'trfl'},{l:'血糖',v:'5.2',u:'mmol/L',tr:'→ 正常',tc:'trfl'},{l:'BMI',v:'22.8',u:'',tr:'→ 稳定',tc:'trfl'}],ai:'血红蛋白轻度偏低，建议增加铁质摄入，必要时就医检查。'}
+  {name:'本人',label:'2024年12月',grad:'linear-gradient(135deg,#FF6B6B,#FF9F43)',ms:[{l:'空腹血糖',v:'5.8',u:'mmol/L',tr:'↑ 较去年 +0.3',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c1d)'},{l:'血压',v:'118/76',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},{l:'总胆固醇',v:'6.2',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},{l:'BMI',v:'24.1',u:'',tr:'↓ -0.5',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'}],ai:'总胆固醇偏高，建议减少动物脂肪，增加有氧运动。血糖需持续关注。'},
+  {name:'妻子',label:'2024年11月',grad:'linear-gradient(135deg,#48DBFB,#1DD1A1)',ms:[{l:'空腹血糖',v:'4.9',u:'mmol/L',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},{l:'血压',v:'110/70',u:'',tr:'↓ 改善',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},{l:'血红蛋白',v:'125',u:'g/L',tr:'→ 正常',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},{l:'BMI',v:'21.3',u:'',tr:'→ 稳定',bg:'var(--c3l)',c:'var(--c3d)',tc:'var(--c6d)'}],ai:'各项指标均正常，请保持当前生活习惯。'},
+  {name:'父亲',label:'2024年11月',grad:'linear-gradient(135deg,#A29BFE,#FF9FF3)',ms:[{l:'血压',v:'138/88',u:'mmHg',tr:'↑ 临界',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},{l:'血糖',v:'6.8',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},{l:'尿酸',v:'420',u:'μmol/L',tr:'↑ 偏高',bg:'var(--c5l)',c:'var(--c5d)',tc:'var(--c1d)'},{l:'BMI',v:'26.4',u:'',tr:'↑ 超重',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'}],ai:'血压血糖尿酸均偏高，建议低盐低糖饮食，及时就医。'},
+  {name:'母亲',label:'2024年10月',grad:'linear-gradient(135deg,#FECA57,#FF9F43)',ms:[{l:'血红蛋白',v:'105',u:'g/L',tr:'↓ 偏低',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},{l:'血压',v:'112/72',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},{l:'血糖',v:'5.2',u:'mmol/L',tr:'→ 正常',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},{l:'BMI',v:'22.8',u:'',tr:'→ 稳定',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'}],ai:'血红蛋白轻度偏低，建议增加铁质摄入，必要时就医检查。'}
 ];
 function selM(chip,idx){
-  document.querySelectorAll('.mem-av').forEach(a=>a.classList.remove('on'));
-  chip.querySelector('.mem-av').classList.add('on');
+  document.querySelectorAll('.mem-av').forEach(a=>{a.classList.remove('on');a.style.borderColor='transparent';});
+  const av=chip.querySelector('.mem-av');av.classList.add('on');av.style.borderColor=navColors[idx]||'#FF6B6B';
   const d=mds[idx];
   document.getElementById('mc').innerHTML=`
     <div class="sec-label">${d.name} · ${d.label}</div>
-    <div class="metric-2">${d.ms.map(m=>`<div class="mbox"><div class="lbl">${m.l}</div><div class="val">${m.v} <span class="unit">${m.u}</span></div><div class="tr ${m.tc}">${m.tr}</div></div>`).join('')}</div>
+    <div class="metric-2">${d.ms.map(m=>`<div class="mbox" style="background:${m.bg};color:${m.c};"><div class="lbl">${m.l}</div><div class="val">${m.v} <span class="unit">${m.u}</span></div><div class="tr" style="color:${m.tc};">${m.tr}</div></div>`).join('')}</div>
     <div class="sec-label" style="margin-top:20px;">AI 解读</div>
     <div class="ai-note">${d.ai}</div>
     <div class="sec-label" style="margin-top:24px;">上传体检报告</div>
     <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
     <div class="upload-area" onclick="document.getElementById('file-input').click()">
-      <div class="upload-icon">📄</div>
+      <div class="upload-icon">📋</div>
       <div class="upload-title">点击上传体检报告</div>
       <div class="upload-sub">支持 PDF、JPG、PNG 格式</div>
     </div>
-    <div class="upload-file-list" id="file-list"></div>
-    <div class="sec-label" style="margin-top:4px;">历史报告</div>
+    <div id="file-list"></div>
+    <div class="sec-label" style="margin-top:8px;">历史报告</div>
     <div class="card-wh">
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2024年 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2023年 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2024年</div></div><span class="hist-arr">›</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2023年</div></div><span class="hist-arr">›</span></div>
     </div>`;
 }
 </script>
