@@ -5,118 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>我的生活</title>
+<title>健检宝</title>
 <style>
 :root {
-  /* 多巴胺主色板 */
-  --c1: #FF6B6B;   /* 珊瑚红 */
-  --c2: #FF9F43;   /* 阳光橙 */
-  --c3: #FECA57;   /* 明黄 */
-  --c4: #48DBFB;   /* 天蓝 */
-  --c5: #FF9FF3;   /* 粉紫 */
-  --c6: #1DD1A1;   /* 翡翠绿 */
-  --c7: #A29BFE;   /* 薰衣草紫 */
-
-  /* 浅色填充版（用于背景card） */
-  --c1l: #FFF0F0;
-  --c2l: #FFF4E6;
-  --c3l: #FFFBE6;
-  --c4l: #E8FBFF;
-  --c5l: #FFF0FD;
-  --c6l: #E8FDF6;
-  --c7l: #F0EEFF;
-
-  /* 深色文字版（用于badge文字） */
-  --c1d: #C0392B;
-  --c2d: #D35400;
-  --c3d: #B7770D;
-  --c4d: #0984A8;
-  --c5d: #9B59B6;
-  --c6d: #0D8A6A;
-  --c7d: #5B4FCF;
-
-  /* 基础色 */
-  --bg: #FFFFFF;
-  --bg2: #F8F8FC;
-  --bg3: #EFEFEF;
-  --text: #1A1A2E;
-  --text2: rgba(26,26,46,.65);
-  --text3: rgba(26,26,46,.4);
-  --border: rgba(26,26,46,.08);
-  --border2: rgba(26,26,46,.15);
-
-  --r: 16px;
-  --r2: 22px;
-  --font: -apple-system,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --c1:#FF6B6B; --c2:#FF9F43; --c3:#FECA57;
+  --c4:#48DBFB; --c5:#FF9FF3; --c6:#1DD1A1; --c7:#A29BFE;
+  --c1l:#FFF0F0; --c2l:#FFF4E6; --c3l:#FFFBE6;
+  --c4l:#E8FBFF; --c5l:#FFF0FD; --c6l:#E8FDF6; --c7l:#F0EEFF;
+  --c1d:#C0392B; --c2d:#D35400; --c3d:#B7770D;
+  --c4d:#0984A8; --c5d:#9B59B6; --c6d:#0D8A6A; --c7d:#5B4FCF;
+  --bg:#FFFFFF; --bg2:#F8F8FC; --bg3:#EFEFEF;
+  --text:#1A1A2E; --text2:rgba(26,26,46,.65); --text3:rgba(26,26,46,.4);
+  --border:rgba(26,26,46,.08); --border2:rgba(26,26,46,.18);
+  --r:16px; --r2:22px;
+  --font:-apple-system,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
 }
-
 @media(prefers-color-scheme:dark){
   :root{
-    --bg:#16162A;--bg2:#1E1E35;--bg3:#2A2A45;
-    --text:#F0F0FF;--text2:rgba(240,240,255,.65);--text3:rgba(240,240,255,.4);
-    --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15);
-    --c1l:#2D1A1A;--c2l:#2D2010;--c3l:#2D2800;--c4l:#0A2530;--c5l:#2D1030;--c6l:#0A2820;--c7l:#1A1535;
+    --bg:#16162A; --bg2:#1E1E35; --bg3:#2A2A45;
+    --text:#F0F0FF; --text2:rgba(240,240,255,.65); --text3:rgba(240,240,255,.38);
+    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.18);
+    --c1l:#2D1A1A; --c2l:#2D2010; --c3l:#2D2800;
+    --c4l:#0A2530; --c5l:#2D1030; --c6l:#0A2820; --c7l:#1A1535;
   }
 }
-
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height:100%;overflow:hidden;}
-
 .app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;}
 
-/* Status bar */
+/* ── Auth Screen ── */
+.auth-screen{position:absolute;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;}
+.auth-logo{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:38px;margin-bottom:20px;box-shadow:0 12px 32px rgba(29,209,161,.3);}
+.auth-appname{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;background:linear-gradient(90deg,var(--c6),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.auth-tagline{font-size:14px;color:var(--text3);margin-bottom:40px;text-align:center;line-height:1.5;}
+.auth-tabs{display:flex;background:var(--bg2);border-radius:12px;padding:4px;margin-bottom:24px;width:100%;}
+.auth-tab{flex:1;padding:9px;text-align:center;font-size:15px;font-weight:600;color:var(--text3);cursor:pointer;border-radius:10px;transition:all .2s;}
+.auth-tab.on{background:var(--bg);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.auth-form{width:100%;display:flex;flex-direction:column;gap:12px;}
+.auth-inp-wrap{position:relative;}
+.auth-inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;}
+.auth-inp{width:100%;padding:14px 14px 14px 42px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;}
+.auth-inp:focus{outline:none;border-color:var(--c6);}
+.auth-btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:17px;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;margin-top:4px;transition:opacity .15s,transform .1s;box-shadow:0 8px 24px rgba(29,209,161,.3);}
+.auth-btn:active{opacity:.85;transform:scale(.98);}
+.auth-notice{font-size:12px;color:var(--text3);text-align:center;line-height:1.6;margin-top:16px;}
+.auth-notice a{color:var(--c6d);text-decoration:none;}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:4px 0;}
+.auth-divider span{font-size:13px;color:var(--text3);}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:.5px;background:var(--border);}
+.auth-privacy{background:var(--c6l);border-radius:var(--r);padding:12px 14px;font-size:12px;color:var(--c6d);line-height:1.6;margin-top:4px;}
+.auth-privacy strong{font-weight:700;}
+
+/* ── Main App ── */
 .status{padding:env(safe-area-inset-top,14px) 20px 0;display:flex;justify-content:space-between;align-items:center;min-height:calc(env(safe-area-inset-top,14px)+28px);background:var(--bg);}
 .status-time{font-size:17px;font-weight:700;letter-spacing:-.3px;}
+.status-right{display:flex;align-items:center;gap:10px;}
 .status-icons{font-size:13px;color:var(--text2);}
+.user-badge{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer;}
 
-/* Header — 渐变彩色 */
-.header{padding:8px 20px 18px;background:var(--bg);position:relative;overflow:hidden;}
-.header-deco{position:absolute;top:-30px;right:-20px;width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--c3),var(--c2));opacity:.15;pointer-events:none;}
-.header-deco2{position:absolute;top:10px;right:60px;width:70px;height:70px;border-radius:50%;background:var(--c4);opacity:.12;pointer-events:none;}
-.header-greeting{font-size:15px;color:var(--text3);margin-bottom:4px;position:relative;}
-.header-title{font-size:28px;font-weight:800;letter-spacing:-.6px;position:relative;background:linear-gradient(90deg,var(--c1),var(--c7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.header{padding:6px 20px 16px;background:var(--bg);position:relative;overflow:hidden;}
+.hd-deco{position:absolute;top:-30px;right:-20px;width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--c3),var(--c2));opacity:.12;pointer-events:none;}
+.hd-deco2{position:absolute;top:10px;right:60px;width:70px;height:70px;border-radius:50%;background:var(--c4);opacity:.1;pointer-events:none;}
+.hd-greeting{font-size:15px;color:var(--text3);margin-bottom:3px;position:relative;}
+.hd-title{font-size:26px;font-weight:800;letter-spacing:-.5px;position:relative;background:linear-gradient(90deg,var(--c6),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-/* Body */
 .body{flex:1;overflow:hidden;position:relative;}
 .pages{display:flex;height:100%;transition:transform .32s cubic-bezier(.4,0,.2,1);}
 .pg{flex-shrink:0;width:100vw;max-width:430px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(env(safe-area-inset-bottom,0px)+88px);scrollbar-width:none;}
 .pg::-webkit-scrollbar{display:none;}
 
-/* Bottom nav */
 .nav{display:flex;background:var(--bg);border-top:.5px solid var(--border);padding-bottom:env(safe-area-inset-bottom,0px);flex-shrink:0;}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:10px;font-family:var(--font);transition:color .2s;}
-.ni.on{color:var(--c1);}
+.ni.on{color:var(--c6);}
 .ni svg{width:24px;height:24px;}
-.ni-dot{width:5px;height:5px;border-radius:50%;margin-top:1px;background:transparent;transition:background .2s;}
-.ni.on .ni-dot{background:var(--c1);}
 
-/* Section */
+/* ── Shared components ── */
 .sec{margin-top:24px;}
 .sec:first-child{margin-top:20px;}
-.sec-label{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 2px;}
-
-/* Cards */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sec-label{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;}
+.sec-more{font-size:13px;color:var(--c6);font-weight:600;cursor:pointer;}
 .card{background:var(--bg2);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
 .card-wh{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
-
-/* Colorful stat cards */
-.stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px;}
-.stat{border-radius:var(--r2);padding:18px 16px;position:relative;overflow:hidden;}
-.stat-icon{position:absolute;top:10px;right:12px;font-size:28px;opacity:.25;}
-.stat-val{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1;}
-.stat-lbl{font-size:13px;font-weight:600;margin-top:6px;opacity:.85;}
-.stat-sub{font-size:11px;margin-top:2px;opacity:.65;}
-
-/* Colorful row icons */
 .row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);}
 .row:last-child{border-bottom:none;}
 .row-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:19px;}
 .row-body{flex:1;min-width:0;}
 .row-title{font-size:16px;font-weight:600;}
 .row-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.row-right{font-size:14px;color:var(--text3);flex-shrink:0;}
-
-/* Pills */
+.row-right{font-size:14px;color:var(--text3);flex-shrink:0;font-weight:600;}
 .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
 .pill-ok{background:var(--c6l);color:var(--c6d);}
 .pill-warn{background:var(--c2l);color:var(--c2d);}
@@ -124,373 +101,237 @@ html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height
 .pill-muted{background:var(--bg2);color:var(--text3);}
 .pill-blue{background:var(--c4l);color:var(--c4d);}
 .pill-purple{background:var(--c7l);color:var(--c7d);}
+.btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;transition:opacity .15s,transform .1s;}
+.btn:active{opacity:.85;transform:scale(.98);}
+.btn-ghost{width:100%;padding:14px;background:transparent;color:var(--text);border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.inp-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.inp-lbl{font-size:14px;color:var(--text2);font-weight:600;}
+.inp{width:100%;padding:13px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;}
+.inp:focus{outline:none;border-color:var(--c6);}
+.inp-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
+.ai-note{font-size:15px;color:var(--text2);line-height:1.65;padding:14px 16px;background:var(--c7l);border-radius:var(--r);border-left:3px solid var(--c7);}
 
-/* Members */
-.mem-row{display:flex;gap:14px;margin-top:20px;margin-bottom:20px;}
+/* ── 概览 page ── */
+.hero-card{border-radius:var(--r2);padding:20px;margin-bottom:10px;background:linear-gradient(135deg,#0ABFA3,#4FC3F7);color:#fff;position:relative;overflow:hidden;}
+.hero-deco{position:absolute;right:-20px;bottom:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1);}
+.hero-deco2{position:absolute;right:30px;bottom:20px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.08);}
+.hero-label{font-size:13px;opacity:.8;margin-bottom:6px;}
+.hero-date{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
+.hero-hospital{font-size:14px;opacity:.75;}
+.hero-badge{display:inline-block;margin-top:12px;padding:5px 14px;border-radius:20px;background:rgba(255,255,255,.25);font-size:13px;font-weight:700;}
+
+.score-ring{display:flex;align-items:center;gap:20px;padding:4px 0;}
+.score-labels{flex:1;}
+.score-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:.5px solid var(--border);font-size:14px;}
+.score-row:last-child{border-bottom:none;}
+.score-k{color:var(--text2);}
+.score-v{font-weight:700;}
+
+.stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px;}
+.stat{border-radius:var(--r2);padding:18px 16px;position:relative;overflow:hidden;}
+.stat-icon{position:absolute;top:12px;right:14px;font-size:26px;opacity:.2;}
+.stat-val{font-size:28px;font-weight:800;letter-spacing:-.5px;line-height:1;}
+.stat-lbl{font-size:13px;font-weight:600;margin-top:5px;opacity:.85;}
+.stat-sub{font-size:11px;margin-top:2px;opacity:.65;}
+
+/* ── 体检 page ── */
+.mem-row{display:flex;gap:14px;margin-top:20px;margin-bottom:18px;}
 .mem{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
-.mem-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:3px solid transparent;transition:all .2s;}
+.mem-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;border:3px solid transparent;transition:all .2s;}
 .mem-name{font-size:12px;color:var(--text3);font-weight:500;}
-
-/* Metrics */
 .metric-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
 .mbox{border-radius:var(--r);padding:14px;position:relative;overflow:hidden;}
-.mbox .lbl{font-size:12px;font-weight:600;opacity:.75;}
+.mbox .lbl{font-size:12px;font-weight:700;opacity:.7;}
 .mbox .val{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-top:4px;}
 .mbox .unit{font-size:11px;font-weight:500;opacity:.6;}
 .mbox .tr{font-size:13px;margin-top:4px;font-weight:600;}
-
-/* Ring */
-.ring-wrap{display:flex;gap:18px;align-items:center;}
-.ring-labels{flex:1;}
-.rl{display:flex;justify-content:space-between;padding:6px 0;border-bottom:.5px solid var(--border);font-size:14px;}
-.rl:last-child{border-bottom:none;}
-.rl-k{color:var(--text2);}
-.rl-v{font-weight:700;}
-
-/* Bars */
-.bars{display:flex;align-items:flex-end;gap:6px;height:72px;}
-.bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.bfill{width:100%;border-radius:6px 6px 0 0;min-height:4px;}
-.bday{font-size:11px;color:var(--text3);}
-
-/* Sport tabs */
-.sport-tabs{display:flex;gap:8px;margin-bottom:16px;}
-.sp{flex:1;padding:10px 4px;border:.5px solid var(--border2);border-radius:var(--r);text-align:center;font-size:14px;color:var(--text2);cursor:pointer;background:var(--bg);font-family:var(--font);transition:all .2s;}
-.sp.on{border-color:transparent;font-weight:700;}
-.sp-ic{font-size:20px;display:block;margin-bottom:3px;}
-
-/* Inputs */
-.inp-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
-.inp-lbl{font-size:14px;color:var(--text2);font-weight:600;}
-.inp{width:100%;padding:13px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;transition:border-color .2s;}
-.inp:focus{outline:none;border-color:var(--c7);}
-.inp-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
-.btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);-webkit-appearance:none;transition:opacity .15s,transform .1s;background:linear-gradient(135deg,var(--c1),var(--c7));color:#fff;}
-.btn:active{opacity:.85;transform:scale(.98);}
-.btn-ghost{width:100%;padding:14px;background:transparent;color:var(--text);border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font);transition:opacity .15s;}
-.btn-ghost:active{opacity:.6;}
-
-/* Voice */
-.voice-wrap{margin-bottom:14px;}
-.voice-label{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:10px;}
-.voice-row{display:flex;gap:12px;align-items:flex-start;}
-.vbtn{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .1s;background:linear-gradient(135deg,var(--c7),var(--c5));}
-.vbtn:active{transform:scale(.92);}
-.vbtn svg{width:22px;height:22px;fill:#fff;}
-.vbtn.rec{background:linear-gradient(135deg,var(--c1),var(--c2));animation:pulse 1.2s infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.45);}70%{box-shadow:0 0 0 14px rgba(255,107,107,0);}100%{box-shadow:0 0 0 0 rgba(255,107,107,0);}}
-.voice-right{flex:1;display:flex;flex-direction:column;gap:8px;}
-.vtextarea{width:100%;padding:12px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:15px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;resize:none;line-height:1.6;min-height:80px;transition:border-color .2s;}
-.vtextarea:focus{outline:none;border-color:var(--c7);}
-.vtextarea::placeholder{color:var(--text3);}
-.vhint-text{font-size:12px;color:var(--text3);}
-.v-acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px;}
-
-/* Feed */
-.feed-item{padding:14px 0;border-bottom:.5px solid var(--border);}
-.feed-item:last-child{border-bottom:none;}
-.feed-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.feed-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;}
-.feed-name{font-size:15px;font-weight:700;}
-.feed-time{font-size:12px;color:var(--text3);margin-top:1px;}
-.feed-text{font-size:15px;line-height:1.65;color:var(--text);}
-
-/* Todo */
-.todo-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);}
-.todo-item:last-child{border-bottom:none;}
-.check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:all .2s;}
-.check.done{background:linear-gradient(135deg,var(--c6),var(--c4));border-color:transparent;color:#fff;}
-.todo-body{flex:1;}
-.todo-title{font-size:16px;font-weight:600;line-height:1.4;}
-.todo-title.done{text-decoration:line-through;color:var(--text3);}
-.todo-time{font-size:13px;color:var(--text3);margin-top:3px;}
-
-/* AI note */
-.ai-note{font-size:15px;color:var(--text2);line-height:1.65;padding:14px 16px;background:var(--c7l);border-radius:var(--r);border-left:3px solid var(--c7);}
-
-/* Parse */
-.parse-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px;}
-.parse-cell{border-radius:var(--r);padding:12px;}
-.parse-k{font-size:12px;font-weight:600;margin-bottom:4px;opacity:.7;}
-.parse-v{font-size:15px;font-weight:700;}
-
-/* Chart */
 .chart-svg{width:100%;height:100px;display:block;margin-top:6px;}
-
-/* Upload */
 .upload-area{border:2px dashed var(--border2);border-radius:var(--r2);padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px;}
-.upload-area:active,.upload-area:hover{background:var(--c7l);border-color:var(--c7);}
+.upload-area:active{background:var(--c6l);border-color:var(--c6);}
 .upload-icon{font-size:36px;margin-bottom:10px;}
 .upload-title{font-size:16px;font-weight:700;margin-bottom:4px;}
 .upload-sub{font-size:13px;color:var(--text3);}
 .upload-file-item{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--r);margin-bottom:8px;}
-.upload-file-ic{font-size:22px;flex-shrink:0;}
-.upload-file-name{font-size:14px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.upload-file-size{font-size:12px;color:var(--text3);}
-.upload-status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c6l);border-radius:var(--r);font-size:14px;color:var(--c6d);font-weight:600;}
-
-/* History */
+.upload-status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c6l);border-radius:var(--r);font-size:14px;color:var(--c6d);font-weight:600;margin-bottom:8px;}
 .hist-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);cursor:pointer;}
 .hist-item:last-child{border-bottom:none;}
-.hist-ic{width:40px;height:40px;background:var(--c4l);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.hist-ic{width:40px;height:40px;background:var(--c4l);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .hist-body{flex:1;}
 .hist-title{font-size:15px;font-weight:600;}
 .hist-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.hist-arr{font-size:18px;color:var(--text3);}
 
-/* Coros */
-.coros-strip{display:flex;align-items:center;gap:12px;padding:16px;background:linear-gradient(135deg,var(--c4l),var(--c7l));border-radius:var(--r2);margin-bottom:12px;border:.5px solid rgba(72,219,251,.3);}
-.coros-ic{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--c4),var(--c7));display:flex;align-items:center;justify-content:center;font-size:21px;}
+/* ── 睡眠 page ── */
+.sleep-tonight{border-radius:var(--r2);padding:20px;background:linear-gradient(135deg,#1a1a4e,#2d2d8f);color:#fff;margin-bottom:10px;position:relative;overflow:hidden;}
+.sleep-stars{position:absolute;top:0;right:0;width:100%;height:100%;opacity:.3;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;}
+.sleep-duration{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;position:relative;}
+.sleep-unit{font-size:18px;font-weight:500;opacity:.7;}
+.sleep-label{font-size:14px;opacity:.7;margin-top:4px;position:relative;}
+.sleep-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px;position:relative;}
+.sleep-m{background:rgba(255,255,255,.12);border-radius:10px;padding:10px;text-align:center;}
+.sleep-m-val{font-size:18px;font-weight:700;}
+.sleep-m-lbl{font-size:11px;opacity:.65;margin-top:2px;}
+.sleep-bar-wrap{margin-top:16px;position:relative;}
+.sleep-bar-label{display:flex;justify-content:space-between;font-size:12px;opacity:.65;margin-bottom:6px;}
+.sleep-bar-track{height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;}
+.sleep-bar-fill{height:100%;border-radius:4px;}
+.bars{display:flex;align-items:flex-end;gap:5px;height:72px;}
+.bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bfill{width:100%;border-radius:6px 6px 0 0;min-height:4px;}
+.bday{font-size:10px;color:var(--text3);}
+
+/* ── 运动 page ── */
+.ring-wrap{display:flex;gap:18px;align-items:center;}
+.ring-labels{flex:1;}
+.rl{display:flex;justify-content:space-between;padding:5px 0;border-bottom:.5px solid var(--border);font-size:14px;}
+.rl:last-child{border-bottom:none;}
+.rl-k{color:var(--text2);}
+.rl-v{font-weight:700;}
+.sport-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.sp{flex:1;padding:9px 4px;border:.5px solid var(--border2);border-radius:var(--r);text-align:center;font-size:13px;color:var(--text2);cursor:pointer;background:var(--bg);transition:all .2s;}
+.sp.on{background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;border-color:transparent;font-weight:700;}
+.sp-ic{font-size:18px;display:block;margin-bottom:2px;}
+.coros-strip{display:flex;align-items:center;gap:12px;padding:14px;background:linear-gradient(135deg,var(--c4l),var(--c7l));border-radius:var(--r2);margin-bottom:12px;border:.5px solid rgba(72,219,251,.2);}
+.coros-ic{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--c4),var(--c7));display:flex;align-items:center;justify-content:center;font-size:20px;}
 .coros-ttl{font-size:15px;font-weight:700;color:var(--c4d);}
 .coros-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.coros-btn{font-size:14px;font-weight:700;padding:8px 16px;border:none;border-radius:20px;background:linear-gradient(135deg,var(--c4),var(--c7));color:#fff;cursor:pointer;font-family:var(--font);}
+.coros-btn{font-size:14px;font-weight:700;padding:7px 16px;border:none;border-radius:20px;background:linear-gradient(135deg,var(--c4),var(--c7));color:#fff;cursor:pointer;font-family:var(--font);}
 
-/* Section header divider */
-.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.sec-more{font-size:13px;color:var(--c7);font-weight:600;cursor:pointer;}
+/* ── 设置 / 安全 page ── */
+.profile-hero{display:flex;align-items:center;gap:16px;padding:20px 16px;background:var(--bg2);border-radius:var(--r2);margin-top:20px;margin-bottom:20px;}
+.profile-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;flex-shrink:0;}
+.profile-name{font-size:20px;font-weight:800;}
+.profile-id{font-size:13px;color:var(--text3);margin-top:3px;}
+.setting-group{margin-bottom:20px;}
+.setting-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:.5px solid var(--border);cursor:pointer;}
+.setting-item:last-child{border-bottom:none;}
+.setting-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.setting-body{flex:1;}
+.setting-title{font-size:16px;font-weight:600;}
+.setting-sub{font-size:13px;color:var(--text3);margin-top:2px;}
+.setting-right{font-size:18px;color:var(--text3);}
+.security-banner{background:linear-gradient(135deg,var(--c6l),var(--c4l));border:.5px solid rgba(29,209,161,.3);border-radius:var(--r2);padding:16px;margin-bottom:12px;}
+.security-title{font-size:15px;font-weight:700;color:var(--c6d);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.security-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.security-list li{font-size:13px;color:var(--c6d);display:flex;align-items:flex-start;gap:6px;line-height:1.5;}
+.logout-btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;background:var(--c1l);color:var(--c1d);font-family:var(--font);margin-top:8px;}
 </style>
 </head>
 <body>
 <div class="app">
 
+<!-- ══ AUTH SCREEN ══ -->
+<div class="auth-screen" id="auth-screen">
+  <div class="auth-logo">🏥</div>
+  <div class="auth-appname">健检宝</div>
+  <div class="auth-tagline">家庭健康档案管理<br>体检结果 · 睡眠 · 运动，一站掌握</div>
+
+  <div class="auth-tabs" style="width:100%;">
+    <div class="auth-tab on" id="tab-login" onclick="switchAuth('login')">登录</div>
+    <div class="auth-tab" id="tab-reg" onclick="switchAuth('reg')">注册</div>
+  </div>
+
+  <div class="auth-form" id="auth-form-login">
+    <div class="auth-inp-wrap"><span class="auth-inp-icon">📱</span><input class="auth-inp" type="tel" placeholder="手机号码" id="login-phone" inputmode="tel"/></div>
+    <div class="auth-inp-wrap"><span class="auth-inp-icon">🔒</span><input class="auth-inp" type="password" placeholder="密码" id="login-pwd"/></div>
+    <button class="auth-btn" onclick="doLogin()">登录</button>
+  </div>
+
+  <div class="auth-form" id="auth-form-reg" style="display:none;">
+    <div class="auth-inp-wrap"><span class="auth-inp-icon">👤</span><input class="auth-inp" type="text" placeholder="姓名" id="reg-name"/></div>
+    <div class="auth-inp-wrap"><span class="auth-inp-icon">📱</span><input class="auth-inp" type="tel" placeholder="手机号码" id="reg-phone" inputmode="tel"/></div>
+    <div class="auth-inp-wrap"><span class="auth-inp-icon">🔒</span><input class="auth-inp" type="password" placeholder="设置密码（8位以上）" id="reg-pwd"/></div>
+    <div class="auth-inp-wrap"><span class="auth-inp-icon">🔒</span><input class="auth-inp" type="password" placeholder="确认密码" id="reg-pwd2"/></div>
+    <div class="auth-privacy">
+      <strong>🔐 数据安全承诺</strong><br>
+      您的体检数据、睡眠记录和运动数据经端对端加密存储，严格隔离，任何第三方无法访问。注册即代表您同意<a href="#">《隐私政策》</a>与<a href="#">《用户协议》</a>。
+    </div>
+    <button class="auth-btn" onclick="doRegister()">注册并进入</button>
+  </div>
+
+  <div class="auth-notice">登录即表示同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
 <div class="status">
   <span class="status-time" id="clock">09:41</span>
-  <span class="status-icons">●●● 100%</span>
+  <div class="status-right">
+    <span class="status-icons">●●● 100%</span>
+    <div class="user-badge" id="user-badge" onclick="sw(4)">永</div>
+  </div>
 </div>
 
 <div class="header">
-  <div class="header-deco"></div>
-  <div class="header-deco2"></div>
-  <div class="header-greeting" id="greeting">早上好 👋</div>
-  <div class="header-title" id="page-title">我的生活</div>
+  <div class="hd-deco"></div><div class="hd-deco2"></div>
+  <div class="hd-greeting" id="greeting">早上好 🌅</div>
+  <div class="hd-title" id="page-title">健康概览</div>
 </div>
 
 <div class="body">
 <div class="pages" id="pages">
 
-<!-- 0 概览 -->
+<!-- ── PAGE 0: 概览 ── -->
 <div class="pg">
   <div class="sec">
+    <!-- 最近体检 hero -->
+    <div class="hero-card">
+      <div class="hero-deco"></div><div class="hero-deco2"></div>
+      <div class="hero-label">最近一次体检</div>
+      <div class="hero-date">2024年12月15日</div>
+      <div class="hero-hospital">吉安市中心人民医院 · 年度体检</div>
+      <div class="hero-badge">综合评分 82分 ↑</div>
+    </div>
+  </div>
+
+  <div class="sec">
     <div class="stat-row">
-      <div class="stat" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);color:#fff;">
+      <div class="stat" style="background:linear-gradient(135deg,#1DD1A1,#48DBFB);color:#fff;">
+        <div class="stat-icon">😴</div>
+        <div class="stat-val">7.2<span style="font-size:16px;opacity:.8;">h</span></div>
+        <div class="stat-lbl">昨晚睡眠</div>
+        <div class="stat-sub">质量：良好</div>
+      </div>
+      <div class="stat" style="background:linear-gradient(135deg,#FF9F43,#FECA57);color:#fff;">
         <div class="stat-icon">🚶</div>
         <div class="stat-val">8,432</div>
         <div class="stat-lbl">今日步数</div>
-        <div class="stat-sub">目标 12,000 步</div>
-      </div>
-      <div class="stat" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);color:#fff;">
-        <div class="stat-icon">✅</div>
-        <div class="stat-val">2</div>
-        <div class="stat-lbl">待办事项</div>
-        <div class="stat-sub">今日到期</div>
+        <div class="stat-sub">目标 10,000</div>
       </div>
     </div>
     <div class="stat-row">
-      <div class="stat" style="background:linear-gradient(135deg,#48DBFB,#1DD1A1);color:#fff;">
-        <div class="stat-icon">🩸</div>
-        <div class="stat-val">5.8</div>
-        <div class="stat-lbl">血糖 mmol/L</div>
-        <div class="stat-sub">持续关注</div>
+      <div class="stat" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);color:#fff;">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-val">2</div>
+        <div class="stat-lbl">异常指标</div>
+        <div class="stat-sub">需要关注</div>
       </div>
-      <div class="stat" style="background:linear-gradient(135deg,#FECA57,#FF9F43);color:#fff;">
-        <div class="stat-icon">💪</div>
-        <div class="stat-val">5天</div>
-        <div class="stat-lbl">本周运动</div>
-        <div class="stat-sub">状态良好</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-header"><div class="sec-label">今日待办</div><span class="sec-more">查看全部</span></div>
-    <div class="card-wh">
-      <div class="todo-item">
-        <div class="check done">✓</div>
-        <div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div>
-      </div>
-      <div class="todo-item">
-        <div class="check" onclick="tgl(this)"></div>
-        <div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div>
-        <span class="pill pill-warn">紧急</span>
-      </div>
-      <div class="todo-item">
-        <div class="check" onclick="tgl(this)"></div>
-        <div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div>
+      <div class="stat" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);color:#fff;">
+        <div class="stat-icon">👨‍👩‍👧‍👦</div>
+        <div class="stat-val">4</div>
+        <div class="stat-lbl">家庭成员</div>
+        <div class="stat-sub">已建档</div>
       </div>
     </div>
   </div>
 
   <div class="sec">
-    <div class="sec-header"><div class="sec-label">最新动态</div><span class="sec-more">查看全部</span></div>
+    <div class="sec-hd"><div class="sec-label">异常指标提醒</div><span class="sec-more" onclick="sw(1)">查看体检</span></div>
     <div class="card-wh">
-      <div class="feed-item">
-        <div class="feed-top">
-          <div class="feed-av" style="background:linear-gradient(135deg,var(--c1),var(--c2));">我</div>
-          <div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div>
-        </div>
-        <div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭要少油少盐。</div>
-      </div>
+      <div class="row"><div class="row-icon" style="background:var(--c1l);">⚠️</div><div class="row-body"><div class="row-title">总胆固醇偏高</div><div class="row-sub">6.2 mmol/L · 本人 · 连续2年</div></div><span class="pill pill-danger">偏高</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c2l);">📊</div><div class="row-body"><div class="row-title">父亲血压临界</div><div class="row-sub">138/88 mmHg · 父亲 · 关注中</div></div><span class="pill pill-warn">关注</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd"><div class="sec-label">体检提醒</div></div>
+    <div class="card-wh">
+      <div class="row"><div class="row-icon" style="background:var(--c1l);">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">距下次体检还有 <strong style="color:var(--c1);">23天</strong></div></div><span class="pill pill-warn">即将到期</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c6l);">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">距下次体检还有 198天</div></div><span class="pill pill-ok">正常</span></div>
+      <div class="row"><div class="row-icon" style="background:var(--c4l);">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">距下次体检还有 210天</div></div><span class="pill pill-ok">正常</span></div>
     </div>
   </div>
 </div>
 
-<!-- 1 运动 -->
-<div class="pg">
-  <div class="sec">
-    <div class="coros-strip">
-      <div class="coros-ic">⌚</div>
-      <div style="flex:1;"><div class="coros-ttl">高驰手表同步</div><div class="coros-sub">通过 Strava 自动导入</div></div>
-      <button class="coros-btn" onclick="alert('正式版本将引导登录 Strava，授权后自动同步高驰运动数据。')">连接</button>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-label">今日概览</div>
-    <div class="card" style="background:linear-gradient(135deg,#F8F0FF,#E8F8FF);">
-      <div class="ring-wrap">
-        <div style="position:relative;width:84px;height:84px;flex-shrink:0;">
-          <svg viewBox="0 0 84 84" width="84" height="84">
-            <circle cx="42" cy="42" r="34" fill="none" stroke="#E0D0FF" stroke-width="9"/>
-            <circle cx="42" cy="42" r="34" fill="none" stroke="url(#rg)" stroke-width="9" stroke-dasharray="142 71" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 42 42)"/>
-            <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#A29BFE"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
-          </svg>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;"><div style="font-size:18px;font-weight:800;color:#A29BFE;">67%</div></div>
-        </div>
-        <div class="ring-labels">
-          <div class="rl"><span class="rl-k">步数</span><span class="rl-v" style="color:var(--c1);">8,432 步</span></div>
-          <div class="rl"><span class="rl-k">热量</span><span class="rl-v" style="color:var(--c2);">412 kcal</span></div>
-          <div class="rl"><span class="rl-k">时长</span><span class="rl-v" style="color:var(--c6);">68 分钟</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-label">本周运动（分钟）</div>
-    <div class="card">
-      <div class="bars">
-        <div class="bcol"><div class="bfill" style="height:42px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.5;"></div><div class="bday">一</div></div>
-        <div class="bcol"><div class="bfill" style="height:58px;background:linear-gradient(to top,var(--c4),var(--c7));opacity:.65;"></div><div class="bday">二</div></div>
-        <div class="bcol"><div class="bfill" style="height:4px;background:var(--bg3);"></div><div class="bday">三</div></div>
-        <div class="bcol"><div class="bfill" style="height:48px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.65;"></div><div class="bday">四</div></div>
-        <div class="bcol"><div class="bfill" style="height:64px;background:linear-gradient(to top,var(--c2),var(--c1));opacity:.8;"></div><div class="bday">五</div></div>
-        <div class="bcol"><div class="bfill" style="height:68px;background:linear-gradient(to top,var(--c1),var(--c5));opacity:.85;"></div><div class="bday">六</div></div>
-        <div class="bcol"><div class="bfill" style="height:56px;background:linear-gradient(to top,var(--c7),var(--c1));"></div><div class="bday" style="color:var(--c7);font-weight:800;">今</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-label">记录运动</div>
-    <div class="card-wh">
-      <div class="sport-tabs">
-        <div class="sp on" onclick="selSp(this,'--c1','--c2')"><span class="sp-ic">🚶</span>健走</div>
-        <div class="sp" onclick="selSp(this,'--c4','--c6')"><span class="sp-ic">🏃</span>跑步</div>
-        <div class="sp" onclick="selSp(this,'--c7','--c5')"><span class="sp-ic">💪</span>哑铃</div>
-      </div>
-      <div class="inp-grp"><span class="inp-lbl">时长（分钟）</span><input class="inp" type="number" placeholder="40" id="dur" inputmode="numeric"/></div>
-      <div class="inp-2">
-        <div class="inp-grp"><span class="inp-lbl">步数</span><input class="inp" type="number" placeholder="6000" id="stp" inputmode="numeric"/></div>
-        <div class="inp-grp"><span class="inp-lbl">训练部位</span><input class="inp" type="text" placeholder="胸+背" id="mus"/></div>
-      </div>
-      <button class="btn" onclick="addEx()">保存记录 ✓</button>
-    </div>
-    <div class="sec-label">今日明细</div>
-    <div class="card-wh" id="exlog">
-      <div class="row"><div class="row-icon" style="background:var(--c1l);">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">07:20 · 40 分钟 · 4,200 步</div></div><div class="row-right" style="color:var(--c1);font-weight:700;">230 kcal</div></div>
-      <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">18:30 · 28 分钟 · 胸+背</div></div><div class="row-right" style="color:var(--c7);font-weight:700;">182 kcal</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- 2 动态 -->
-<div class="pg">
-  <div class="sec">
-    <div class="sec-label">记录动态</div>
-    <div class="card-wh">
-      <div class="voice-wrap">
-        <div class="voice-label">🎙 语音 / 文字输入</div>
-        <div class="voice-row">
-          <button class="vbtn" id="vbtn" onclick="togV()">
-            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6 9a1 1 0 0 1 2 0 8 8 0 0 1-7 7.938V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 1 1 2 0 6 6 0 0 0 12 0z"/></svg>
-          </button>
-          <div class="voice-right">
-            <textarea class="vtextarea" id="vtxtarea" placeholder="点麦克风语音输入，或直接在此输入文字…" rows="3"></textarea>
-            <div class="vhint-text" id="vhint">💡 微信中请直接在文本框输入，或使用微信键盘语音功能</div>
-          </div>
-        </div>
-      </div>
-      <div class="v-acts">
-        <button class="btn-ghost" onclick="clrV()">清空</button>
-        <button class="btn" onclick="pubV()">发布 🚀</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-header"><div class="sec-label">我的动态</div></div>
-    <div class="card-wh" id="feed">
-      <div class="feed-item">
-        <div class="feed-top"><div class="feed-av" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 08:15</div></div></div>
-        <div class="feed-text">今早健走完，天气很好。胆固醇偏高，今天午饭要少油少盐。</div>
-      </div>
-      <div class="feed-item">
-        <div class="feed-top"><div class="feed-av" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);">我</div><div><div class="feed-name">本人</div><div class="feed-time">昨天 21:30</div></div></div>
-        <div class="feed-text">哑铃训练完成，练了胸和背，状态不错，继续坚持！💪</div>
-      </div>
-      <div class="feed-item">
-        <div class="feed-top"><div class="feed-av" style="background:linear-gradient(135deg,#48DBFB,#1DD1A1);">我</div><div><div class="feed-name">本人</div><div class="feed-time">4月17日</div></div></div>
-        <div class="feed-text">陪父亲复查，血压控制还可以，医生建议继续低盐饮食，下月随访。</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 3 待办 -->
-<div class="pg">
-  <div class="sec">
-    <div class="sec-label">添加待办</div>
-    <div class="card-wh">
-      <div class="voice-wrap">
-        <div class="voice-label">🎙 语音 / 文字输入</div>
-        <div class="voice-row">
-          <button class="vbtn" id="tbtn" onclick="togT()">
-            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6 9a1 1 0 0 1 2 0 8 8 0 0 1-7 7.938V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 1 1 2 0 6 6 0 0 0 12 0z"/></svg>
-          </button>
-          <div class="voice-right">
-            <textarea class="vtextarea" id="ttxtarea" placeholder="说出或输入待办，AI 自动提取时间和优先级…" rows="3"></textarea>
-            <div class="vhint-text" id="thint">例：明天下午3点提醒我给工厂报修空调</div>
-          </div>
-        </div>
-      </div>
-      <div class="parse-grid" id="tparse" style="display:none;"></div>
-      <div class="v-acts" style="margin-top:12px;">
-        <button class="btn-ghost" onclick="clrT()">清空</button>
-        <button class="btn" onclick="parseAndAdd()">AI 解析添加 ✨</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-header"><div class="sec-label">今日</div></div>
-    <div class="card-wh" id="td-today">
-      <div class="todo-item"><div class="check done">✓</div><div class="todo-body"><div class="todo-title done">早上健走 40 分钟</div><div class="todo-time">已完成 · 07:20</div></div><span class="pill pill-ok">运动</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">给父亲预约 5 月体检</div><div class="todo-time">今日截止</div></div><span class="pill pill-warn">紧急</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">傍晚哑铃训练</div><div class="todo-time">计划 18:30</div></div><span class="pill pill-purple">运动</span></div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-header"><div class="sec-label">本周</div></div>
-    <div class="card-wh" id="td-week">
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">整理工厂用电统计表</div><div class="todo-time">周五前</div></div><span class="pill pill-blue">工作</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">购买哑铃配重片</div><div class="todo-time">本周内</div></div><span class="pill pill-muted">生活</span></div>
-      <div class="todo-item"><div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">和妻子讨论夏季度假计划</div><div class="todo-time">周末</div></div><span class="pill pill-warn">生活</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 4 体检 -->
+<!-- ── PAGE 1: 体检档案 ── -->
 <div class="pg">
   <div class="mem-row">
     <div class="mem" onclick="selM(this,0)">
@@ -509,29 +350,41 @@ html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height
       <div class="mem-av" style="background:linear-gradient(135deg,var(--c3),var(--c2));color:#fff;">母</div>
       <span class="mem-name">母亲</span>
     </div>
+    <div class="mem" onclick="addMember()">
+      <div class="mem-av" style="background:var(--bg2);color:var(--text3);font-size:22px;">+</div>
+      <span class="mem-name">添加</span>
+    </div>
   </div>
+
   <div id="mc">
     <div class="sec-label">本人 · 2024年12月</div>
-    <div class="metric-2">
-      <div class="mbox" style="background:linear-gradient(135deg,var(--c4l),#dff6ff);color:var(--c4d);">
-        <div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);">↑ 较去年 +0.3</div>
+    <div class="metric-2" style="margin-top:10px;">
+      <div class="mbox" style="background:var(--c4l);color:var(--c4d);">
+        <div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c2d);">↑ 较去年 +0.3</div>
       </div>
-      <div class="mbox" style="background:linear-gradient(135deg,var(--c6l),#d5fdf0);color:var(--c6d);">
+      <div class="mbox" style="background:var(--c6l);color:var(--c6d);">
         <div class="lbl">血压</div><div class="val">118/76</div><div class="tr" style="color:var(--c6d);">→ 稳定</div>
       </div>
-      <div class="mbox" style="background:linear-gradient(135deg,var(--c1l),#ffe8e8);color:var(--c1d);">
+      <div class="mbox" style="background:var(--c1l);color:var(--c1d);">
         <div class="lbl">总胆固醇</div><div class="val">6.2 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);font-weight:800;">↑ 偏高</div>
       </div>
-      <div class="mbox" style="background:linear-gradient(135deg,var(--c7l),#ede8ff);color:var(--c7d);">
+      <div class="mbox" style="background:var(--c7l);color:var(--c7d);">
         <div class="lbl">BMI</div><div class="val">24.1</div><div class="tr" style="color:var(--c6d);">↓ -0.5</div>
       </div>
+      <div class="mbox" style="background:var(--c2l);color:var(--c2d);">
+        <div class="lbl">尿酸</div><div class="val">310 <span class="unit">μmol/L</span></div><div class="tr" style="color:var(--c6d);">→ 正常</div>
+      </div>
+      <div class="mbox" style="background:var(--c5l);color:var(--c5d);">
+        <div class="lbl">肝功能 ALT</div><div class="val">28 <span class="unit">U/L</span></div><div class="tr" style="color:var(--c6d);">→ 正常</div>
+      </div>
     </div>
+
     <div class="sec-label" style="margin-top:20px;">历年血糖趋势</div>
     <div class="card" style="background:linear-gradient(135deg,#f0f8ff,#e8f4ff);padding-bottom:10px;">
       <svg class="chart-svg" viewBox="0 0 300 90" preserveAspectRatio="none">
         <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#A29BFE"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
         <line x1="0" y1="30" x2="300" y2="30" stroke="#FFB3B3" stroke-width="1.5" stroke-dasharray="5,4"/>
-        <text x="293" y="27" font-size="9" fill="#FF6B6B" text-anchor="end" font-family="-apple-system,sans-serif" font-weight="700">参考上限</text>
+        <text x="293" y="27" font-size="9" fill="#FF6B6B" text-anchor="end" font-family="-apple-system,sans-serif" font-weight="700">参考上限 6.1</text>
         <polyline points="20,65 80,58 140,52 200,44 260,35 300,30" fill="none" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="300" cy="30" r="5" fill="#48DBFB" stroke="#fff" stroke-width="2"/>
         <text x="20" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2020</text>
@@ -542,55 +395,212 @@ html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height
         <text x="290" y="26" font-size="10" fill="#48DBFB" font-weight="800" text-anchor="end" font-family="-apple-system,sans-serif">5.8</text>
       </svg>
     </div>
-    <div class="sec-label" style="margin-top:20px;">AI 解读</div>
-    <div class="ai-note">总胆固醇 6.2 偏高，建议减少动物脂肪摄入，增加有氧运动。血糖有上升趋势，需持续关注。其余指标良好。</div>
+
+    <div class="sec-label" style="margin-top:20px;">AI 健康解读</div>
+    <div class="ai-note">总胆固醇 6.2 mmol/L 偏高，已连续两年超标，建议减少动物脂肪摄入，增加有氧运动，并在3个月后复查。血糖呈上升趋势，需持续关注，建议调整饮食结构。其余指标良好。</div>
 
     <div class="sec-label" style="margin-top:24px;">上传体检报告</div>
     <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
     <div class="upload-area" onclick="document.getElementById('file-input').click()">
       <div class="upload-icon">📋</div>
       <div class="upload-title">点击上传体检报告</div>
-      <div class="upload-sub">支持 PDF、JPG、PNG 格式</div>
+      <div class="upload-sub">支持 PDF、JPG、PNG · 数据加密存储</div>
     </div>
     <div id="file-list"></div>
 
     <div class="sec-label" style="margin-top:8px;">历史报告</div>
     <div class="card-wh">
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">本人 · 年度体检</div><div class="hist-sub">2024年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">本人 · 年度体检</div><div class="hist-sub">2023年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">父亲 · 年度体检</div><div class="hist-sub">2024年11月 · 吉安市中医院</div></div><span class="hist-arr">›</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2024年12月 · 吉安市中心人民医院</div></div><span class="pill pill-ok">已解析</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2023年12月 · 吉安市中心人民医院</div></div><span class="pill pill-ok">已解析</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">专项复查</div><div class="hist-sub">2023年6月 · 吉安市第一人民医院</div></div><span class="pill pill-ok">已解析</span></div>
     </div>
   </div>
 </div>
 
-<!-- 5 提醒 -->
+<!-- ── PAGE 2: 睡眠 ── -->
 <div class="pg">
   <div class="sec">
-    <div class="sec-label">体检提醒</div>
-    <div class="card-wh">
-      <div class="row"><div class="row-icon" style="background:var(--c1l);">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">还有 <strong style="color:var(--c1);">23 天</strong> · 5月12日</div></div><span class="pill pill-warn">即将到期</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c6l);">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">还有 198 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c4l);">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">还有 210 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c7l);">👤</div><div class="row-body"><div class="row-title">母亲</div><div class="row-sub">还有 168 天 · 10月</div></div><span class="pill pill-ok">正常</span></div>
+    <div class="sleep-tonight">
+      <div class="sleep-stars"></div>
+      <div class="sleep-label" style="position:relative;">昨晚睡眠 · 4月27日</div>
+      <div class="sleep-duration" style="position:relative;">7<span class="sleep-unit">h</span> 12<span class="sleep-unit">min</span></div>
+      <div class="sleep-metrics">
+        <div class="sleep-m"><div class="sleep-m-val">23:18</div><div class="sleep-m-lbl">入睡时间</div></div>
+        <div class="sleep-m"><div class="sleep-m-val">06:30</div><div class="sleep-m-lbl">起床时间</div></div>
+        <div class="sleep-m"><div class="sleep-m-val">86<span style="font-size:11px;">分</span></div><div class="sleep-m-lbl">睡眠质量</div></div>
+      </div>
+      <div class="sleep-bar-wrap">
+        <div class="sleep-bar-label"><span>深睡 2.1h</span><span>浅睡 3.4h</span><span>REM 1.7h</span></div>
+        <div class="sleep-bar-track">
+          <div class="sleep-bar-fill" style="width:100%;background:linear-gradient(90deg,#3D3FAE 29%,#6C8EFF 29%,#6C8EFF 76%,#48DBFB 76%);"></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="sec">
-    <div class="sec-label">运动目标</div>
-    <div class="card-wh">
-      <div class="row"><div class="row-icon" style="background:var(--c2l);">🚶</div><div class="row-body"><div class="row-title">每日健走</div><div class="row-sub">12,000 步 · 今日 70%</div></div><span class="pill pill-warn">未达标</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">本周哑铃</div><div class="row-sub">目标 3 次 · 已完成 2 次</div></div><span class="pill pill-ok">进行中</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c1l);">🏃</div><div class="row-body"><div class="row-title">本周跑步</div><div class="row-sub">目标 2 次 · 已完成 0 次</div></div><span class="pill pill-danger">待完成</span></div>
+    <div class="sec-label">本周睡眠（小时）</div>
+    <div class="card">
+      <div class="bars">
+        <div class="bcol"><div class="bfill" style="height:56px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.7;"></div><div class="bday">一</div></div>
+        <div class="bcol"><div class="bfill" style="height:48px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.6;"></div><div class="bday">二</div></div>
+        <div class="bcol"><div class="bfill" style="height:60px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.75;"></div><div class="bday">三</div></div>
+        <div class="bcol"><div class="bfill" style="height:38px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.5;"></div><div class="bday">四</div></div>
+        <div class="bcol"><div class="bfill" style="height:64px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.8;"></div><div class="bday">五</div></div>
+        <div class="bcol"><div class="bfill" style="height:68px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);"></div><div class="bday">六</div></div>
+        <div class="bcol"><div class="bfill" style="height:58px;background:linear-gradient(to top,#48DBFB,#A29BFE);"></div><div class="bday" style="color:var(--c4);font-weight:800;">今</div></div>
+      </div>
     </div>
   </div>
 
   <div class="sec">
-    <div class="sec-label">异常指标</div>
+    <div class="sec-label">手动记录睡眠</div>
     <div class="card-wh">
-      <div class="row"><div class="row-icon" style="background:var(--c1l);">⚠️</div><div class="row-body"><div class="row-title">本人 · 总胆固醇</div><div class="row-sub">6.2 mmol/L · 连续两年偏高</div></div><span class="pill pill-danger">偏高</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c2l);">📊</div><div class="row-body"><div class="row-title">父亲 · 血压</div><div class="row-sub">138/88 mmHg · 临界偏高</div></div><span class="pill pill-warn">关注</span></div>
+      <div class="inp-2" style="margin-bottom:12px;">
+        <div class="inp-grp"><span class="inp-lbl">入睡时间</span><input class="inp" type="time" value="23:00" id="sleep-start"/></div>
+        <div class="inp-grp"><span class="inp-lbl">起床时间</span><input class="inp" type="time" value="06:30" id="sleep-end"/></div>
+      </div>
+      <div class="inp-grp">
+        <span class="inp-lbl">睡眠质量</span>
+        <select class="inp" id="sleep-quality">
+          <option>优秀（90分以上）</option>
+          <option selected>良好（70-89分）</option>
+          <option>一般（50-69分）</option>
+          <option>较差（50分以下）</option>
+        </select>
+      </div>
+      <button class="btn" onclick="saveSleep()">保存睡眠记录</button>
     </div>
   </div>
+
+  <div class="sec">
+    <div class="sec-label">睡眠健康建议</div>
+    <div class="ai-note">本周平均睡眠 7.1小时，质量良好。建议保持固定作息，周四睡眠不足6小时，长期不足可能影响血压和血糖水平——与您的体检指标高度相关，需重点关注。</div>
+  </div>
+</div>
+
+<!-- ── PAGE 3: 运动 ── -->
+<div class="pg">
+  <div class="sec">
+    <div class="coros-strip">
+      <div class="coros-ic">⌚</div>
+      <div style="flex:1;"><div class="coros-ttl">高驰手表同步</div><div class="coros-sub">通过 Strava 自动导入数据</div></div>
+      <button class="coros-btn" onclick="alert('正式版将引导登录 Strava，授权后自动同步高驰运动数据。')">连接</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">今日运动</div>
+    <div class="card" style="background:linear-gradient(135deg,#F0FFF8,#E8F8FF);">
+      <div class="ring-wrap">
+        <div style="position:relative;width:84px;height:84px;flex-shrink:0;">
+          <svg viewBox="0 0 84 84" width="84" height="84">
+            <circle cx="42" cy="42" r="34" fill="none" stroke="#D0FFE8" stroke-width="9"/>
+            <circle cx="42" cy="42" r="34" fill="none" stroke="url(#rg2)" stroke-width="9" stroke-dasharray="142 71" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 42 42)"/>
+            <defs><linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1DD1A1"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
+          </svg>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;"><div style="font-size:17px;font-weight:800;color:var(--c6);">70%</div><div style="font-size:10px;color:var(--text3);">目标</div></div>
+        </div>
+        <div class="ring-labels">
+          <div class="rl"><span class="rl-k">步数</span><span class="rl-v" style="color:var(--c6);">8,432 步</span></div>
+          <div class="rl"><span class="rl-k">消耗</span><span class="rl-v" style="color:var(--c2);">412 kcal</span></div>
+          <div class="rl"><span class="rl-k">时长</span><span class="rl-v" style="color:var(--c4);">68 分钟</span></div>
+          <div class="rl"><span class="rl-k">心率均值</span><span class="rl-v" style="color:var(--c1);">94 bpm</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">本周运动（分钟）</div>
+    <div class="card">
+      <div class="bars">
+        <div class="bcol"><div class="bfill" style="height:42px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.5;"></div><div class="bday">一</div></div>
+        <div class="bcol"><div class="bfill" style="height:58px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.6;"></div><div class="bday">二</div></div>
+        <div class="bcol"><div class="bfill" style="height:4px;background:var(--bg3);"></div><div class="bday">三</div></div>
+        <div class="bcol"><div class="bfill" style="height:48px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.65;"></div><div class="bday">四</div></div>
+        <div class="bcol"><div class="bfill" style="height:64px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.8;"></div><div class="bday">五</div></div>
+        <div class="bcol"><div class="bfill" style="height:68px;background:linear-gradient(to top,var(--c6),var(--c4));"></div><div class="bday">六</div></div>
+        <div class="bcol"><div class="bfill" style="height:56px;background:linear-gradient(to top,var(--c2),var(--c1));"></div><div class="bday" style="color:var(--c1);font-weight:800;">今</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">记录运动</div>
+    <div class="card-wh">
+      <div class="sport-tabs">
+        <div class="sp on" onclick="selSp(this)"><span class="sp-ic">🚶</span>健走</div>
+        <div class="sp" onclick="selSp(this)"><span class="sp-ic">🏃</span>跑步</div>
+        <div class="sp" onclick="selSp(this)"><span class="sp-ic">💪</span>哑铃</div>
+        <div class="sp" onclick="selSp(this)"><span class="sp-ic">🚴</span>骑行</div>
+      </div>
+      <div class="inp-2">
+        <div class="inp-grp"><span class="inp-lbl">时长（分钟）</span><input class="inp" type="number" placeholder="40" id="dur" inputmode="numeric"/></div>
+        <div class="inp-grp"><span class="inp-lbl">步数 / 距离</span><input class="inp" type="text" placeholder="6000步" id="stp"/></div>
+      </div>
+      <button class="btn" onclick="addEx()">保存运动记录 ✓</button>
+    </div>
+    <div class="sec-label">今日明细</div>
+    <div class="card-wh" id="exlog">
+      <div class="row"><div class="row-icon" style="background:var(--c6l);">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">07:20 · 40分钟 · 4,200步</div></div><div class="row-right" style="color:var(--c6);">230 kcal</div></div>
+      <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">18:30 · 28分钟 · 胸背</div></div><div class="row-right" style="color:var(--c7);">182 kcal</div></div>
+    </div>
+
+    <div class="sec-label">运动与健康关联</div>
+    <div class="ai-note">本周运动5天，累计318分钟，良好。有氧运动有助于改善您的胆固醇偏高问题，建议每周保持150分钟以上中等强度有氧运动，重点推荐快走和骑行。</div>
+  </div>
+</div>
+
+<!-- ── PAGE 4: 我的 / 安全 ── -->
+<div class="pg">
+  <div class="profile-hero">
+    <div class="profile-av" id="profile-av">永</div>
+    <div>
+      <div class="profile-name" id="profile-name">永志</div>
+      <div class="profile-id">ID: JX·2025·00421 · 数据已加密 🔐</div>
+    </div>
+  </div>
+
+  <div class="security-banner">
+    <div class="security-title">🔐 数据安全保障</div>
+    <ul class="security-list">
+      <li>✅ 体检数据端对端加密，服务器仅存储密文</li>
+      <li>✅ 每位用户数据严格隔离，无法跨账号访问</li>
+      <li>✅ 不共享、不出售任何健康数据给第三方</li>
+      <li>✅ 支持随时导出或永久删除您的全部数据</li>
+      <li>✅ 符合《个人信息保护法》相关要求</li>
+    </ul>
+  </div>
+
+  <div class="setting-group">
+    <div class="sec-label" style="margin-bottom:10px;">家庭管理</div>
+    <div class="card-wh">
+      <div class="setting-item"><div class="setting-icon" style="background:var(--c4l);">👨‍👩‍👧‍👦</div><div class="setting-body"><div class="setting-title">家庭成员</div><div class="setting-sub">已添加 4 位成员</div></div><div class="setting-right">›</div></div>
+      <div class="setting-item"><div class="setting-icon" style="background:var(--c6l);">📅</div><div class="setting-body"><div class="setting-title">体检提醒设置</div><div class="setting-sub">提前 30 天提醒</div></div><div class="setting-right">›</div></div>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <div class="sec-label" style="margin-bottom:10px;">账户与安全</div>
+    <div class="card-wh">
+      <div class="setting-item"><div class="setting-icon" style="background:var(--c7l);">🔒</div><div class="setting-body"><div class="setting-title">修改密码</div><div class="setting-sub">建议定期更新密码</div></div><div class="setting-right">›</div></div>
+      <div class="setting-item"><div class="setting-icon" style="background:var(--c3l);">📲</div><div class="setting-body"><div class="setting-title">绑定手机号</div><div class="setting-sub">138****8888</div></div><div class="setting-right">›</div></div>
+      <div class="setting-item"><div class="setting-icon" style="background:var(--c2l);">📤</div><div class="setting-body"><div class="setting-title">导出我的数据</div><div class="setting-sub">下载全部健康记录</div></div><div class="setting-right">›</div></div>
+      <div class="setting-item"><div class="setting-icon" style="background:var(--c1l);">🗑️</div><div class="setting-body"><div class="setting-title">删除账户</div><div class="setting-sub">永久删除所有数据</div></div><div class="setting-right">›</div></div>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <div class="sec-label" style="margin-bottom:10px;">关于</div>
+    <div class="card-wh">
+      <div class="setting-item"><div class="setting-icon" style="background:var(--bg2);">📄</div><div class="setting-body"><div class="setting-title">隐私政策</div></div><div class="setting-right">›</div></div>
+      <div class="setting-item"><div class="setting-icon" style="background:var(--bg2);">📋</div><div class="setting-body"><div class="setting-title">用户协议</div></div><div class="setting-right">›</div></div>
+      <div class="setting-item"><div class="setting-icon" style="background:var(--bg2);">ℹ️</div><div class="setting-body"><div class="setting-title">版本</div><div class="setting-sub">v1.0.0 Beta</div></div></div>
+    </div>
+  </div>
+
+  <button class="logout-btn" onclick="doLogout()">退出登录</button>
 </div>
 
 </div>
@@ -599,223 +609,212 @@ html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height
 <!-- Bottom Nav -->
 <div class="nav">
   <div class="ni on" onclick="sw(0)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span>概览</span><div class="ni-dot"></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>概览</span>
   </div>
   <div class="ni" onclick="sw(1)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-    <span>运动</span><div class="ni-dot"></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span>体检</span>
   </div>
   <div class="ni" onclick="sw(2)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <span>动态</span><div class="ni-dot"></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>睡眠</span>
   </div>
   <div class="ni" onclick="sw(3)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-    <span>待办</span><div class="ni-dot"></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <span>运动</span>
   </div>
   <div class="ni" onclick="sw(4)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-    <span>体检</span><div class="ni-dot"></div>
-  </div>
-  <div class="ni" onclick="sw(5)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-    <span>提醒</span><div class="ni-dot"></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>我的</span>
   </div>
 </div>
 
 </div>
+
 <script>
-const navColors=['#FF6B6B','#FF9F43','#A29BFE','#48DBFB','#1DD1A1','#FECA57'];
-const titles=['我的生活','运动记录','语音动态','待办日程','体检档案','健康提醒'];
-const gradients=[
-  'linear-gradient(90deg,#FF6B6B,#A29BFE)',
-  'linear-gradient(90deg,#FF9F43,#FECA57)',
-  'linear-gradient(90deg,#A29BFE,#FF9FF3)',
-  'linear-gradient(90deg,#48DBFB,#A29BFE)',
-  'linear-gradient(90deg,#1DD1A1,#48DBFB)',
-  'linear-gradient(90deg,#FECA57,#FF6B6B)',
-];
+// ── Auth ──
+function switchAuth(mode){
+  document.getElementById('tab-login').classList.toggle('on', mode==='login');
+  document.getElementById('tab-reg').classList.toggle('on', mode==='reg');
+  document.getElementById('auth-form-login').style.display = mode==='login'?'flex':'none';
+  document.getElementById('auth-form-reg').style.display = mode==='reg'?'flex':'none';
+}
+function doLogin(){
+  const phone=document.getElementById('login-phone').value;
+  const pwd=document.getElementById('login-pwd').value;
+  if(!phone||!pwd){alert('请填写手机号和密码');return;}
+  // Demo: any input works
+  document.getElementById('auth-screen').style.display='none';
+}
+function doRegister(){
+  const name=document.getElementById('reg-name').value;
+  const phone=document.getElementById('reg-phone').value;
+  const pwd=document.getElementById('reg-pwd').value;
+  const pwd2=document.getElementById('reg-pwd2').value;
+  if(!name||!phone||!pwd||!pwd2){alert('请填写所有信息');return;}
+  if(pwd.length<8){alert('密码需8位以上');return;}
+  if(pwd!==pwd2){alert('两次密码不一致');return;}
+  // Update profile display
+  document.getElementById('profile-av').textContent=name[0];
+  document.getElementById('profile-name').textContent=name;
+  document.getElementById('user-badge').textContent=name[0];
+  document.getElementById('auth-screen').style.display='none';
+}
+function doLogout(){
+  if(confirm('确认退出登录？')){document.getElementById('auth-screen').style.display='flex';}
+}
 
+// ── Clock & greeting ──
+const navColors=['#1DD1A1','#1DD1A1','#6C8EFF','#1DD1A1','#1DD1A1'];
+const titles=['健康概览','体检档案','睡眠记录','运动记录','我的'];
+const titleGrads=[
+  'linear-gradient(90deg,#1DD1A1,#48DBFB)',
+  'linear-gradient(90deg,#FF6B6B,#A29BFE)',
+  'linear-gradient(90deg,#6C8EFF,#48DBFB)',
+  'linear-gradient(90deg,#1DD1A1,#FECA57)',
+  'linear-gradient(90deg,#A29BFE,#FF9FF3)',
+];
 function tick(){
   const n=new Date(),h=n.getHours(),m=n.getMinutes();
   document.getElementById('clock').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-  const emojis=['🌙','🌅','☀️','🌤️','🌇','🌃'];
-  const ei=h<6?0:h<8?1:h<12?2:h<17?3:h<20?4:5;
-  const words=['深夜好','早上好','上午好','下午好','傍晚好','晚上好'];
-  document.getElementById('greeting').textContent=`${words[ei]} ${emojis[ei]}`;
+  const gi=[['深夜好','🌙'],['早上好','🌅'],['上午好','☀️'],['下午好','🌤️'],['傍晚好','🌇'],['晚上好','🌃']];
+  const idx=h<6?0:h<8?1:h<12?2:h<17?3:h<20?4:5;
+  document.getElementById('greeting').textContent=`${gi[idx][0]} ${gi[idx][1]}`;
 }
 tick();setInterval(tick,10000);
 
+// ── Nav ──
 let cur=0;
 function sw(i){
   cur=i;
   document.querySelectorAll('.ni').forEach((t,j)=>{
     t.classList.toggle('on',j===i);
     t.style.color=j===i?navColors[i]:'';
-    const dot=t.querySelector('.ni-dot');
-    if(dot)dot.style.background=j===i?navColors[i]:'transparent';
   });
-  const titleEl=document.getElementById('page-title');
-  titleEl.textContent=titles[i];
-  titleEl.style.backgroundImage=gradients[i];
+  const tEl=document.getElementById('page-title');
+  tEl.textContent=titles[i];
+  tEl.style.backgroundImage=titleGrads[i];
   const W=Math.min(window.innerWidth,430);
   document.getElementById('pages').style.transform=`translateX(-${i*W}px)`;
 }
 window.addEventListener('resize',()=>sw(cur));
 
+// Swipe
 let sx=0,sy=0;
-const pgs=document.getElementById('pages');
-pgs.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-pgs.addEventListener('touchend',e=>{
+document.getElementById('pages').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+document.getElementById('pages').addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-  if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){if(dx<0&&cur<5)sw(cur+1);else if(dx>0&&cur>0)sw(cur-1);}
+  if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){if(dx<0&&cur<4)sw(cur+1);else if(dx>0&&cur>0)sw(cur-1);}
 },{passive:true});
 
-function tgl(el){
-  el.classList.toggle('done');el.textContent=el.classList.contains('done')?'✓':'';
-  const t=el.parentElement.querySelector('.todo-title');if(t)t.classList.toggle('done');
-}
-
-function selSp(c){document.querySelectorAll('.sp').forEach(x=>{x.classList.remove('on');x.style.background='';x.style.color='';x.style.borderColor='';});c.classList.add('on');c.style.background='linear-gradient(135deg,var(--c7),var(--c5))';c.style.color='#fff';c.style.borderColor='transparent';}
-
-function addEx(){
-  const sp=document.querySelector('.sp.on').textContent.trim();
-  const dur=document.getElementById('dur').value||'--';
-  const stp=document.getElementById('stp').value,mus=document.getElementById('mus').value;
-  const em={'🚶健走':'🚶','🏃跑步':'🏃','💪哑铃':'💪'};
-  const ic=em[sp]||'🏃',sub=stp?`${stp} 步`:mus||'';
-  const kcal=Math.round((parseInt(dur)||0)*4);
-  const row=document.createElement('div');row.className='row';
-  row.innerHTML=`<div class="row-icon" style="background:var(--c7l);">${ic}</div><div class="row-body"><div class="row-title">${sp.replace(/[🚶🏃💪]/g,'').trim()}</div><div class="row-sub">刚刚 · ${dur} 分钟${sub?' · '+sub:''}</div></div><div class="row-right" style="color:var(--c7);font-weight:700;">${kcal} kcal</div>`;
-  document.getElementById('exlog').appendChild(row);
-  ['dur','stp','mus'].forEach(id=>document.getElementById(id).value='');
-}
-
-let vRec=false;
-function togV(){
-  const btn=document.getElementById('vbtn'),ta=document.getElementById('vtxtarea'),hint=document.getElementById('vhint');
-  if(!vRec){
-    if('webkitSpeechRecognition'in window||'SpeechRecognition'in window){
-      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-      const r=new SR();r.lang='zh-CN';r.interimResults=false;
-      vRec=true;btn.classList.add('rec');hint.textContent='🔴 录音中，说完后自动识别…';
-      r.start();
-      r.onresult=e=>{ta.value+=(ta.value?'\n':'')+e.results[0][0].transcript;};
-      r.onerror=()=>{hint.textContent='识别失败，请直接在文本框输入';};
-      r.onend=()=>{vRec=false;btn.classList.remove('rec');hint.textContent='✅ 识别完成，可修改后发布';};
-    }else{
-      btn.classList.add('rec');
-      hint.textContent='⚠️ 当前环境不支持语音识别，请直接输入文字';
-      setTimeout(()=>{btn.classList.remove('rec');},1000);
-    }
-  }else{
-    vRec=false;btn.classList.remove('rec');hint.textContent='可继续修改后发布';
-  }
-}
-function clrV(){document.getElementById('vtxtarea').value='';document.getElementById('vhint').textContent='💡 微信中请直接在文本框输入，或使用微信键盘语音功能';}
-function pubV(){
-  const txt=document.getElementById('vtxtarea').value.trim();
-  if(!txt){alert('请先输入内容');return;}
-  const n=new Date(),ts=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
-  const grads=['linear-gradient(135deg,#FF6B6B,#FF9F43)','linear-gradient(135deg,#A29BFE,#FF9FF3)','linear-gradient(135deg,#48DBFB,#1DD1A1)','linear-gradient(135deg,#FECA57,#FF9F43)'];
-  const g=grads[Math.floor(Math.random()*grads.length)];
-  const item=document.createElement('div');item.className='feed-item';
-  item.innerHTML=`<div class="feed-top"><div class="feed-av" style="background:${g};">我</div><div><div class="feed-name">本人</div><div class="feed-time">今天 ${ts}</div></div></div><div class="feed-text">${txt}</div>`;
-  document.getElementById('feed').insertBefore(item,document.getElementById('feed').firstChild);
-  clrV();
-}
-
-const tSamples=[
-  {t:'明天下午三点提醒我给工厂报修空调',p:{title:'工厂报修空调',time:'明天 15:00',pri:'普通',tag:'工作',pc:'pill-blue'}},
-  {t:'这周五之前记得给母亲买钙片和鱼油',p:{title:'给母亲买钙片和鱼油',time:'本周五前',pri:'普通',tag:'家人',pc:'pill-ok'}},
-  {t:'下周一上午和合作伙伴开会，提前准备项目方案',p:{title:'准备项目方案',time:'下周一上午',pri:'紧急',tag:'工作',pc:'pill-warn'}},
-];
-let tRec=false,tIdx=0;
-function togT(){
-  const btn=document.getElementById('tbtn'),ta=document.getElementById('ttxtarea'),hint=document.getElementById('thint');
-  if(!tRec){
-    if('webkitSpeechRecognition'in window||'SpeechRecognition'in window){
-      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-      const r=new SR();r.lang='zh-CN';r.interimResults=false;
-      tRec=true;btn.classList.add('rec');hint.textContent='🔴 录音中…';
-      r.start();
-      r.onresult=e=>{ta.value=e.results[0][0].transcript;};
-      r.onerror=()=>{hint.textContent='识别失败，请直接输入';};
-      r.onend=()=>{tRec=false;btn.classList.remove('rec');hint.textContent='✅ 识别完成，点击 AI 解析添加';};
-    }else{
-      btn.classList.add('rec');
-      hint.textContent='⚠️ 请直接在文本框输入待办内容';
-      setTimeout(()=>{btn.classList.remove('rec');},1000);
-    }
-  }else{
-    tRec=false;btn.classList.remove('rec');hint.textContent='输入完成，点击 AI 解析添加';
-  }
-}
-function clrT(){document.getElementById('ttxtarea').value='';document.getElementById('tparse').style.display='none';document.getElementById('thint').textContent='例：明天下午3点提醒我给工厂报修空调';}
-function parseAndAdd(){
-  const txt=document.getElementById('ttxtarea').value.trim();
-  if(!txt){alert('请先输入待办内容');return;}
-  const s=tSamples[tIdx++%tSamples.length];
-  const pg=document.getElementById('tparse');pg.style.display='grid';
-  const cellColors=[['#E8F4FF','#0984A8'],['#E8FDF6','#0D8A6A'],['#FFF4E6','#D35400'],['#F0EEFF','#5B4FCF']];
-  const cc=cellColors;
-  pg.innerHTML=`<div class="parse-cell" style="background:${cc[0][0]};color:${cc[0][1]};"><div class="parse-k">事项</div><div class="parse-v">${s.p.title}</div></div><div class="parse-cell" style="background:${cc[1][0]};color:${cc[1][1]};"><div class="parse-k">时间</div><div class="parse-v">${s.p.time}</div></div><div class="parse-cell" style="background:${cc[2][0]};color:${cc[2][1]};"><div class="parse-k">优先级</div><div class="parse-v"><span class="pill ${s.p.pc}">${s.p.pri}</span></div></div><div class="parse-cell" style="background:${cc[3][0]};color:${cc[3][1]};"><div class="parse-k">分类</div><div class="parse-v">${s.p.tag}</div></div>`;
-  const list=document.getElementById('td-today');
-  const item=document.createElement('div');item.className='todo-item';
-  item.innerHTML=`<div class="check" onclick="tgl(this)"></div><div class="todo-body"><div class="todo-title">${s.p.title}</div><div class="todo-time">${s.p.time}</div></div><span class="pill ${s.p.pc}">${s.p.tag}</span>`;
-  list.appendChild(item);
-  document.getElementById('ttxtarea').value='';
-  setTimeout(()=>{pg.style.display='none';document.getElementById('thint').textContent='✅ 已添加到今日待办';setTimeout(()=>document.getElementById('thint').textContent='例：明天下午3点提醒我给工厂报修空调',2500);},1500);
-}
-
-function handleFiles(files){
-  const list=document.getElementById('file-list');
-  Array.from(files).forEach(f=>{
-    const ext=f.name.split('.').pop().toUpperCase();
-    const size=f.size>1024*1024?(f.size/1024/1024).toFixed(1)+' MB':(f.size/1024).toFixed(0)+' KB';
-    const ic=ext==='PDF'?'📄':'🖼️';
-    const item=document.createElement('div');item.className='upload-file-item';
-    item.innerHTML=`<div class="upload-file-ic">${ic}</div><div style="flex:1;min-width:0;"><div class="upload-file-name">${f.name}</div><div class="upload-file-size">${ext} · ${size}</div></div><span class="pill pill-blue">上传中…</span>`;
-    list.appendChild(item);
-    setTimeout(()=>{
-      const tag=item.querySelector('.pill');if(tag){tag.className='pill pill-ok';tag.textContent='✓ 成功';}
-      const status=document.createElement('div');status.className='upload-status';
-      status.innerHTML=`✨ <strong>${f.name}</strong> 上传成功，AI 解析中…`;
-      list.appendChild(status);
-      setTimeout(()=>{status.innerHTML='✅ 解析完成，指标已录入档案';},2000);
-    },1200);
-  });
-}
-
+// ── Members ──
 const mds=[
-  {name:'本人',label:'2024年12月',grad:'linear-gradient(135deg,#FF6B6B,#FF9F43)',ms:[{l:'空腹血糖',v:'5.8',u:'mmol/L',tr:'↑ 较去年 +0.3',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c1d)'},{l:'血压',v:'118/76',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},{l:'总胆固醇',v:'6.2',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},{l:'BMI',v:'24.1',u:'',tr:'↓ -0.5',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'}],ai:'总胆固醇偏高，建议减少动物脂肪，增加有氧运动。血糖需持续关注。'},
-  {name:'妻子',label:'2024年11月',grad:'linear-gradient(135deg,#48DBFB,#1DD1A1)',ms:[{l:'空腹血糖',v:'4.9',u:'mmol/L',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},{l:'血压',v:'110/70',u:'',tr:'↓ 改善',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},{l:'血红蛋白',v:'125',u:'g/L',tr:'→ 正常',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},{l:'BMI',v:'21.3',u:'',tr:'→ 稳定',bg:'var(--c3l)',c:'var(--c3d)',tc:'var(--c6d)'}],ai:'各项指标均正常，请保持当前生活习惯。'},
-  {name:'父亲',label:'2024年11月',grad:'linear-gradient(135deg,#A29BFE,#FF9FF3)',ms:[{l:'血压',v:'138/88',u:'mmHg',tr:'↑ 临界',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},{l:'血糖',v:'6.8',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},{l:'尿酸',v:'420',u:'μmol/L',tr:'↑ 偏高',bg:'var(--c5l)',c:'var(--c5d)',tc:'var(--c1d)'},{l:'BMI',v:'26.4',u:'',tr:'↑ 超重',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'}],ai:'血压血糖尿酸均偏高，建议低盐低糖饮食，及时就医。'},
-  {name:'母亲',label:'2024年10月',grad:'linear-gradient(135deg,#FECA57,#FF9F43)',ms:[{l:'血红蛋白',v:'105',u:'g/L',tr:'↓ 偏低',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},{l:'血压',v:'112/72',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},{l:'血糖',v:'5.2',u:'mmol/L',tr:'→ 正常',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},{l:'BMI',v:'22.8',u:'',tr:'→ 稳定',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'}],ai:'血红蛋白轻度偏低，建议增加铁质摄入，必要时就医检查。'}
+  {name:'本人',label:'2024年12月',grad:'linear-gradient(135deg,#FF6B6B,#FF9F43)',
+    ms:[{l:'空腹血糖',v:'5.8',u:'mmol/L',tr:'↑ +0.3',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c2d)'},
+        {l:'血压',v:'118/76',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
+        {l:'总胆固醇',v:'6.2',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},
+        {l:'BMI',v:'24.1',u:'',tr:'↓ -0.5',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},
+        {l:'尿酸',v:'310',u:'μmol/L',tr:'→ 正常',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c6d)'},
+        {l:'ALT',v:'28',u:'U/L',tr:'→ 正常',bg:'var(--c5l)',c:'var(--c5d)',tc:'var(--c6d)'}],
+    ai:'总胆固醇偏高，建议减少动物脂肪，增加有氧运动，3个月后复查。血糖持续关注。'},
+  {name:'妻子',label:'2024年11月',grad:'linear-gradient(135deg,#48DBFB,#1DD1A1)',
+    ms:[{l:'空腹血糖',v:'4.9',u:'mmol/L',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
+        {l:'血压',v:'110/70',u:'',tr:'↓ 改善',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},
+        {l:'血红蛋白',v:'125',u:'g/L',tr:'→ 正常',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},
+        {l:'BMI',v:'21.3',u:'',tr:'→ 稳定',bg:'var(--c3l)',c:'var(--c3d)',tc:'var(--c6d)'},
+        {l:'总胆固醇',v:'4.8',u:'mmol/L',tr:'→ 正常',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
+        {l:'甲状腺TSH',v:'2.1',u:'mIU/L',tr:'→ 正常',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'}],
+    ai:'各项指标均正常，请保持当前生活习惯，每年定期复查。'},
+  {name:'父亲',label:'2024年11月',grad:'linear-gradient(135deg,#A29BFE,#FF9FF3)',
+    ms:[{l:'血压',v:'138/88',u:'mmHg',tr:'↑ 临界',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},
+        {l:'血糖',v:'6.8',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},
+        {l:'尿酸',v:'420',u:'μmol/L',tr:'↑ 偏高',bg:'var(--c5l)',c:'var(--c5d)',tc:'var(--c1d)'},
+        {l:'BMI',v:'26.4',u:'',tr:'↑ 超重',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},
+        {l:'总胆固醇',v:'5.8',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},
+        {l:'肌酐',v:'98',u:'μmol/L',tr:'→ 正常',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'}],
+    ai:'血压、血糖、尿酸均偏高，建议低盐低糖饮食，减重，及时就医随访。'},
+  {name:'母亲',label:'2024年10月',grad:'linear-gradient(135deg,#FECA57,#FF9F43)',
+    ms:[{l:'血红蛋白',v:'105',u:'g/L',tr:'↓ 偏低',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},
+        {l:'血压',v:'112/72',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
+        {l:'血糖',v:'5.2',u:'mmol/L',tr:'→ 正常',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},
+        {l:'BMI',v:'22.8',u:'',tr:'→ 稳定',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},
+        {l:'总胆固醇',v:'4.5',u:'mmol/L',tr:'→ 正常',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
+        {l:'骨密度',v:'T:-0.8',u:'',tr:'→ 正常',bg:'var(--c3l)',c:'var(--c3d)',tc:'var(--c6d)'}],
+    ai:'血红蛋白轻度偏低，建议增加铁质摄入（瘦肉、菠菜），必要时就医检查。'}
 ];
 function selM(chip,idx){
   document.querySelectorAll('.mem-av').forEach(a=>{a.classList.remove('on');a.style.borderColor='transparent';});
-  const av=chip.querySelector('.mem-av');av.classList.add('on');av.style.borderColor=navColors[idx]||'#FF6B6B';
+  const av=chip.querySelector('.mem-av');av.classList.add('on');av.style.borderColor='#fff';av.style.boxShadow=`0 0 0 3px ${['#FF6B6B','#48DBFB','#A29BFE','#FECA57'][idx]}`;
   const d=mds[idx];
   document.getElementById('mc').innerHTML=`
     <div class="sec-label">${d.name} · ${d.label}</div>
-    <div class="metric-2">${d.ms.map(m=>`<div class="mbox" style="background:${m.bg};color:${m.c};"><div class="lbl">${m.l}</div><div class="val">${m.v} <span class="unit">${m.u}</span></div><div class="tr" style="color:${m.tc};">${m.tr}</div></div>`).join('')}</div>
-    <div class="sec-label" style="margin-top:20px;">AI 解读</div>
+    <div class="metric-2" style="margin-top:10px;">${d.ms.map(m=>`
+      <div class="mbox" style="background:${m.bg};color:${m.c};">
+        <div class="lbl">${m.l}</div>
+        <div class="val">${m.v} <span class="unit">${m.u}</span></div>
+        <div class="tr" style="color:${m.tc};">${m.tr}</div>
+      </div>`).join('')}</div>
+    <div class="sec-label" style="margin-top:20px;">AI 健康解读</div>
     <div class="ai-note">${d.ai}</div>
     <div class="sec-label" style="margin-top:24px;">上传体检报告</div>
     <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
     <div class="upload-area" onclick="document.getElementById('file-input').click()">
       <div class="upload-icon">📋</div>
       <div class="upload-title">点击上传体检报告</div>
-      <div class="upload-sub">支持 PDF、JPG、PNG 格式</div>
+      <div class="upload-sub">支持 PDF、JPG、PNG · 数据加密存储</div>
     </div>
     <div id="file-list"></div>
     <div class="sec-label" style="margin-top:8px;">历史报告</div>
     <div class="card-wh">
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2024年</div></div><span class="hist-arr">›</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2023年</div></div><span class="hist-arr">›</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2024年</div></div><span class="pill pill-ok">已解析</span></div>
+      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2023年</div></div><span class="pill pill-ok">已解析</span></div>
     </div>`;
+}
+
+function addMember(){alert('正式版本可添加更多家庭成员，点击注册后建立专属档案。');}
+
+// ── File upload ──
+function handleFiles(files){
+  const list=document.getElementById('file-list');
+  if(!list)return;
+  Array.from(files).forEach(f=>{
+    const ext=f.name.split('.').pop().toUpperCase();
+    const size=f.size>1024*1024?(f.size/1024/1024).toFixed(1)+' MB':(f.size/1024).toFixed(0)+' KB';
+    const item=document.createElement('div');item.className='upload-file-item';
+    item.innerHTML=`<span style="font-size:22px;">${ext==='PDF'?'📄':'🖼️'}</span><div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${f.name}</div><div style="font-size:12px;color:var(--text3);">${ext} · ${size}</div></div><span class="pill pill-blue">上传中</span>`;
+    list.appendChild(item);
+    setTimeout(()=>{
+      const tag=item.querySelector('.pill');if(tag){tag.className='pill pill-ok';tag.textContent='✓ 成功';}
+      const st=document.createElement('div');st.className='upload-status';
+      st.innerHTML='✨ 上传成功，AI 正在解析指标…';
+      list.appendChild(st);
+      setTimeout(()=>{st.innerHTML='✅ 解析完成，指标已安全录入档案';},2200);
+    },1400);
+  });
+}
+
+// ── Sleep ──
+function saveSleep(){
+  const s=document.getElementById('sleep-start').value;
+  const e=document.getElementById('sleep-end').value;
+  const q=document.getElementById('sleep-quality').value;
+  alert(`已记录：${s} 入睡，${e} 起床，${q}。数据已加密保存。`);
+}
+
+// ── Exercise ──
+function selSp(c){document.querySelectorAll('.sp').forEach(x=>{x.classList.remove('on');});c.classList.add('on');}
+function addEx(){
+  const sp=document.querySelector('.sp.on').textContent.trim();
+  const dur=document.getElementById('dur').value||'--';
+  const stp=document.getElementById('stp').value;
+  const emap={'🚶健走':'🚶','🏃跑步':'🏃','💪哑铃':'💪','🚴骑行':'🚴'};
+  const ic=emap[sp]||'🏃';
+  const kcal=Math.round((parseInt(dur)||0)*4);
+  const row=document.createElement('div');row.className='row';
+  row.innerHTML=`<div class="row-icon" style="background:var(--c6l);">${ic}</div><div class="row-body"><div class="row-title">${sp.replace(/[🚶🏃💪🚴]/g,'').trim()}</div><div class="row-sub">刚刚 · ${dur}分钟${stp?' · '+stp:''}</div></div><div class="row-right" style="color:var(--c6);">${kcal} kcal</div>`;
+  document.getElementById('exlog').appendChild(row);
+  document.getElementById('dur').value='';document.getElementById('stp').value='';
 }
 </script>
 </body>
