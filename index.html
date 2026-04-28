@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>健检宝</title>
+<title>健康档案</title>
 <style>
 :root {
   --c1:#FF6B6B; --c2:#FF9F43; --c3:#FECA57;
@@ -13,78 +13,79 @@
   --c1l:#FFF0F0; --c2l:#FFF4E6; --c3l:#FFFBE6;
   --c4l:#E8FBFF; --c5l:#FFF0FD; --c6l:#E8FDF6; --c7l:#F0EEFF;
   --c1d:#C0392B; --c2d:#D35400; --c3d:#B7770D;
-  --c4d:#0984A8; --c5d:#9B59B6; --c6d:#0D8A6A; --c7d:#5B4FCF;
-  --bg:#FFFFFF; --bg2:#F8F8FC; --bg3:#EFEFEF;
+  --c4d:#0984A8; --c6d:#0D8A6A; --c7d:#5B4FCF;
+  --bg:#FFFFFF; --bg2:#F7F7FB; --bg3:#EFEFEF;
   --text:#1A1A2E; --text2:rgba(26,26,46,.65); --text3:rgba(26,26,46,.4);
-  --border:rgba(26,26,46,.08); --border2:rgba(26,26,46,.18);
+  --border:rgba(26,26,46,.08); --border2:rgba(26,26,46,.15);
   --r:16px; --r2:22px;
   --font:-apple-system,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
 }
 @media(prefers-color-scheme:dark){
   :root{
-    --bg:#16162A; --bg2:#1E1E35; --bg3:#2A2A45;
-    --text:#F0F0FF; --text2:rgba(240,240,255,.65); --text3:rgba(240,240,255,.38);
-    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.18);
-    --c1l:#2D1A1A; --c2l:#2D2010; --c3l:#2D2800;
-    --c4l:#0A2530; --c5l:#2D1030; --c6l:#0A2820; --c7l:#1A1535;
+    --bg:#16162A;--bg2:#1E1E35;--bg3:#2A2A45;
+    --text:#F0F0FF;--text2:rgba(240,240,255,.65);--text3:rgba(240,240,255,.38);
+    --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15);
+    --c1l:#2D1A1A;--c2l:#2D2010;--c3l:#2D2800;--c4l:#0A2530;--c5l:#2D1030;--c6l:#0A2820;--c7l:#1A1535;
   }
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height:100%;overflow:hidden;}
 .app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── Auth Screen ── */
-.auth-screen{position:absolute;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;}
-.auth-logo{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:38px;margin-bottom:20px;box-shadow:0 12px 32px rgba(29,209,161,.3);}
-.auth-appname{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;background:linear-gradient(90deg,var(--c6),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.auth-tagline{font-size:14px;color:var(--text3);margin-bottom:40px;text-align:center;line-height:1.5;}
-.auth-tabs{display:flex;background:var(--bg2);border-radius:12px;padding:4px;margin-bottom:24px;width:100%;}
-.auth-tab{flex:1;padding:9px;text-align:center;font-size:15px;font-weight:600;color:var(--text3);cursor:pointer;border-radius:10px;transition:all .2s;}
-.auth-tab.on{background:var(--bg);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.08);}
-.auth-form{width:100%;display:flex;flex-direction:column;gap:12px;}
-.auth-inp-wrap{position:relative;}
-.auth-inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;}
-.auth-inp{width:100%;padding:14px 14px 14px 42px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;}
-.auth-inp:focus{outline:none;border-color:var(--c6);}
-.auth-btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:17px;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;margin-top:4px;transition:opacity .15s,transform .1s;box-shadow:0 8px 24px rgba(29,209,161,.3);}
-.auth-btn:active{opacity:.85;transform:scale(.98);}
-.auth-notice{font-size:12px;color:var(--text3);text-align:center;line-height:1.6;margin-top:16px;}
-.auth-notice a{color:var(--c6d);text-decoration:none;}
-.auth-divider{display:flex;align-items:center;gap:12px;margin:4px 0;}
-.auth-divider span{font-size:13px;color:var(--text3);}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:.5px;background:var(--border);}
-.auth-privacy{background:var(--c6l);border-radius:var(--r);padding:12px 14px;font-size:12px;color:var(--c6d);line-height:1.6;margin-top:4px;}
-.auth-privacy strong{font-weight:700;}
+/* ── 登录页 ── */
+.login-page{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:40px 28px;background:var(--bg);}
+.login-logo{width:80px;height:80px;border-radius:28px;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:38px;margin-bottom:20px;box-shadow:0 12px 32px rgba(72,219,251,.3);}
+.login-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;background:linear-gradient(90deg,var(--c6),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.login-sub{font-size:14px;color:var(--text3);margin-bottom:44px;text-align:center;line-height:1.6;}
+.login-form{width:100%;display:flex;flex-direction:column;gap:14px;}
+.inp-wrap{position:relative;}
+.inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:17px;}
+.inp{width:100%;padding:14px 14px 14px 44px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg2);color:var(--text);font-family:var(--font);-webkit-appearance:none;transition:border-color .2s;}
+.inp:focus{outline:none;border-color:var(--c6);}
+.inp::placeholder{color:var(--text3);}
+.btn-full{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;transition:opacity .15s,transform .1s;margin-top:4px;}
+.btn-full:active{opacity:.85;transform:scale(.98);}
+.login-switch{margin-top:20px;font-size:14px;color:var(--text3);text-align:center;}
+.login-switch span{color:var(--c6);font-weight:700;cursor:pointer;}
+.login-notice{margin-top:28px;padding:14px;background:var(--c6l);border-radius:var(--r);font-size:12px;color:var(--c6d);line-height:1.65;text-align:left;width:100%;}
+.login-notice strong{font-weight:700;}
+.divider{display:flex;align-items:center;gap:10px;margin:4px 0;}
+.divider-line{flex:1;height:.5px;background:var(--border);}
+.divider-text{font-size:12px;color:var(--text3);}
 
-/* ── Main App ── */
+/* ── 主应用 ── */
+.main-app{display:flex;flex-direction:column;height:100%;overflow:hidden;}
 .status{padding:env(safe-area-inset-top,14px) 20px 0;display:flex;justify-content:space-between;align-items:center;min-height:calc(env(safe-area-inset-top,14px)+28px);background:var(--bg);}
-.status-time{font-size:17px;font-weight:700;letter-spacing:-.3px;}
-.status-right{display:flex;align-items:center;gap:10px;}
+.status-time{font-size:17px;font-weight:700;}
 .status-icons{font-size:13px;color:var(--text2);}
-.user-badge{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer;}
+.header{padding:8px 20px 16px;background:var(--bg);position:relative;overflow:hidden;}
+.hd-deco{position:absolute;top:-20px;right:-10px;width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--c3),var(--c2));opacity:.13;pointer-events:none;}
+.hd-deco2{position:absolute;top:20px;right:70px;width:60px;height:60px;border-radius:50%;background:var(--c4);opacity:.1;pointer-events:none;}
+.hd-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;}
+.hd-user{display:flex;align-items:center;gap:10px;}
+.hd-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0;}
+.hd-greeting{font-size:13px;color:var(--text3);}
+.hd-name{font-size:16px;font-weight:700;color:var(--text);}
+.hd-logout{font-size:12px;color:var(--text3);cursor:pointer;padding:6px 10px;border:.5px solid var(--border2);border-radius:20px;font-family:var(--font);}
+.hd-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-top:12px;background:linear-gradient(90deg,var(--c1),var(--c7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;}
 
-.header{padding:6px 20px 16px;background:var(--bg);position:relative;overflow:hidden;}
-.hd-deco{position:absolute;top:-30px;right:-20px;width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--c3),var(--c2));opacity:.12;pointer-events:none;}
-.hd-deco2{position:absolute;top:10px;right:60px;width:70px;height:70px;border-radius:50%;background:var(--c4);opacity:.1;pointer-events:none;}
-.hd-greeting{font-size:15px;color:var(--text3);margin-bottom:3px;position:relative;}
-.hd-title{font-size:26px;font-weight:800;letter-spacing:-.5px;position:relative;background:linear-gradient(90deg,var(--c6),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+/* ── 导航 ── */
+.tabs{display:flex;background:var(--bg);border-bottom:.5px solid var(--border);overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:10px 16px 12px;font-size:14px;color:var(--text3);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-.5px;font-family:var(--font);white-space:nowrap;font-weight:500;transition:color .2s;}
+.tab.on{color:var(--c6);border-bottom-color:var(--c6);font-weight:700;}
 
 .body{flex:1;overflow:hidden;position:relative;}
 .pages{display:flex;height:100%;transition:transform .32s cubic-bezier(.4,0,.2,1);}
-.pg{flex-shrink:0;width:100vw;max-width:430px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(env(safe-area-inset-bottom,0px)+88px);scrollbar-width:none;}
+.pg{flex-shrink:0;width:100vw;max-width:430px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(env(safe-area-inset-bottom,0px)+28px);scrollbar-width:none;}
 .pg::-webkit-scrollbar{display:none;}
 
-.nav{display:flex;background:var(--bg);border-top:.5px solid var(--border);padding-bottom:env(safe-area-inset-bottom,0px);flex-shrink:0;}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:10px;font-family:var(--font);transition:color .2s;}
-.ni.on{color:var(--c6);}
-.ni svg{width:24px;height:24px;}
-
-/* ── Shared components ── */
-.sec{margin-top:24px;}
-.sec:first-child{margin-top:20px;}
-.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.sec-label{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;}
-.sec-more{font-size:13px;color:var(--c6);font-weight:600;cursor:pointer;}
+/* ── 通用组件 ── */
+.sec{margin-top:22px;}
+.sec:first-child{margin-top:18px;}
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.sec-label{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;}
+.sec-more{font-size:13px;color:var(--c6);font-weight:700;cursor:pointer;}
 .card{background:var(--bg2);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
 .card-wh{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
 .row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);}
@@ -93,728 +94,792 @@ html,body{font-family:var(--font);background:var(--bg2);color:var(--text);height
 .row-body{flex:1;min-width:0;}
 .row-title{font-size:16px;font-weight:600;}
 .row-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.row-right{font-size:14px;color:var(--text3);flex-shrink:0;font-weight:600;}
+.row-right{font-size:13px;color:var(--text3);flex-shrink:0;text-align:right;}
 .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
 .pill-ok{background:var(--c6l);color:var(--c6d);}
 .pill-warn{background:var(--c2l);color:var(--c2d);}
 .pill-danger{background:var(--c1l);color:var(--c1d);}
-.pill-muted{background:var(--bg2);color:var(--text3);}
 .pill-blue{background:var(--c4l);color:var(--c4d);}
 .pill-purple{background:var(--c7l);color:var(--c7d);}
-.btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;transition:opacity .15s,transform .1s;}
-.btn:active{opacity:.85;transform:scale(.98);}
-.btn-ghost{width:100%;padding:14px;background:transparent;color:var(--text);border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font);}
-.inp-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
-.inp-lbl{font-size:14px;color:var(--text2);font-weight:600;}
-.inp{width:100%;padding:13px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;}
-.inp:focus{outline:none;border-color:var(--c6);}
-.inp-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
-.ai-note{font-size:15px;color:var(--text2);line-height:1.65;padding:14px 16px;background:var(--c7l);border-radius:var(--r);border-left:3px solid var(--c7);}
+.pill-muted{background:var(--bg2);color:var(--text3);}
 
-/* ── 概览 page ── */
-.hero-card{border-radius:var(--r2);padding:20px;margin-bottom:10px;background:linear-gradient(135deg,#0ABFA3,#4FC3F7);color:#fff;position:relative;overflow:hidden;}
-.hero-deco{position:absolute;right:-20px;bottom:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1);}
-.hero-deco2{position:absolute;right:30px;bottom:20px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.08);}
-.hero-label{font-size:13px;opacity:.8;margin-bottom:6px;}
-.hero-date{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
-.hero-hospital{font-size:14px;opacity:.75;}
-.hero-badge{display:inline-block;margin-top:12px;padding:5px 14px;border-radius:20px;background:rgba(255,255,255,.25);font-size:13px;font-weight:700;}
-
-.score-ring{display:flex;align-items:center;gap:20px;padding:4px 0;}
-.score-labels{flex:1;}
-.score-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:.5px solid var(--border);font-size:14px;}
-.score-row:last-child{border-bottom:none;}
-.score-k{color:var(--text2);}
-.score-v{font-weight:700;}
-
+/* ── 概览页 ── */
 .stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px;}
 .stat{border-radius:var(--r2);padding:18px 16px;position:relative;overflow:hidden;}
-.stat-icon{position:absolute;top:12px;right:14px;font-size:26px;opacity:.2;}
-.stat-val{font-size:28px;font-weight:800;letter-spacing:-.5px;line-height:1;}
-.stat-lbl{font-size:13px;font-weight:600;margin-top:5px;opacity:.85;}
-.stat-sub{font-size:11px;margin-top:2px;opacity:.65;}
+.stat-icon{position:absolute;top:10px;right:12px;font-size:26px;opacity:.22;}
+.stat-val{font-size:28px;font-weight:800;letter-spacing:-.4px;line-height:1;color:#fff;}
+.stat-lbl{font-size:13px;font-weight:600;margin-top:5px;color:rgba(255,255,255,.85);}
+.stat-sub{font-size:11px;margin-top:2px;color:rgba(255,255,255,.6);}
+.alert-banner{background:linear-gradient(135deg,var(--c1l),#ffe8e0);border:.5px solid rgba(255,107,107,.3);border-radius:var(--r);padding:13px 15px;display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.alert-ic{font-size:20px;flex-shrink:0;margin-top:1px;}
+.alert-body{flex:1;}
+.alert-title{font-size:14px;font-weight:700;color:var(--c1d);}
+.alert-sub{font-size:12px;color:var(--c1d);opacity:.75;margin-top:2px;line-height:1.5;}
 
-/* ── 体检 page ── */
-.mem-row{display:flex;gap:14px;margin-top:20px;margin-bottom:18px;}
-.mem{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
-.mem-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;border:3px solid transparent;transition:all .2s;}
-.mem-name{font-size:12px;color:var(--text3);font-weight:500;}
+/* ── 成员选择 ── */
+.mem-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.mem-row::-webkit-scrollbar{display:none;}
+.mem{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;}
+.mem-av{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;border:3px solid transparent;transition:all .2s;}
+.mem-av.on{box-shadow:0 0 0 3px var(--c6);}
+.mem-name{font-size:11px;color:var(--text3);font-weight:500;}
+.mem-add{width:50px;height:50px;border-radius:50%;border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--text3);cursor:pointer;flex-shrink:0;}
+
+/* ── 体检指标 ── */
 .metric-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
 .mbox{border-radius:var(--r);padding:14px;position:relative;overflow:hidden;}
-.mbox .lbl{font-size:12px;font-weight:700;opacity:.7;}
-.mbox .val{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-top:4px;}
-.mbox .unit{font-size:11px;font-weight:500;opacity:.6;}
-.mbox .tr{font-size:13px;margin-top:4px;font-weight:600;}
-.chart-svg{width:100%;height:100px;display:block;margin-top:6px;}
+.mbox .lbl{font-size:12px;font-weight:600;opacity:.7;}
+.mbox .val{font-size:22px;font-weight:800;letter-spacing:-.3px;margin-top:3px;}
+.mbox .unit{font-size:10px;font-weight:500;opacity:.6;}
+.mbox .tr{font-size:12px;margin-top:4px;font-weight:600;}
+.mbox-icon{position:absolute;bottom:8px;right:10px;font-size:22px;opacity:.18;}
+
+/* 趋势图 */
+.chart-wrap{background:var(--bg2);border-radius:var(--r2);padding:16px 16px 10px;margin-bottom:10px;}
+.chart-title{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.chart-legend{font-size:11px;color:var(--text3);font-weight:500;}
+.chart-svg{width:100%;height:110px;display:block;}
+.chart-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.ctab{font-size:12px;padding:5px 12px;border-radius:20px;cursor:pointer;border:.5px solid var(--border2);background:var(--bg);color:var(--text3);font-family:var(--font);font-weight:500;transition:all .2s;}
+.ctab.on{background:var(--c6);color:#fff;border-color:var(--c6);font-weight:700;}
+
+/* ── 睡眠 ── */
+.sleep-card{border-radius:var(--r2);padding:18px;background:linear-gradient(135deg,#1a1a3a,#2a1a4a);color:#fff;margin-bottom:10px;position:relative;overflow:hidden;}
+.sleep-deco{position:absolute;top:-20px;right:-20px;width:120px;height:120px;border-radius:50%;background:rgba(162,155,254,.15);}
+.sleep-score{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;}
+.sleep-label{font-size:14px;opacity:.7;margin-top:4px;}
+.sleep-grade{font-size:13px;font-weight:700;color:var(--c7);margin-top:6px;}
+.sleep-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:16px;border-top:1px solid rgba(255,255,255,.1);padding-top:14px;}
+.sleep-stat{text-align:center;font-size:11px;opacity:.7;border-right:1px solid rgba(255,255,255,.1);padding:0 8px;}
+.sleep-stat:last-child{border-right:none;}
+.sleep-stat-val{font-size:16px;font-weight:700;opacity:1;display:block;color:#fff;margin-bottom:2px;}
+.sleep-bars{display:flex;gap:3px;align-items:flex-end;height:48px;margin-top:14px;}
+.sb{flex:1;border-radius:3px 3px 0 0;min-height:4px;opacity:.5;}
+.sb.deep{background:var(--c7);opacity:.9;}
+.sb.light{background:var(--c4);opacity:.7;}
+.sb.rem{background:var(--c5);opacity:.8;}
+
+/* ── 运动 ── */
+.sport-week{display:flex;gap:6px;align-items:flex-end;height:72px;}
+.sw-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.sw-bar{width:100%;border-radius:5px 5px 0 0;min-height:4px;}
+.sw-day{font-size:10px;color:var(--text3);}
+.sport-ring-wrap{display:flex;gap:16px;align-items:center;}
+.sport-stats{flex:1;}
+.sport-stat{display:flex;justify-content:space-between;padding:5px 0;border-bottom:.5px solid var(--border);font-size:14px;}
+.sport-stat:last-child{border-bottom:none;}
+.sport-stat-k{color:var(--text2);}
+.sport-stat-v{font-weight:700;}
+
+/* ── 记录录入 ── */
+.record-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.rtab{flex:1;padding:10px 6px;border:.5px solid var(--border2);border-radius:var(--r);text-align:center;font-size:13px;color:var(--text2);cursor:pointer;background:var(--bg);font-family:var(--font);transition:all .2s;}
+.rtab.on{border-color:transparent;color:#fff;font-weight:700;}
+.inp-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.inp-lbl{font-size:14px;color:var(--text2);font-weight:600;}
+.inp-f{width:100%;padding:13px 14px;border:.5px solid var(--border2);border-radius:var(--r);font-size:16px;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-appearance:none;transition:border-color .2s;}
+.inp-f:focus{outline:none;border-color:var(--c6);}
+.inp-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;}
+.inp-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px;}
+.btn-save{width:100%;padding:14px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;transition:opacity .15s,transform .1s;}
+.btn-save:active{opacity:.85;transform:scale(.98);}
+
+/* ── 上传 ── */
 .upload-area{border:2px dashed var(--border2);border-radius:var(--r2);padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px;}
 .upload-area:active{background:var(--c6l);border-color:var(--c6);}
-.upload-icon{font-size:36px;margin-bottom:10px;}
+.upload-icon-big{font-size:36px;margin-bottom:8px;}
 .upload-title{font-size:16px;font-weight:700;margin-bottom:4px;}
 .upload-sub{font-size:13px;color:var(--text3);}
 .upload-file-item{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg2);border-radius:var(--r);margin-bottom:8px;}
-.upload-status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c6l);border-radius:var(--r);font-size:14px;color:var(--c6d);font-weight:600;margin-bottom:8px;}
+.upload-status{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c6l);border-radius:var(--r);font-size:13px;color:var(--c6d);font-weight:600;margin-bottom:6px;}
 .hist-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:.5px solid var(--border);cursor:pointer;}
 .hist-item:last-child{border-bottom:none;}
 .hist-ic{width:40px;height:40px;background:var(--c4l);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .hist-body{flex:1;}
 .hist-title{font-size:15px;font-weight:600;}
 .hist-sub{font-size:13px;color:var(--text3);margin-top:2px;}
+.hist-arr{font-size:18px;color:var(--text3);}
 
-/* ── 睡眠 page ── */
-.sleep-tonight{border-radius:var(--r2);padding:20px;background:linear-gradient(135deg,#1a1a4e,#2d2d8f);color:#fff;margin-bottom:10px;position:relative;overflow:hidden;}
-.sleep-stars{position:absolute;top:0;right:0;width:100%;height:100%;opacity:.3;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;}
-.sleep-duration{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;position:relative;}
-.sleep-unit{font-size:18px;font-weight:500;opacity:.7;}
-.sleep-label{font-size:14px;opacity:.7;margin-top:4px;position:relative;}
-.sleep-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px;position:relative;}
-.sleep-m{background:rgba(255,255,255,.12);border-radius:10px;padding:10px;text-align:center;}
-.sleep-m-val{font-size:18px;font-weight:700;}
-.sleep-m-lbl{font-size:11px;opacity:.65;margin-top:2px;}
-.sleep-bar-wrap{margin-top:16px;position:relative;}
-.sleep-bar-label{display:flex;justify-content:space-between;font-size:12px;opacity:.65;margin-bottom:6px;}
-.sleep-bar-track{height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;}
-.sleep-bar-fill{height:100%;border-radius:4px;}
-.bars{display:flex;align-items:flex-end;gap:5px;height:72px;}
-.bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.bfill{width:100%;border-radius:6px 6px 0 0;min-height:4px;}
-.bday{font-size:10px;color:var(--text3);}
+/* ── 底部导航 ── */
+.nav{display:flex;background:var(--bg);border-top:.5px solid var(--border);padding-bottom:env(safe-area-inset-bottom,0px);flex-shrink:0;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;cursor:pointer;color:var(--text3);font-size:10px;font-family:var(--font);transition:color .2s;}
+.ni.on{color:var(--c6);}
+.ni svg{width:24px;height:24px;}
 
-/* ── 运动 page ── */
-.ring-wrap{display:flex;gap:18px;align-items:center;}
-.ring-labels{flex:1;}
-.rl{display:flex;justify-content:space-between;padding:5px 0;border-bottom:.5px solid var(--border);font-size:14px;}
-.rl:last-child{border-bottom:none;}
-.rl-k{color:var(--text2);}
-.rl-v{font-weight:700;}
-.sport-tabs{display:flex;gap:8px;margin-bottom:14px;}
-.sp{flex:1;padding:9px 4px;border:.5px solid var(--border2);border-radius:var(--r);text-align:center;font-size:13px;color:var(--text2);cursor:pointer;background:var(--bg);transition:all .2s;}
-.sp.on{background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;border-color:transparent;font-weight:700;}
-.sp-ic{font-size:18px;display:block;margin-bottom:2px;}
-.coros-strip{display:flex;align-items:center;gap:12px;padding:14px;background:linear-gradient(135deg,var(--c4l),var(--c7l));border-radius:var(--r2);margin-bottom:12px;border:.5px solid rgba(72,219,251,.2);}
-.coros-ic{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--c4),var(--c7));display:flex;align-items:center;justify-content:center;font-size:20px;}
-.coros-ttl{font-size:15px;font-weight:700;color:var(--c4d);}
-.coros-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.coros-btn{font-size:14px;font-weight:700;padding:7px 16px;border:none;border-radius:20px;background:linear-gradient(135deg,var(--c4),var(--c7));color:#fff;cursor:pointer;font-family:var(--font);}
+/* ── 数据安全提示 ── */
+.security-badge{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c6l);border-radius:var(--r);font-size:12px;color:var(--c6d);font-weight:600;margin-bottom:12px;}
 
-/* ── 设置 / 安全 page ── */
-.profile-hero{display:flex;align-items:center;gap:16px;padding:20px 16px;background:var(--bg2);border-radius:var(--r2);margin-top:20px;margin-bottom:20px;}
-.profile-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--c6),var(--c4));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;flex-shrink:0;}
-.profile-name{font-size:20px;font-weight:800;}
-.profile-id{font-size:13px;color:var(--text3);margin-top:3px;}
-.setting-group{margin-bottom:20px;}
-.setting-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:.5px solid var(--border);cursor:pointer;}
-.setting-item:last-child{border-bottom:none;}
-.setting-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
-.setting-body{flex:1;}
-.setting-title{font-size:16px;font-weight:600;}
-.setting-sub{font-size:13px;color:var(--text3);margin-top:2px;}
-.setting-right{font-size:18px;color:var(--text3);}
-.security-banner{background:linear-gradient(135deg,var(--c6l),var(--c4l));border:.5px solid rgba(29,209,161,.3);border-radius:var(--r2);padding:16px;margin-bottom:12px;}
-.security-title{font-size:15px;font-weight:700;color:var(--c6d);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-.security-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
-.security-list li{font-size:13px;color:var(--c6d);display:flex;align-items:flex-start;gap:6px;line-height:1.5;}
-.logout-btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;background:var(--c1l);color:var(--c1d);font-family:var(--font);margin-top:8px;}
+/* AI note */
+.ai-note{font-size:14px;color:var(--text2);line-height:1.7;padding:14px 16px;background:var(--c7l);border-radius:var(--r);border-left:3px solid var(--c7);margin-bottom:10px;}
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app" id="app">
 
-<!-- ══ AUTH SCREEN ══ -->
-<div class="auth-screen" id="auth-screen">
-  <div class="auth-logo">🏥</div>
-  <div class="auth-appname">健检宝</div>
-  <div class="auth-tagline">家庭健康档案管理<br>体检结果 · 睡眠 · 运动，一站掌握</div>
+<!-- ══════════════════ 登录页 ══════════════════ -->
+<div class="login-page" id="login-page">
+  <div class="login-logo">🏥</div>
+  <div class="login-title">健康档案</div>
+  <div class="login-sub">安全管理您和家人的健康数据<br>体检报告 · 睡眠记录 · 运动数据</div>
 
-  <div class="auth-tabs" style="width:100%;">
-    <div class="auth-tab on" id="tab-login" onclick="switchAuth('login')">登录</div>
-    <div class="auth-tab" id="tab-reg" onclick="switchAuth('reg')">注册</div>
+  <div class="login-form" id="login-form">
+    <div class="inp-wrap"><span class="inp-icon">📱</span><input class="inp" type="tel" id="login-phone" placeholder="手机号" inputmode="numeric" maxlength="11"/></div>
+    <div class="inp-wrap"><span class="inp-icon">🔒</span><input class="inp" type="password" id="login-pwd" placeholder="密码（6位以上）"/></div>
+    <button class="btn-full" onclick="doLogin()">登录</button>
+    <div class="divider"><div class="divider-line"></div><div class="divider-text">或</div><div class="divider-line"></div></div>
+    <button class="btn-full" style="background:linear-gradient(135deg,#07C160,#0ABF54);" onclick="wechatLogin()">微信一键登录</button>
+    <div class="login-switch">还没有账号？<span onclick="switchToReg()">立即注册</span></div>
   </div>
 
-  <div class="auth-form" id="auth-form-login">
-    <div class="auth-inp-wrap"><span class="auth-inp-icon">📱</span><input class="auth-inp" type="tel" placeholder="手机号码" id="login-phone" inputmode="tel"/></div>
-    <div class="auth-inp-wrap"><span class="auth-inp-icon">🔒</span><input class="auth-inp" type="password" placeholder="密码" id="login-pwd"/></div>
-    <button class="auth-btn" onclick="doLogin()">登录</button>
+  <div id="reg-form" style="display:none;width:100%;display:none;">
+    <div class="inp-wrap" style="margin-bottom:14px;"><span class="inp-icon">👤</span><input class="inp" type="text" id="reg-name" placeholder="姓名"/></div>
+    <div class="inp-wrap" style="margin-bottom:14px;"><span class="inp-icon">📱</span><input class="inp" type="tel" id="reg-phone" placeholder="手机号" inputmode="numeric" maxlength="11"/></div>
+    <div class="inp-wrap" style="margin-bottom:14px;"><span class="inp-icon">🔒</span><input class="inp" type="password" id="reg-pwd" placeholder="设置密码（6位以上）"/></div>
+    <div class="inp-wrap" style="margin-bottom:14px;"><span class="inp-icon">🔒</span><input class="inp" type="password" id="reg-pwd2" placeholder="确认密码"/></div>
+    <button class="btn-full" onclick="doRegister()">注册并登录</button>
+    <div class="login-switch" style="margin-top:16px;">已有账号？<span onclick="switchToLogin()">返回登录</span></div>
   </div>
 
-  <div class="auth-form" id="auth-form-reg" style="display:none;">
-    <div class="auth-inp-wrap"><span class="auth-inp-icon">👤</span><input class="auth-inp" type="text" placeholder="姓名" id="reg-name"/></div>
-    <div class="auth-inp-wrap"><span class="auth-inp-icon">📱</span><input class="auth-inp" type="tel" placeholder="手机号码" id="reg-phone" inputmode="tel"/></div>
-    <div class="auth-inp-wrap"><span class="auth-inp-icon">🔒</span><input class="auth-inp" type="password" placeholder="设置密码（8位以上）" id="reg-pwd"/></div>
-    <div class="auth-inp-wrap"><span class="auth-inp-icon">🔒</span><input class="auth-inp" type="password" placeholder="确认密码" id="reg-pwd2"/></div>
-    <div class="auth-privacy">
-      <strong>🔐 数据安全承诺</strong><br>
-      您的体检数据、睡眠记录和运动数据经端对端加密存储，严格隔离，任何第三方无法访问。注册即代表您同意<a href="#">《隐私政策》</a>与<a href="#">《用户协议》</a>。
-    </div>
-    <button class="auth-btn" onclick="doRegister()">注册并进入</button>
+  <div class="login-notice">
+    <strong>🔐 数据安全承诺</strong><br>
+    所有健康数据采用端对端加密存储，严格用户隔离，任何第三方（包括平台运营方）均无法访问您的个人健康信息。数据不用于任何商业目的。
   </div>
-
-  <div class="auth-notice">登录即表示同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></div>
 </div>
 
-<!-- ══ MAIN APP ══ -->
-<div class="status">
-  <span class="status-time" id="clock">09:41</span>
-  <div class="status-right">
+<!-- ══════════════════ 主应用 ══════════════════ -->
+<div class="main-app" id="main-app" style="display:none;">
+
+  <div class="status">
+    <span class="status-time" id="clock">09:41</span>
     <span class="status-icons">●●● 100%</span>
-    <div class="user-badge" id="user-badge" onclick="sw(4)">永</div>
   </div>
-</div>
 
-<div class="header">
-  <div class="hd-deco"></div><div class="hd-deco2"></div>
-  <div class="hd-greeting" id="greeting">早上好 🌅</div>
-  <div class="hd-title" id="page-title">健康概览</div>
-</div>
-
-<div class="body">
-<div class="pages" id="pages">
-
-<!-- ── PAGE 0: 概览 ── -->
-<div class="pg">
-  <div class="sec">
-    <!-- 最近体检 hero -->
-    <div class="hero-card">
-      <div class="hero-deco"></div><div class="hero-deco2"></div>
-      <div class="hero-label">最近一次体检</div>
-      <div class="hero-date">2024年12月15日</div>
-      <div class="hero-hospital">吉安市中心人民医院 · 年度体检</div>
-      <div class="hero-badge">综合评分 82分 ↑</div>
+  <div class="header">
+    <div class="hd-deco"></div><div class="hd-deco2"></div>
+    <div class="hd-top">
+      <div class="hd-user">
+        <div class="hd-avatar" id="hd-av">我</div>
+        <div><div class="hd-greeting" id="hd-greeting">早上好</div><div class="hd-name" id="hd-name">用户</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="font-size:11px;color:var(--c6);background:var(--c6l);padding:4px 9px;border-radius:10px;font-weight:700;">🔐 已加密</div>
+        <div class="hd-logout" onclick="doLogout()">退出</div>
+      </div>
     </div>
+    <div class="hd-title" id="hd-title">健康概览</div>
   </div>
 
-  <div class="sec">
+  <div class="tabs" id="tabs">
+    <div class="tab on" onclick="sw(0,this)">概览</div>
+    <div class="tab" onclick="sw(1,this)">体检报告</div>
+    <div class="tab" onclick="sw(2,this)">睡眠</div>
+    <div class="tab" onclick="sw(3,this)">运动</div>
+    <div class="tab" onclick="sw(4,this)">录入数据</div>
+  </div>
+
+  <div class="body">
+  <div class="pages" id="pages">
+
+  <!-- ── PAGE 0 概览 ── -->
+  <div class="pg">
+    <!-- 异常提醒 -->
+    <div class="sec">
+      <div class="alert-banner">
+        <div class="alert-ic">⚠️</div>
+        <div class="alert-body">
+          <div class="alert-title">1 项指标需要关注</div>
+          <div class="alert-sub">总胆固醇 6.2 mmol/L 连续两年偏高，建议就医复查</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据卡片 -->
     <div class="stat-row">
-      <div class="stat" style="background:linear-gradient(135deg,#1DD1A1,#48DBFB);color:#fff;">
+      <div class="stat" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);">
+        <div class="stat-icon">🩸</div>
+        <div class="stat-val">5.8</div>
+        <div class="stat-lbl">血糖 mmol/L</div>
+        <div class="stat-sub">↑ 较去年 +0.3</div>
+      </div>
+      <div class="stat" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);">
+        <div class="stat-icon">💓</div>
+        <div class="stat-val">118/76</div>
+        <div class="stat-lbl">血压 mmHg</div>
+        <div class="stat-sub">→ 稳定</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat" style="background:linear-gradient(135deg,#1DD1A1,#48DBFB);">
         <div class="stat-icon">😴</div>
-        <div class="stat-val">7.2<span style="font-size:16px;opacity:.8;">h</span></div>
-        <div class="stat-lbl">昨晚睡眠</div>
+        <div class="stat-val">7.2h</div>
+        <div class="stat-lbl">昨夜睡眠</div>
         <div class="stat-sub">质量：良好</div>
       </div>
-      <div class="stat" style="background:linear-gradient(135deg,#FF9F43,#FECA57);color:#fff;">
-        <div class="stat-icon">🚶</div>
+      <div class="stat" style="background:linear-gradient(135deg,#FECA57,#FF9F43);">
+        <div class="stat-icon">🏃</div>
         <div class="stat-val">8,432</div>
         <div class="stat-lbl">今日步数</div>
-        <div class="stat-sub">目标 10,000</div>
+        <div class="stat-sub">目标 12,000</div>
       </div>
     </div>
-    <div class="stat-row">
-      <div class="stat" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);color:#fff;">
-        <div class="stat-icon">⚠️</div>
-        <div class="stat-val">2</div>
-        <div class="stat-lbl">异常指标</div>
-        <div class="stat-sub">需要关注</div>
+
+    <!-- 家庭成员 -->
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">家庭成员档案</div><span class="sec-more">管理</span></div>
+      <div class="mem-row" style="margin-bottom:0;padding:4px 0 12px;">
+        <div class="mem" onclick="selMem(this,0)">
+          <div class="mem-av on" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);">我</div>
+          <span class="mem-name">本人</span>
+        </div>
+        <div class="mem" onclick="selMem(this,1)">
+          <div class="mem-av" style="background:linear-gradient(135deg,#48DBFB,#1DD1A1);">妻</div>
+          <span class="mem-name">妻子</span>
+        </div>
+        <div class="mem" onclick="selMem(this,2)">
+          <div class="mem-av" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);">父</div>
+          <span class="mem-name">父亲</span>
+        </div>
+        <div class="mem" onclick="selMem(this,3)">
+          <div class="mem-av" style="background:linear-gradient(135deg,#FECA57,#FF9F43);">母</div>
+          <span class="mem-name">母亲</span>
+        </div>
+        <div class="mem-add" onclick="alert('添加家庭成员')">+</div>
       </div>
-      <div class="stat" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);color:#fff;">
-        <div class="stat-icon">👨‍👩‍👧‍👦</div>
-        <div class="stat-val">4</div>
-        <div class="stat-lbl">家庭成员</div>
-        <div class="stat-sub">已建档</div>
+    </div>
+
+    <!-- 体检提醒 -->
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">体检提醒</div></div>
+      <div class="card-wh">
+        <div class="row"><div class="row-icon" style="background:var(--c1l);">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">距下次体检 <strong style="color:var(--c1);">23 天</strong> · 5月12日</div></div><span class="pill pill-warn">即将到期</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c6l);">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">距下次体检 198 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c4l);">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">距下次体检 210 天 · 11月</div></div><span class="pill pill-ok">正常</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c7l);">👤</div><div class="row-body"><div class="row-title">母亲</div><div class="row-sub">距下次体检 168 天 · 10月</div></div><span class="pill pill-ok">正常</span></div>
       </div>
     </div>
   </div>
 
-  <div class="sec">
-    <div class="sec-hd"><div class="sec-label">异常指标提醒</div><span class="sec-more" onclick="sw(1)">查看体检</span></div>
-    <div class="card-wh">
-      <div class="row"><div class="row-icon" style="background:var(--c1l);">⚠️</div><div class="row-body"><div class="row-title">总胆固醇偏高</div><div class="row-sub">6.2 mmol/L · 本人 · 连续2年</div></div><span class="pill pill-danger">偏高</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c2l);">📊</div><div class="row-body"><div class="row-title">父亲血压临界</div><div class="row-sub">138/88 mmHg · 父亲 · 关注中</div></div><span class="pill pill-warn">关注</span></div>
+  <!-- ── PAGE 1 体检报告 ── -->
+  <div class="pg">
+    <!-- 成员选择 -->
+    <div class="sec">
+      <div class="mem-row">
+        <div class="mem" onclick="selMem2(this,0)"><div class="mem-av on" style="background:linear-gradient(135deg,#FF6B6B,#FF9F43);">我</div><span class="mem-name">本人</span></div>
+        <div class="mem" onclick="selMem2(this,1)"><div class="mem-av" style="background:linear-gradient(135deg,#48DBFB,#1DD1A1);">妻</div><span class="mem-name">妻子</span></div>
+        <div class="mem" onclick="selMem2(this,2)"><div class="mem-av" style="background:linear-gradient(135deg,#A29BFE,#FF9FF3);">父</div><span class="mem-name">父亲</span></div>
+        <div class="mem" onclick="selMem2(this,3)"><div class="mem-av" style="background:linear-gradient(135deg,#FECA57,#FF9F43);">母</div><span class="mem-name">母亲</span></div>
+      </div>
+    </div>
+
+    <!-- 指标卡 -->
+    <div id="report-body">
+      <div class="sec-label" style="margin-bottom:10px;">本人 · 2024年12月 · 吉安市中心人民医院</div>
+      <div class="metric-2">
+        <div class="mbox" style="background:var(--c4l);color:var(--c4d);">
+          <div class="mbox-icon">🩸</div>
+          <div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);">↑ 较去年 +0.3</div>
+        </div>
+        <div class="mbox" style="background:var(--c6l);color:var(--c6d);">
+          <div class="mbox-icon">💓</div>
+          <div class="lbl">血压</div><div class="val">118/76 <span class="unit">mmHg</span></div><div class="tr" style="color:var(--c6d);">→ 稳定</div>
+        </div>
+        <div class="mbox" style="background:var(--c1l);color:var(--c1d);">
+          <div class="mbox-icon">🔬</div>
+          <div class="lbl">总胆固醇</div><div class="val">6.2 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);font-weight:800;">↑ 偏高</div>
+        </div>
+        <div class="mbox" style="background:var(--c7l);color:var(--c7d);">
+          <div class="mbox-icon">⚖️</div>
+          <div class="lbl">BMI</div><div class="val">24.1</div><div class="tr" style="color:var(--c6d);">↓ -0.5</div>
+        </div>
+        <div class="mbox" style="background:var(--c2l);color:var(--c2d);">
+          <div class="mbox-icon">🧪</div>
+          <div class="lbl">尿酸</div><div class="val">320 <span class="unit">μmol/L</span></div><div class="tr" style="color:var(--c6d);">→ 正常</div>
+        </div>
+        <div class="mbox" style="background:var(--c3l);color:var(--c3d);">
+          <div class="mbox-icon">🫁</div>
+          <div class="lbl">血红蛋白</div><div class="val">142 <span class="unit">g/L</span></div><div class="tr" style="color:var(--c6d);">→ 正常</div>
+        </div>
+      </div>
+
+      <!-- 趋势图 -->
+      <div class="sec-header" style="margin-top:20px;margin-bottom:8px;"><div class="sec-label">历年趋势</div></div>
+      <div class="chart-tabs">
+        <div class="ctab on" onclick="selChart(this,'血糖')">血糖</div>
+        <div class="ctab" onclick="selChart(this,'血压')">血压</div>
+        <div class="ctab" onclick="selChart(this,'胆固醇')">胆固醇</div>
+        <div class="ctab" onclick="selChart(this,'BMI')">BMI</div>
+      </div>
+      <div class="chart-wrap" style="padding-top:12px;">
+        <div class="chart-title"><span id="chart-name">空腹血糖趋势</span><span class="chart-legend">mmol/L</span></div>
+        <svg class="chart-svg" viewBox="0 0 300 100" preserveAspectRatio="none" id="chart-svg">
+          <defs><linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1DD1A1"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
+          <line x1="0" y1="35" x2="300" y2="35" stroke="#FFB3B3" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <text x="295" y="32" font-size="9" fill="#FF6B6B" text-anchor="end" font-family="-apple-system,sans-serif" font-weight="700">参考上限</text>
+          <polyline points="20,68 80,60 140,54 200,46 260,38 300,34" fill="none" stroke="url(#cg1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="20" cy="68" r="4" fill="#1DD1A1" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="80" cy="60" r="4" fill="#1DD1A1" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="140" cy="54" r="4" fill="#48DBFB" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="46" r="4" fill="#48DBFB" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="260" cy="38" r="4" fill="#48DBFB" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="300" cy="34" r="5" fill="#48DBFB" stroke="#fff" stroke-width="2"/>
+          <text x="20" y="90" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2020</text>
+          <text x="80" y="90" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2021</text>
+          <text x="140" y="90" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2022</text>
+          <text x="200" y="90" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2023</text>
+          <text x="260" y="90" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2024</text>
+        </svg>
+      </div>
+
+      <!-- AI解读 -->
+      <div class="sec-label" style="margin-top:4px;margin-bottom:8px;">AI 健康解读</div>
+      <div class="ai-note">📊 总胆固醇 6.2 偏高，已连续两年超标，建议减少饱和脂肪酸摄入，增加有氧运动频率，必要时就医评估是否需要药物干预。<br><br>🩸 空腹血糖呈上升趋势，虽仍在正常范围内，建议控制精制糖和精制碳水摄入，定期监测。<br><br>✅ 血压、BMI、尿酸、血红蛋白均在正常范围，整体状况良好。</div>
+
+      <!-- 上传 -->
+      <div class="sec-label" style="margin-top:20px;margin-bottom:10px;">上传体检报告</div>
+      <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
+      <div class="upload-area" onclick="document.getElementById('file-input').click()">
+        <div class="upload-icon-big">📋</div>
+        <div class="upload-title">点击上传体检报告</div>
+        <div class="upload-sub">支持 PDF · JPG · PNG · AI 自动识别提取指标</div>
+      </div>
+      <div id="file-list"></div>
+
+      <div class="sec-label" style="margin-top:8px;margin-bottom:10px;">历史报告</div>
+      <div class="card-wh">
+        <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2024年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
+        <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2023年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
+        <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2022年12月 · 吉安市中心人民医院</div></div><span class="hist-arr">›</span></div>
+      </div>
     </div>
   </div>
 
-  <div class="sec">
-    <div class="sec-hd"><div class="sec-label">体检提醒</div></div>
-    <div class="card-wh">
-      <div class="row"><div class="row-icon" style="background:var(--c1l);">👤</div><div class="row-body"><div class="row-title">父亲</div><div class="row-sub">距下次体检还有 <strong style="color:var(--c1);">23天</strong></div></div><span class="pill pill-warn">即将到期</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c6l);">👤</div><div class="row-body"><div class="row-title">本人</div><div class="row-sub">距下次体检还有 198天</div></div><span class="pill pill-ok">正常</span></div>
-      <div class="row"><div class="row-icon" style="background:var(--c4l);">👤</div><div class="row-body"><div class="row-title">妻子</div><div class="row-sub">距下次体检还有 210天</div></div><span class="pill pill-ok">正常</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- ── PAGE 1: 体检档案 ── -->
-<div class="pg">
-  <div class="mem-row">
-    <div class="mem" onclick="selM(this,0)">
-      <div class="mem-av on" style="background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border-color:var(--c1);">我</div>
-      <span class="mem-name">本人</span>
-    </div>
-    <div class="mem" onclick="selM(this,1)">
-      <div class="mem-av" style="background:linear-gradient(135deg,var(--c4),var(--c6));color:#fff;">妻</div>
-      <span class="mem-name">妻子</span>
-    </div>
-    <div class="mem" onclick="selM(this,2)">
-      <div class="mem-av" style="background:linear-gradient(135deg,var(--c7),var(--c5));color:#fff;">父</div>
-      <span class="mem-name">父亲</span>
-    </div>
-    <div class="mem" onclick="selM(this,3)">
-      <div class="mem-av" style="background:linear-gradient(135deg,var(--c3),var(--c2));color:#fff;">母</div>
-      <span class="mem-name">母亲</span>
-    </div>
-    <div class="mem" onclick="addMember()">
-      <div class="mem-av" style="background:var(--bg2);color:var(--text3);font-size:22px;">+</div>
-      <span class="mem-name">添加</span>
-    </div>
-  </div>
-
-  <div id="mc">
-    <div class="sec-label">本人 · 2024年12月</div>
-    <div class="metric-2" style="margin-top:10px;">
-      <div class="mbox" style="background:var(--c4l);color:var(--c4d);">
-        <div class="lbl">空腹血糖</div><div class="val">5.8 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c2d);">↑ 较去年 +0.3</div>
-      </div>
-      <div class="mbox" style="background:var(--c6l);color:var(--c6d);">
-        <div class="lbl">血压</div><div class="val">118/76</div><div class="tr" style="color:var(--c6d);">→ 稳定</div>
-      </div>
-      <div class="mbox" style="background:var(--c1l);color:var(--c1d);">
-        <div class="lbl">总胆固醇</div><div class="val">6.2 <span class="unit">mmol/L</span></div><div class="tr" style="color:var(--c1d);font-weight:800;">↑ 偏高</div>
-      </div>
-      <div class="mbox" style="background:var(--c7l);color:var(--c7d);">
-        <div class="lbl">BMI</div><div class="val">24.1</div><div class="tr" style="color:var(--c6d);">↓ -0.5</div>
-      </div>
-      <div class="mbox" style="background:var(--c2l);color:var(--c2d);">
-        <div class="lbl">尿酸</div><div class="val">310 <span class="unit">μmol/L</span></div><div class="tr" style="color:var(--c6d);">→ 正常</div>
-      </div>
-      <div class="mbox" style="background:var(--c5l);color:var(--c5d);">
-        <div class="lbl">肝功能 ALT</div><div class="val">28 <span class="unit">U/L</span></div><div class="tr" style="color:var(--c6d);">→ 正常</div>
-      </div>
-    </div>
-
-    <div class="sec-label" style="margin-top:20px;">历年血糖趋势</div>
-    <div class="card" style="background:linear-gradient(135deg,#f0f8ff,#e8f4ff);padding-bottom:10px;">
-      <svg class="chart-svg" viewBox="0 0 300 90" preserveAspectRatio="none">
-        <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#A29BFE"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
-        <line x1="0" y1="30" x2="300" y2="30" stroke="#FFB3B3" stroke-width="1.5" stroke-dasharray="5,4"/>
-        <text x="293" y="27" font-size="9" fill="#FF6B6B" text-anchor="end" font-family="-apple-system,sans-serif" font-weight="700">参考上限 6.1</text>
-        <polyline points="20,65 80,58 140,52 200,44 260,35 300,30" fill="none" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="300" cy="30" r="5" fill="#48DBFB" stroke="#fff" stroke-width="2"/>
-        <text x="20" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2020</text>
-        <text x="80" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2021</text>
-        <text x="140" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2022</text>
-        <text x="200" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2023</text>
-        <text x="260" y="82" font-size="9" fill="#8e8e93" text-anchor="middle" font-family="-apple-system,sans-serif">2024</text>
-        <text x="290" y="26" font-size="10" fill="#48DBFB" font-weight="800" text-anchor="end" font-family="-apple-system,sans-serif">5.8</text>
-      </svg>
-    </div>
-
-    <div class="sec-label" style="margin-top:20px;">AI 健康解读</div>
-    <div class="ai-note">总胆固醇 6.2 mmol/L 偏高，已连续两年超标，建议减少动物脂肪摄入，增加有氧运动，并在3个月后复查。血糖呈上升趋势，需持续关注，建议调整饮食结构。其余指标良好。</div>
-
-    <div class="sec-label" style="margin-top:24px;">上传体检报告</div>
-    <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
-    <div class="upload-area" onclick="document.getElementById('file-input').click()">
-      <div class="upload-icon">📋</div>
-      <div class="upload-title">点击上传体检报告</div>
-      <div class="upload-sub">支持 PDF、JPG、PNG · 数据加密存储</div>
-    </div>
-    <div id="file-list"></div>
-
-    <div class="sec-label" style="margin-top:8px;">历史报告</div>
-    <div class="card-wh">
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2024年12月 · 吉安市中心人民医院</div></div><span class="pill pill-ok">已解析</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">年度体检</div><div class="hist-sub">2023年12月 · 吉安市中心人民医院</div></div><span class="pill pill-ok">已解析</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">专项复查</div><div class="hist-sub">2023年6月 · 吉安市第一人民医院</div></div><span class="pill pill-ok">已解析</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- ── PAGE 2: 睡眠 ── -->
-<div class="pg">
-  <div class="sec">
-    <div class="sleep-tonight">
-      <div class="sleep-stars"></div>
-      <div class="sleep-label" style="position:relative;">昨晚睡眠 · 4月27日</div>
-      <div class="sleep-duration" style="position:relative;">7<span class="sleep-unit">h</span> 12<span class="sleep-unit">min</span></div>
-      <div class="sleep-metrics">
-        <div class="sleep-m"><div class="sleep-m-val">23:18</div><div class="sleep-m-lbl">入睡时间</div></div>
-        <div class="sleep-m"><div class="sleep-m-val">06:30</div><div class="sleep-m-lbl">起床时间</div></div>
-        <div class="sleep-m"><div class="sleep-m-val">86<span style="font-size:11px;">分</span></div><div class="sleep-m-lbl">睡眠质量</div></div>
-      </div>
-      <div class="sleep-bar-wrap">
-        <div class="sleep-bar-label"><span>深睡 2.1h</span><span>浅睡 3.4h</span><span>REM 1.7h</span></div>
-        <div class="sleep-bar-track">
-          <div class="sleep-bar-fill" style="width:100%;background:linear-gradient(90deg,#3D3FAE 29%,#6C8EFF 29%,#6C8EFF 76%,#48DBFB 76%);"></div>
+  <!-- ── PAGE 2 睡眠 ── -->
+  <div class="pg">
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">昨夜睡眠</div><span class="sec-more">本周报告</span></div>
+      <div class="sleep-card">
+        <div class="sleep-deco"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="sleep-score">7.2</div>
+            <div class="sleep-label">小时 · 2025年4月27日</div>
+            <div class="sleep-grade">⭐ 良好</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:28px;font-weight:800;color:var(--c7);">82</div>
+            <div style="font-size:12px;opacity:.7;margin-top:2px;">睡眠评分</div>
+          </div>
+        </div>
+        <div class="sleep-stats">
+          <div class="sleep-stat"><span class="sleep-stat-val">23:10</span>入睡时间</div>
+          <div class="sleep-stat"><span class="sleep-stat-val">06:22</span>起床时间</div>
+          <div class="sleep-stat"><span class="sleep-stat-val">2次</span>夜间醒来</div>
+        </div>
+        <div style="margin-top:14px;font-size:11px;opacity:.55;margin-bottom:6px;">睡眠阶段分布</div>
+        <div class="sleep-bars">
+          <div class="sb deep" style="height:20px;"></div>
+          <div class="sb light" style="height:35px;"></div>
+          <div class="sb rem" style="height:28px;"></div>
+          <div class="sb deep" style="height:38px;"></div>
+          <div class="sb light" style="height:30px;"></div>
+          <div class="sb deep" style="height:42px;"></div>
+          <div class="sb rem" style="height:32px;"></div>
+          <div class="sb light" style="height:25px;"></div>
+          <div class="sb deep" style="height:35px;"></div>
+          <div class="sb rem" style="height:20px;"></div>
+          <div class="sb light" style="height:15px;"></div>
+          <div class="sb deep" style="height:10px;"></div>
+        </div>
+        <div style="display:flex;gap:14px;margin-top:8px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;opacity:.7;"><div style="width:10px;height:10px;border-radius:2px;background:var(--c7);"></div>深睡</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;opacity:.7;"><div style="width:10px;height:10px;border-radius:2px;background:var(--c4);"></div>浅睡</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;opacity:.7;"><div style="width:10px;height:10px;border-radius:2px;background:var(--c5);"></div>REM</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="sec">
-    <div class="sec-label">本周睡眠（小时）</div>
-    <div class="card">
-      <div class="bars">
-        <div class="bcol"><div class="bfill" style="height:56px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.7;"></div><div class="bday">一</div></div>
-        <div class="bcol"><div class="bfill" style="height:48px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.6;"></div><div class="bday">二</div></div>
-        <div class="bcol"><div class="bfill" style="height:60px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.75;"></div><div class="bday">三</div></div>
-        <div class="bcol"><div class="bfill" style="height:38px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.5;"></div><div class="bday">四</div></div>
-        <div class="bcol"><div class="bfill" style="height:64px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);opacity:.8;"></div><div class="bday">五</div></div>
-        <div class="bcol"><div class="bfill" style="height:68px;background:linear-gradient(to top,#3D3FAE,#6C8EFF);"></div><div class="bday">六</div></div>
-        <div class="bcol"><div class="bfill" style="height:58px;background:linear-gradient(to top,#48DBFB,#A29BFE);"></div><div class="bday" style="color:var(--c4);font-weight:800;">今</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-label">手动记录睡眠</div>
-    <div class="card-wh">
-      <div class="inp-2" style="margin-bottom:12px;">
-        <div class="inp-grp"><span class="inp-lbl">入睡时间</span><input class="inp" type="time" value="23:00" id="sleep-start"/></div>
-        <div class="inp-grp"><span class="inp-lbl">起床时间</span><input class="inp" type="time" value="06:30" id="sleep-end"/></div>
-      </div>
-      <div class="inp-grp">
-        <span class="inp-lbl">睡眠质量</span>
-        <select class="inp" id="sleep-quality">
-          <option>优秀（90分以上）</option>
-          <option selected>良好（70-89分）</option>
-          <option>一般（50-69分）</option>
-          <option>较差（50分以下）</option>
-        </select>
-      </div>
-      <button class="btn" onclick="saveSleep()">保存睡眠记录</button>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-label">睡眠健康建议</div>
-    <div class="ai-note">本周平均睡眠 7.1小时，质量良好。建议保持固定作息，周四睡眠不足6小时，长期不足可能影响血压和血糖水平——与您的体检指标高度相关，需重点关注。</div>
-  </div>
-</div>
-
-<!-- ── PAGE 3: 运动 ── -->
-<div class="pg">
-  <div class="sec">
-    <div class="coros-strip">
-      <div class="coros-ic">⌚</div>
-      <div style="flex:1;"><div class="coros-ttl">高驰手表同步</div><div class="coros-sub">通过 Strava 自动导入数据</div></div>
-      <button class="coros-btn" onclick="alert('正式版将引导登录 Strava，授权后自动同步高驰运动数据。')">连接</button>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-label">今日运动</div>
-    <div class="card" style="background:linear-gradient(135deg,#F0FFF8,#E8F8FF);">
-      <div class="ring-wrap">
-        <div style="position:relative;width:84px;height:84px;flex-shrink:0;">
-          <svg viewBox="0 0 84 84" width="84" height="84">
-            <circle cx="42" cy="42" r="34" fill="none" stroke="#D0FFE8" stroke-width="9"/>
-            <circle cx="42" cy="42" r="34" fill="none" stroke="url(#rg2)" stroke-width="9" stroke-dasharray="142 71" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 42 42)"/>
-            <defs><linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1DD1A1"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
-          </svg>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;"><div style="font-size:17px;font-weight:800;color:var(--c6);">70%</div><div style="font-size:10px;color:var(--text3);">目标</div></div>
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">本周睡眠（小时）</div></div>
+      <div class="card">
+        <div class="sport-week">
+          <div class="sw-col"><div class="sw-bar" style="height:52px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.7;"></div><div class="sw-day">一</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:40px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.5;"></div><div class="sw-day">二</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:58px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.8;"></div><div class="sw-day">三</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:48px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.65;"></div><div class="sw-day">四</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:62px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.85;"></div><div class="sw-day">五</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:55px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.75;"></div><div class="sw-day">六</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:54px;background:linear-gradient(to top,var(--c7),var(--c5));"></div><div class="sw-day" style="color:var(--c7);font-weight:800;">昨</div></div>
         </div>
-        <div class="ring-labels">
-          <div class="rl"><span class="rl-k">步数</span><span class="rl-v" style="color:var(--c6);">8,432 步</span></div>
-          <div class="rl"><span class="rl-k">消耗</span><span class="rl-v" style="color:var(--c2);">412 kcal</span></div>
-          <div class="rl"><span class="rl-k">时长</span><span class="rl-v" style="color:var(--c4);">68 分钟</span></div>
-          <div class="rl"><span class="rl-k">心率均值</span><span class="rl-v" style="color:var(--c1);">94 bpm</span></div>
+        <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--text3);">
+          <span>周均 <strong style="color:var(--text);">7.0h</strong></span>
+          <span>建议 <strong style="color:var(--c6);">7~9h</strong></span>
         </div>
       </div>
     </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">历月睡眠质量</div></div>
+      <div class="card-wh">
+        <div class="row"><div class="row-icon" style="background:var(--c7l);">😴</div><div class="row-body"><div class="row-title">4月平均睡眠</div><div class="row-sub">7.0 小时 · 评分 80分</div></div><span class="pill pill-ok">良好</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c7l);">😴</div><div class="row-body"><div class="row-title">3月平均睡眠</div><div class="row-sub">6.5 小时 · 评分 72分</div></div><span class="pill pill-warn">一般</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c7l);">😴</div><div class="row-body"><div class="row-title">2月平均睡眠</div><div class="row-sub">7.3 小时 · 评分 85分</div></div><span class="pill pill-ok">良好</span></div>
+      </div>
+    </div>
+
+    <div class="sec-label" style="margin-top:4px;margin-bottom:8px;">AI 睡眠建议</div>
+    <div class="ai-note">😴 本周平均睡眠 7.0 小时，处于合理范围。建议保持 23:00 前入睡，有助于深度睡眠比例提升。<br><br>💡 3月睡眠质量下降，与压力或作息不规律有关，建议睡前减少手机使用，保持规律作息时间。</div>
   </div>
 
-  <div class="sec">
-    <div class="sec-label">本周运动（分钟）</div>
-    <div class="card">
-      <div class="bars">
-        <div class="bcol"><div class="bfill" style="height:42px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.5;"></div><div class="bday">一</div></div>
-        <div class="bcol"><div class="bfill" style="height:58px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.6;"></div><div class="bday">二</div></div>
-        <div class="bcol"><div class="bfill" style="height:4px;background:var(--bg3);"></div><div class="bday">三</div></div>
-        <div class="bcol"><div class="bfill" style="height:48px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.65;"></div><div class="bday">四</div></div>
-        <div class="bcol"><div class="bfill" style="height:64px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.8;"></div><div class="bday">五</div></div>
-        <div class="bcol"><div class="bfill" style="height:68px;background:linear-gradient(to top,var(--c6),var(--c4));"></div><div class="bday">六</div></div>
-        <div class="bcol"><div class="bfill" style="height:56px;background:linear-gradient(to top,var(--c2),var(--c1));"></div><div class="bday" style="color:var(--c1);font-weight:800;">今</div></div>
+  <!-- ── PAGE 3 运动 ── -->
+  <div class="pg">
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">今日运动</div><span class="sec-more">高驰同步</span></div>
+      <div class="card" style="background:linear-gradient(135deg,#F0FFF8,#E8F8FF);">
+        <div class="sport-ring-wrap">
+          <div style="position:relative;width:88px;height:88px;flex-shrink:0;">
+            <svg viewBox="0 0 88 88" width="88" height="88">
+              <circle cx="44" cy="44" r="36" fill="none" stroke="#E0F8F0" stroke-width="9"/>
+              <circle cx="44" cy="44" r="36" fill="none" stroke="url(#srg)" stroke-width="9" stroke-dasharray="150 75" stroke-dashoffset="56" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+              <defs><linearGradient id="srg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1DD1A1"/><stop offset="100%" stop-color="#48DBFB"/></linearGradient></defs>
+            </svg>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+              <div style="font-size:18px;font-weight:800;color:#1DD1A1;">67%</div>
+              <div style="font-size:10px;color:var(--text3);">目标</div>
+            </div>
+          </div>
+          <div class="sport-stats">
+            <div class="sport-stat"><span class="sport-stat-k">步数</span><span class="sport-stat-v" style="color:var(--c1);">8,432 步</span></div>
+            <div class="sport-stat"><span class="sport-stat-k">热量</span><span class="sport-stat-v" style="color:var(--c2);">412 kcal</span></div>
+            <div class="sport-stat"><span class="sport-stat-k">时长</span><span class="sport-stat-v" style="color:var(--c6);">68 分钟</span></div>
+            <div class="sport-stat"><span class="sport-stat-k">距离</span><span class="sport-stat-v" style="color:var(--c4);">5.8 km</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">本周运动（分钟）</div></div>
+      <div class="card">
+        <div class="sport-week">
+          <div class="sw-col"><div class="sw-bar" style="height:42px;background:linear-gradient(to top,var(--c7),var(--c5));opacity:.5;"></div><div class="sw-day">一</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:58px;background:linear-gradient(to top,var(--c4),var(--c6));opacity:.65;"></div><div class="sw-day">二</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:4px;background:var(--bg3);"></div><div class="sw-day">三</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:48px;background:linear-gradient(to top,var(--c6),var(--c4));opacity:.65;"></div><div class="sw-day">四</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:64px;background:linear-gradient(to top,var(--c2),var(--c1));opacity:.8;"></div><div class="sw-day">五</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:68px;background:linear-gradient(to top,var(--c1),var(--c5));"></div><div class="sw-day">六</div></div>
+          <div class="sw-col"><div class="sw-bar" style="height:56px;background:linear-gradient(to top,var(--c7),var(--c1));"></div><div class="sw-day" style="color:var(--c6);font-weight:800;">今</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--text3);">
+          <span>周均 <strong style="color:var(--text);">54 分钟</strong></span>
+          <span>本周总计 <strong style="color:var(--c6);">324 分钟</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">运动目标追踪</div></div>
+      <div class="card-wh">
+        <div class="row"><div class="row-icon" style="background:var(--c2l);">🚶</div><div class="row-body"><div class="row-title">每日健走</div><div class="row-sub">12,000 步 · 今日 70%</div></div><span class="pill pill-warn">未达标</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">本周力量训练</div><div class="row-sub">目标 3 次 · 已完成 2 次</div></div><span class="pill pill-ok">进行中</span></div>
+        <div class="row"><div class="row-icon" style="background:var(--c1l);">🏃</div><div class="row-body"><div class="row-title">本周有氧跑步</div><div class="row-sub">目标 2 次 · 已完成 0 次</div></div><span class="pill pill-danger">待完成</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-header"><div class="sec-label">运动记录</div></div>
+      <div class="card-wh" id="sport-log">
+        <div class="row"><div class="row-icon" style="background:var(--c1l);">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">今天 07:20 · 40 分钟 · 4,200 步</div></div><div class="row-right" style="color:var(--c1);font-weight:700;">230 kcal</div></div>
+        <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">今天 18:30 · 28 分钟 · 胸+背</div></div><div class="row-right" style="color:var(--c7);font-weight:700;">182 kcal</div></div>
+      </div>
+    </div>
+
+    <div class="sec-label" style="margin-top:4px;margin-bottom:8px;">AI 运动建议</div>
+    <div class="ai-note">🏃 本周运动频次良好，建议增加一次有氧跑步以达成周目标。<br><br>💡 结合您的总胆固醇偏高情况，建议每周保持 150 分钟以上中等强度有氧运动，有助于改善血脂水平。</div>
+  </div>
+
+  <!-- ── PAGE 4 录入数据 ── -->
+  <div class="pg">
+    <div class="sec">
+      <div class="security-badge">🔐 所有录入数据均加密存储，仅您本人可见</div>
+
+      <div class="record-tabs">
+        <div class="rtab on" onclick="selRtab(this,'#FF6B6B','#FF9F43')" id="rt0">体检指标</div>
+        <div class="rtab" onclick="selRtab(this,'#A29BFE','#FF9FF3')" id="rt1">睡眠</div>
+        <div class="rtab" onclick="selRtab(this,'#1DD1A1','#48DBFB')" id="rt2">运动</div>
+      </div>
+
+      <!-- 体检录入 -->
+      <div id="form-jiankang" class="card-wh">
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">血糖 (mmol/L)</span><input class="inp-f" type="number" placeholder="5.6" inputmode="decimal"/></div>
+          <div class="inp-grp"><span class="inp-lbl">收缩压 (mmHg)</span><input class="inp-f" type="number" placeholder="120" inputmode="numeric"/></div>
+        </div>
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">舒张压 (mmHg)</span><input class="inp-f" type="number" placeholder="80" inputmode="numeric"/></div>
+          <div class="inp-grp"><span class="inp-lbl">总胆固醇 (mmol/L)</span><input class="inp-f" type="number" placeholder="5.2" inputmode="decimal"/></div>
+        </div>
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">体重 (kg)</span><input class="inp-f" type="number" placeholder="70" inputmode="decimal"/></div>
+          <div class="inp-grp"><span class="inp-lbl">尿酸 (μmol/L)</span><input class="inp-f" type="number" placeholder="320" inputmode="numeric"/></div>
+        </div>
+        <div class="inp-grp"><span class="inp-lbl">检查日期</span><input class="inp-f" type="date"/></div>
+        <div class="inp-grp"><span class="inp-lbl">检查医院</span><input class="inp-f" type="text" placeholder="例：吉安市中心人民医院"/></div>
+        <button class="btn-save" onclick="saveRecord('体检指标')">保存体检数据</button>
+      </div>
+
+      <!-- 睡眠录入 -->
+      <div id="form-sleep" class="card-wh" style="display:none;">
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">入睡时间</span><input class="inp-f" type="time" value="23:00"/></div>
+          <div class="inp-grp"><span class="inp-lbl">起床时间</span><input class="inp-f" type="time" value="06:30"/></div>
+        </div>
+        <div class="inp-grp"><span class="inp-lbl">记录日期</span><input class="inp-f" type="date"/></div>
+        <div class="inp-3">
+          <div class="inp-grp"><span class="inp-lbl">深睡 (分钟)</span><input class="inp-f" type="number" placeholder="90" inputmode="numeric"/></div>
+          <div class="inp-grp"><span class="inp-lbl">浅睡 (分钟)</span><input class="inp-f" type="number" placeholder="180" inputmode="numeric"/></div>
+          <div class="inp-grp"><span class="inp-lbl">REM (分钟)</span><input class="inp-f" type="number" placeholder="60" inputmode="numeric"/></div>
+        </div>
+        <div class="inp-grp"><span class="inp-lbl">主观感受</span>
+          <select class="inp-f"><option>精力充沛</option><option>一般</option><option>疲惫</option><option>很差</option></select>
+        </div>
+        <div class="inp-grp"><span class="inp-lbl">备注</span><input class="inp-f" type="text" placeholder="例：夜间醒来2次"/></div>
+        <button class="btn-save" style="background:linear-gradient(135deg,var(--c7),var(--c5));" onclick="saveRecord('睡眠')">保存睡眠数据</button>
+      </div>
+
+      <!-- 运动录入 -->
+      <div id="form-sport" class="card-wh" style="display:none;">
+        <div class="record-tabs" style="margin-bottom:14px;">
+          <div class="rtab on" onclick="selSportType(this)" style="background:linear-gradient(135deg,var(--c6),var(--c4));color:#fff;border-color:transparent;">🚶健走</div>
+          <div class="rtab" onclick="selSportType(this)">🏃跑步</div>
+          <div class="rtab" onclick="selSportType(this)">💪力量</div>
+          <div class="rtab" onclick="selSportType(this)">🚴骑行</div>
+        </div>
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">时长 (分钟)</span><input class="inp-f" type="number" placeholder="40" inputmode="numeric"/></div>
+          <div class="inp-grp"><span class="inp-lbl">步数 / 距离</span><input class="inp-f" type="text" placeholder="6000步 / 5km"/></div>
+        </div>
+        <div class="inp-2">
+          <div class="inp-grp"><span class="inp-lbl">消耗热量 (kcal)</span><input class="inp-f" type="number" placeholder="自动计算" inputmode="numeric"/></div>
+          <div class="inp-grp"><span class="inp-lbl">平均心率 (bpm)</span><input class="inp-f" type="number" placeholder="125" inputmode="numeric"/></div>
+        </div>
+        <div class="inp-grp"><span class="inp-lbl">训练部位（力量）</span><input class="inp-f" type="text" placeholder="例：胸+背"/></div>
+        <div class="inp-grp"><span class="inp-lbl">记录时间</span><input class="inp-f" type="datetime-local"/></div>
+        <button class="btn-save" style="background:linear-gradient(135deg,var(--c6),var(--c4));" onclick="saveRecord('运动')">保存运动数据</button>
       </div>
     </div>
   </div>
 
-  <div class="sec">
-    <div class="sec-label">记录运动</div>
-    <div class="card-wh">
-      <div class="sport-tabs">
-        <div class="sp on" onclick="selSp(this)"><span class="sp-ic">🚶</span>健走</div>
-        <div class="sp" onclick="selSp(this)"><span class="sp-ic">🏃</span>跑步</div>
-        <div class="sp" onclick="selSp(this)"><span class="sp-ic">💪</span>哑铃</div>
-        <div class="sp" onclick="selSp(this)"><span class="sp-ic">🚴</span>骑行</div>
-      </div>
-      <div class="inp-2">
-        <div class="inp-grp"><span class="inp-lbl">时长（分钟）</span><input class="inp" type="number" placeholder="40" id="dur" inputmode="numeric"/></div>
-        <div class="inp-grp"><span class="inp-lbl">步数 / 距离</span><input class="inp" type="text" placeholder="6000步" id="stp"/></div>
-      </div>
-      <button class="btn" onclick="addEx()">保存运动记录 ✓</button>
-    </div>
-    <div class="sec-label">今日明细</div>
-    <div class="card-wh" id="exlog">
-      <div class="row"><div class="row-icon" style="background:var(--c6l);">🚶</div><div class="row-body"><div class="row-title">健走</div><div class="row-sub">07:20 · 40分钟 · 4,200步</div></div><div class="row-right" style="color:var(--c6);">230 kcal</div></div>
-      <div class="row"><div class="row-icon" style="background:var(--c7l);">💪</div><div class="row-body"><div class="row-title">哑铃训练</div><div class="row-sub">18:30 · 28分钟 · 胸背</div></div><div class="row-right" style="color:var(--c7);">182 kcal</div></div>
-    </div>
-
-    <div class="sec-label">运动与健康关联</div>
-    <div class="ai-note">本周运动5天，累计318分钟，良好。有氧运动有助于改善您的胆固醇偏高问题，建议每周保持150分钟以上中等强度有氧运动，重点推荐快走和骑行。</div>
   </div>
-</div>
+  </div>
 
-<!-- ── PAGE 4: 我的 / 安全 ── -->
-<div class="pg">
-  <div class="profile-hero">
-    <div class="profile-av" id="profile-av">永</div>
-    <div>
-      <div class="profile-name" id="profile-name">永志</div>
-      <div class="profile-id">ID: JX·2025·00421 · 数据已加密 🔐</div>
+  <!-- Bottom Nav -->
+  <div class="nav">
+    <div class="ni on" onclick="sw(0,this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>概览</span>
+    </div>
+    <div class="ni" onclick="sw(1,this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <span>体检</span>
+    </div>
+    <div class="ni" onclick="sw(2,this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>睡眠</span>
+    </div>
+    <div class="ni" onclick="sw(3,this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <span>运动</span>
+    </div>
+    <div class="ni" onclick="sw(4,this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span>录入</span>
     </div>
   </div>
 
-  <div class="security-banner">
-    <div class="security-title">🔐 数据安全保障</div>
-    <ul class="security-list">
-      <li>✅ 体检数据端对端加密，服务器仅存储密文</li>
-      <li>✅ 每位用户数据严格隔离，无法跨账号访问</li>
-      <li>✅ 不共享、不出售任何健康数据给第三方</li>
-      <li>✅ 支持随时导出或永久删除您的全部数据</li>
-      <li>✅ 符合《个人信息保护法》相关要求</li>
-    </ul>
-  </div>
-
-  <div class="setting-group">
-    <div class="sec-label" style="margin-bottom:10px;">家庭管理</div>
-    <div class="card-wh">
-      <div class="setting-item"><div class="setting-icon" style="background:var(--c4l);">👨‍👩‍👧‍👦</div><div class="setting-body"><div class="setting-title">家庭成员</div><div class="setting-sub">已添加 4 位成员</div></div><div class="setting-right">›</div></div>
-      <div class="setting-item"><div class="setting-icon" style="background:var(--c6l);">📅</div><div class="setting-body"><div class="setting-title">体检提醒设置</div><div class="setting-sub">提前 30 天提醒</div></div><div class="setting-right">›</div></div>
-    </div>
-  </div>
-
-  <div class="setting-group">
-    <div class="sec-label" style="margin-bottom:10px;">账户与安全</div>
-    <div class="card-wh">
-      <div class="setting-item"><div class="setting-icon" style="background:var(--c7l);">🔒</div><div class="setting-body"><div class="setting-title">修改密码</div><div class="setting-sub">建议定期更新密码</div></div><div class="setting-right">›</div></div>
-      <div class="setting-item"><div class="setting-icon" style="background:var(--c3l);">📲</div><div class="setting-body"><div class="setting-title">绑定手机号</div><div class="setting-sub">138****8888</div></div><div class="setting-right">›</div></div>
-      <div class="setting-item"><div class="setting-icon" style="background:var(--c2l);">📤</div><div class="setting-body"><div class="setting-title">导出我的数据</div><div class="setting-sub">下载全部健康记录</div></div><div class="setting-right">›</div></div>
-      <div class="setting-item"><div class="setting-icon" style="background:var(--c1l);">🗑️</div><div class="setting-body"><div class="setting-title">删除账户</div><div class="setting-sub">永久删除所有数据</div></div><div class="setting-right">›</div></div>
-    </div>
-  </div>
-
-  <div class="setting-group">
-    <div class="sec-label" style="margin-bottom:10px;">关于</div>
-    <div class="card-wh">
-      <div class="setting-item"><div class="setting-icon" style="background:var(--bg2);">📄</div><div class="setting-body"><div class="setting-title">隐私政策</div></div><div class="setting-right">›</div></div>
-      <div class="setting-item"><div class="setting-icon" style="background:var(--bg2);">📋</div><div class="setting-body"><div class="setting-title">用户协议</div></div><div class="setting-right">›</div></div>
-      <div class="setting-item"><div class="setting-icon" style="background:var(--bg2);">ℹ️</div><div class="setting-body"><div class="setting-title">版本</div><div class="setting-sub">v1.0.0 Beta</div></div></div>
-    </div>
-  </div>
-
-  <button class="logout-btn" onclick="doLogout()">退出登录</button>
-</div>
-
-</div>
-</div>
-
-<!-- Bottom Nav -->
-<div class="nav">
-  <div class="ni on" onclick="sw(0)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span>概览</span>
-  </div>
-  <div class="ni" onclick="sw(1)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-    <span>体检</span>
-  </div>
-  <div class="ni" onclick="sw(2)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    <span>睡眠</span>
-  </div>
-  <div class="ni" onclick="sw(3)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-    <span>运动</span>
-  </div>
-  <div class="ni" onclick="sw(4)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    <span>我的</span>
-  </div>
-</div>
-
-</div>
+</div><!-- end main-app -->
+</div><!-- end app -->
 
 <script>
-// ── Auth ──
-function switchAuth(mode){
-  document.getElementById('tab-login').classList.toggle('on', mode==='login');
-  document.getElementById('tab-reg').classList.toggle('on', mode==='reg');
-  document.getElementById('auth-form-login').style.display = mode==='login'?'flex':'none';
-  document.getElementById('auth-form-reg').style.display = mode==='reg'?'flex':'none';
-}
-function doLogin(){
-  const phone=document.getElementById('login-phone').value;
-  const pwd=document.getElementById('login-pwd').value;
-  if(!phone||!pwd){alert('请填写手机号和密码');return;}
-  // Demo: any input works
-  document.getElementById('auth-screen').style.display='none';
-}
-function doRegister(){
-  const name=document.getElementById('reg-name').value;
-  const phone=document.getElementById('reg-phone').value;
-  const pwd=document.getElementById('reg-pwd').value;
-  const pwd2=document.getElementById('reg-pwd2').value;
-  if(!name||!phone||!pwd||!pwd2){alert('请填写所有信息');return;}
-  if(pwd.length<8){alert('密码需8位以上');return;}
-  if(pwd!==pwd2){alert('两次密码不一致');return;}
-  // Update profile display
-  document.getElementById('profile-av').textContent=name[0];
-  document.getElementById('profile-name').textContent=name;
-  document.getElementById('user-badge').textContent=name[0];
-  document.getElementById('auth-screen').style.display='none';
-}
-function doLogout(){
-  if(confirm('确认退出登录？')){document.getElementById('auth-screen').style.display='flex';}
-}
-
-// ── Clock & greeting ──
-const navColors=['#1DD1A1','#1DD1A1','#6C8EFF','#1DD1A1','#1DD1A1'];
-const titles=['健康概览','体检档案','睡眠记录','运动记录','我的'];
-const titleGrads=[
-  'linear-gradient(90deg,#1DD1A1,#48DBFB)',
-  'linear-gradient(90deg,#FF6B6B,#A29BFE)',
-  'linear-gradient(90deg,#6C8EFF,#48DBFB)',
-  'linear-gradient(90deg,#1DD1A1,#FECA57)',
-  'linear-gradient(90deg,#A29BFE,#FF9FF3)',
-];
+// ── 时钟 ──
 function tick(){
   const n=new Date(),h=n.getHours(),m=n.getMinutes();
-  document.getElementById('clock').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-  const gi=[['深夜好','🌙'],['早上好','🌅'],['上午好','☀️'],['下午好','🌤️'],['傍晚好','🌇'],['晚上好','🌃']];
-  const idx=h<6?0:h<8?1:h<12?2:h<17?3:h<20?4:5;
-  document.getElementById('greeting').textContent=`${gi[idx][0]} ${gi[idx][1]}`;
+  const cl=document.getElementById('clock');
+  if(cl)cl.textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  const words=['深夜好','早上好','上午好','下午好','傍晚好','晚上好'];
+  const ei=h<6?0:h<11?1:h<13?2:h<18?3:h<20?4:5;
+  const g=document.getElementById('hd-greeting');
+  if(g)g.textContent=words[ei];
 }
 tick();setInterval(tick,10000);
 
-// ── Nav ──
+// ── 登录/注册 ──
+function switchToReg(){
+  document.getElementById('login-form').style.display='none';
+  document.getElementById('reg-form').style.display='flex';
+  document.getElementById('reg-form').style.flexDirection='column';
+  document.getElementById('reg-form').style.gap='14px';
+  document.getElementById('reg-form').style.width='100%';
+}
+function switchToLogin(){
+  document.getElementById('reg-form').style.display='none';
+  document.getElementById('login-form').style.display='flex';
+  document.getElementById('login-form').style.flexDirection='column';
+  document.getElementById('login-form').style.gap='14px';
+}
+
+function doLogin(){
+  const phone=document.getElementById('login-phone').value.trim();
+  const pwd=document.getElementById('login-pwd').value;
+  if(phone.length<11){alert('请输入正确的手机号');return;}
+  if(pwd.length<6){alert('密码不能少于6位');return;}
+  enterApp(phone.slice(0,3)+'****'+phone.slice(-4), phone[0]==='1'?'用户'+phone.slice(-4):'用户');
+}
+
+function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const phone=document.getElementById('reg-phone').value.trim();
+  const pwd=document.getElementById('reg-pwd').value;
+  const pwd2=document.getElementById('reg-pwd2').value;
+  if(!name){alert('请输入姓名');return;}
+  if(phone.length<11){alert('请输入正确的手机号');return;}
+  if(pwd.length<6){alert('密码不能少于6位');return;}
+  if(pwd!==pwd2){alert('两次密码不一致');return;}
+  enterApp(phone.slice(0,3)+'****'+phone.slice(-4), name);
+}
+
+function wechatLogin(){
+  enterApp('微信用户', '微信用户');
+}
+
+function enterApp(phone, name){
+  document.getElementById('login-page').style.display='none';
+  document.getElementById('main-app').style.display='flex';
+  document.getElementById('hd-name').textContent=name;
+  const av=document.getElementById('hd-av');
+  if(av)av.textContent=name[0]||'我';
+  tick();
+}
+
+function doLogout(){
+  if(confirm('确认退出登录？')){
+    document.getElementById('main-app').style.display='none';
+    document.getElementById('login-page').style.display='flex';
+    document.getElementById('login-phone').value='';
+    document.getElementById('login-pwd').value='';
+  }
+}
+
+// ── Tab切换 ──
+const tabTitles=['健康概览','体检报告','睡眠分析','运动记录','录入数据'];
+const tabGrads=[
+  'linear-gradient(90deg,#FF6B6B,#A29BFE)',
+  'linear-gradient(90deg,#FF6B6B,#FF9F43)',
+  'linear-gradient(90deg,#A29BFE,#FF9FF3)',
+  'linear-gradient(90deg,#1DD1A1,#48DBFB)',
+  'linear-gradient(90deg,#48DBFB,#1DD1A1)',
+];
 let cur=0;
-function sw(i){
+function sw(i,el){
   cur=i;
-  document.querySelectorAll('.ni').forEach((t,j)=>{
-    t.classList.toggle('on',j===i);
-    t.style.color=j===i?navColors[i]:'';
-  });
-  const tEl=document.getElementById('page-title');
-  tEl.textContent=titles[i];
-  tEl.style.backgroundImage=titleGrads[i];
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  document.querySelectorAll('.ni').forEach((t,j)=>t.classList.toggle('on',j===i));
+  const tt=document.getElementById('hd-title');
+  if(tt){tt.textContent=tabTitles[i];tt.style.backgroundImage=tabGrads[i];}
   const W=Math.min(window.innerWidth,430);
   document.getElementById('pages').style.transform=`translateX(-${i*W}px)`;
 }
 window.addEventListener('resize',()=>sw(cur));
 
-// Swipe
+// 滑动手势
 let sx=0,sy=0;
-document.getElementById('pages').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-document.getElementById('pages').addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-  if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){if(dx<0&&cur<4)sw(cur+1);else if(dx>0&&cur>0)sw(cur-1);}
-},{passive:true});
-
-// ── Members ──
-const mds=[
-  {name:'本人',label:'2024年12月',grad:'linear-gradient(135deg,#FF6B6B,#FF9F43)',
-    ms:[{l:'空腹血糖',v:'5.8',u:'mmol/L',tr:'↑ +0.3',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c2d)'},
-        {l:'血压',v:'118/76',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
-        {l:'总胆固醇',v:'6.2',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},
-        {l:'BMI',v:'24.1',u:'',tr:'↓ -0.5',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},
-        {l:'尿酸',v:'310',u:'μmol/L',tr:'→ 正常',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c6d)'},
-        {l:'ALT',v:'28',u:'U/L',tr:'→ 正常',bg:'var(--c5l)',c:'var(--c5d)',tc:'var(--c6d)'}],
-    ai:'总胆固醇偏高，建议减少动物脂肪，增加有氧运动，3个月后复查。血糖持续关注。'},
-  {name:'妻子',label:'2024年11月',grad:'linear-gradient(135deg,#48DBFB,#1DD1A1)',
-    ms:[{l:'空腹血糖',v:'4.9',u:'mmol/L',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
-        {l:'血压',v:'110/70',u:'',tr:'↓ 改善',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},
-        {l:'血红蛋白',v:'125',u:'g/L',tr:'→ 正常',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},
-        {l:'BMI',v:'21.3',u:'',tr:'→ 稳定',bg:'var(--c3l)',c:'var(--c3d)',tc:'var(--c6d)'},
-        {l:'总胆固醇',v:'4.8',u:'mmol/L',tr:'→ 正常',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
-        {l:'甲状腺TSH',v:'2.1',u:'mIU/L',tr:'→ 正常',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'}],
-    ai:'各项指标均正常，请保持当前生活习惯，每年定期复查。'},
-  {name:'父亲',label:'2024年11月',grad:'linear-gradient(135deg,#A29BFE,#FF9FF3)',
-    ms:[{l:'血压',v:'138/88',u:'mmHg',tr:'↑ 临界',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},
-        {l:'血糖',v:'6.8',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},
-        {l:'尿酸',v:'420',u:'μmol/L',tr:'↑ 偏高',bg:'var(--c5l)',c:'var(--c5d)',tc:'var(--c1d)'},
-        {l:'BMI',v:'26.4',u:'',tr:'↑ 超重',bg:'var(--c1l)',c:'var(--c1d)',tc:'var(--c1d)'},
-        {l:'总胆固醇',v:'5.8',u:'mmol/L',tr:'↑ 偏高',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},
-        {l:'肌酐',v:'98',u:'μmol/L',tr:'→ 正常',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'}],
-    ai:'血压、血糖、尿酸均偏高，建议低盐低糖饮食，减重，及时就医随访。'},
-  {name:'母亲',label:'2024年10月',grad:'linear-gradient(135deg,#FECA57,#FF9F43)',
-    ms:[{l:'血红蛋白',v:'105',u:'g/L',tr:'↓ 偏低',bg:'var(--c2l)',c:'var(--c2d)',tc:'var(--c1d)'},
-        {l:'血压',v:'112/72',u:'',tr:'→ 稳定',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
-        {l:'血糖',v:'5.2',u:'mmol/L',tr:'→ 正常',bg:'var(--c4l)',c:'var(--c4d)',tc:'var(--c6d)'},
-        {l:'BMI',v:'22.8',u:'',tr:'→ 稳定',bg:'var(--c7l)',c:'var(--c7d)',tc:'var(--c6d)'},
-        {l:'总胆固醇',v:'4.5',u:'mmol/L',tr:'→ 正常',bg:'var(--c6l)',c:'var(--c6d)',tc:'var(--c6d)'},
-        {l:'骨密度',v:'T:-0.8',u:'',tr:'→ 正常',bg:'var(--c3l)',c:'var(--c3d)',tc:'var(--c6d)'}],
-    ai:'血红蛋白轻度偏低，建议增加铁质摄入（瘦肉、菠菜），必要时就医检查。'}
-];
-function selM(chip,idx){
-  document.querySelectorAll('.mem-av').forEach(a=>{a.classList.remove('on');a.style.borderColor='transparent';});
-  const av=chip.querySelector('.mem-av');av.classList.add('on');av.style.borderColor='#fff';av.style.boxShadow=`0 0 0 3px ${['#FF6B6B','#48DBFB','#A29BFE','#FECA57'][idx]}`;
-  const d=mds[idx];
-  document.getElementById('mc').innerHTML=`
-    <div class="sec-label">${d.name} · ${d.label}</div>
-    <div class="metric-2" style="margin-top:10px;">${d.ms.map(m=>`
-      <div class="mbox" style="background:${m.bg};color:${m.c};">
-        <div class="lbl">${m.l}</div>
-        <div class="val">${m.v} <span class="unit">${m.u}</span></div>
-        <div class="tr" style="color:${m.tc};">${m.tr}</div>
-      </div>`).join('')}</div>
-    <div class="sec-label" style="margin-top:20px;">AI 健康解读</div>
-    <div class="ai-note">${d.ai}</div>
-    <div class="sec-label" style="margin-top:24px;">上传体检报告</div>
-    <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" multiple onchange="handleFiles(this.files)"/>
-    <div class="upload-area" onclick="document.getElementById('file-input').click()">
-      <div class="upload-icon">📋</div>
-      <div class="upload-title">点击上传体检报告</div>
-      <div class="upload-sub">支持 PDF、JPG、PNG · 数据加密存储</div>
-    </div>
-    <div id="file-list"></div>
-    <div class="sec-label" style="margin-top:8px;">历史报告</div>
-    <div class="card-wh">
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2024年</div></div><span class="pill pill-ok">已解析</span></div>
-      <div class="hist-item"><div class="hist-ic">📄</div><div class="hist-body"><div class="hist-title">${d.name} · 年度体检</div><div class="hist-sub">2023年</div></div><span class="pill pill-ok">已解析</span></div>
-    </div>`;
+const pgs=document.getElementById('pages');
+if(pgs){
+  pgs.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  pgs.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>50){if(dx<0&&cur<4)sw(cur+1);else if(dx>0&&cur>0)sw(cur-1);}
+  },{passive:true});
 }
 
-function addMember(){alert('正式版本可添加更多家庭成员，点击注册后建立专属档案。');}
+// ── 成员选择 ──
+function selMem(chip,idx){
+  document.querySelectorAll('#pages .pg:first-child .mem-av').forEach(a=>a.classList.remove('on'));
+  chip.querySelector('.mem-av').classList.add('on');
+}
+function selMem2(chip,idx){
+  document.querySelectorAll('#pages .pg:nth-child(2) .mem-av').forEach(a=>a.classList.remove('on'));
+  chip.querySelector('.mem-av').classList.add('on');
+  const names=['本人','妻子','父亲','母亲'];
+  const dates=['2024年12月','2024年11月','2024年11月','2024年10月'];
+  document.querySelector('#report-body .sec-label').textContent=`${names[idx]} · ${dates[idx]} · 吉安市中心人民医院`;
+}
 
-// ── File upload ──
+// ── 体检趋势图切换 ──
+const chartData={
+  '血糖':{title:'空腹血糖趋势',unit:'mmol/L',pts:'20,68 80,60 140,54 200,46 260,38 300,34',c1:'#1DD1A1',c2:'#48DBFB'},
+  '血压':{title:'收缩压趋势',unit:'mmHg',pts:'20,60 80,55 140,50 200,48 260,45 300,44',c1:'#A29BFE',c2:'#FF9FF3'},
+  '胆固醇':{title:'总胆固醇趋势',unit:'mmol/L',pts:'20,72 80,65 140,58 200,50 260,40 300,34',c1:'#FF6B6B',c2:'#FF9F43'},
+  'BMI':{title:'BMI 趋势',unit:'',pts:'20,55 80,52 140,50 200,48 260,45 300,44',c1:'#FECA57',c2:'#FF9F43'},
+};
+function selChart(el,key){
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  const d=chartData[key];
+  document.getElementById('chart-name').textContent=d.title;
+  document.querySelector('.chart-legend').textContent=d.unit;
+  const svg=document.getElementById('chart-svg');
+  const pl=svg.querySelector('polyline');if(pl)pl.setAttribute('points',d.pts);
+  const grad=svg.querySelector('#cg1');
+  if(grad){grad.querySelector('stop:first-child').setAttribute('stop-color',d.c1);grad.querySelector('stop:last-child').setAttribute('stop-color',d.c2);}
+  const circles=svg.querySelectorAll('circle');
+  circles.forEach(c=>{c.setAttribute('fill',d.c2);});
+}
+
+// ── 录入Tab切换 ──
+function selRtab(el,c1,c2){
+  document.querySelectorAll('.pg:nth-child(5) > .sec > .record-tabs > .rtab').forEach(t=>{t.classList.remove('on');t.style.background='';t.style.color='';t.style.borderColor='';});
+  el.classList.add('on');el.style.background=`linear-gradient(135deg,${c1},${c2})`;el.style.color='#fff';el.style.borderColor='transparent';
+  document.getElementById('form-jiankang').style.display='none';
+  document.getElementById('form-sleep').style.display='none';
+  document.getElementById('form-sport').style.display='none';
+  const idx=Array.from(el.parentElement.children).indexOf(el);
+  ['form-jiankang','form-sleep','form-sport'][idx] && (document.getElementById(['form-jiankang','form-sleep','form-sport'][idx]).style.display='block');
+}
+
+function selSportType(el){
+  document.querySelectorAll('#form-sport .record-tabs .rtab').forEach(t=>{t.classList.remove('on');t.style.background='';t.style.color='';t.style.borderColor='';});
+  el.classList.add('on');el.style.background='linear-gradient(135deg,var(--c6),var(--c4))';el.style.color='#fff';el.style.borderColor='transparent';
+}
+
+// ── 保存记录 ──
+function saveRecord(type){
+  // 正式版本：加密后通过 HTTPS 发送至后端，后端验证 JWT Token 后存入用户隔离数据库
+  const ts=new Date().toLocaleString('zh-CN');
+  const msg={
+    '体检指标':`✅ 体检数据已加密保存\n时间：${ts}\n数据已同步至您的健康档案`,
+    '睡眠':`✅ 睡眠数据已加密保存\n时间：${ts}`,
+    '运动':`✅ 运动数据已加密保存\n时间：${ts}`,
+  };
+  alert(msg[type]||'保存成功');
+}
+
+// ── 文件上传 ──
 function handleFiles(files){
   const list=document.getElementById('file-list');
-  if(!list)return;
   Array.from(files).forEach(f=>{
     const ext=f.name.split('.').pop().toUpperCase();
     const size=f.size>1024*1024?(f.size/1024/1024).toFixed(1)+' MB':(f.size/1024).toFixed(0)+' KB';
     const item=document.createElement('div');item.className='upload-file-item';
-    item.innerHTML=`<span style="font-size:22px;">${ext==='PDF'?'📄':'🖼️'}</span><div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${f.name}</div><div style="font-size:12px;color:var(--text3);">${ext} · ${size}</div></div><span class="pill pill-blue">上传中</span>`;
+    item.innerHTML=`<div style="font-size:22px;">${ext==='PDF'?'📄':'🖼️'}</div><div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${f.name}</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">${ext} · ${size}</div></div><span class="pill pill-blue">上传中…</span>`;
     list.appendChild(item);
     setTimeout(()=>{
       const tag=item.querySelector('.pill');if(tag){tag.className='pill pill-ok';tag.textContent='✓ 成功';}
       const st=document.createElement('div');st.className='upload-status';
-      st.innerHTML='✨ 上传成功，AI 正在解析指标…';
+      st.innerHTML=`🔐 文件已加密上传，AI 正在识别提取指标…`;
       list.appendChild(st);
-      setTimeout(()=>{st.innerHTML='✅ 解析完成，指标已安全录入档案';},2200);
+      setTimeout(()=>{st.innerHTML='✅ 识别完成，指标已加密录入您的健康档案';},2200);
     },1400);
   });
-}
-
-// ── Sleep ──
-function saveSleep(){
-  const s=document.getElementById('sleep-start').value;
-  const e=document.getElementById('sleep-end').value;
-  const q=document.getElementById('sleep-quality').value;
-  alert(`已记录：${s} 入睡，${e} 起床，${q}。数据已加密保存。`);
-}
-
-// ── Exercise ──
-function selSp(c){document.querySelectorAll('.sp').forEach(x=>{x.classList.remove('on');});c.classList.add('on');}
-function addEx(){
-  const sp=document.querySelector('.sp.on').textContent.trim();
-  const dur=document.getElementById('dur').value||'--';
-  const stp=document.getElementById('stp').value;
-  const emap={'🚶健走':'🚶','🏃跑步':'🏃','💪哑铃':'💪','🚴骑行':'🚴'};
-  const ic=emap[sp]||'🏃';
-  const kcal=Math.round((parseInt(dur)||0)*4);
-  const row=document.createElement('div');row.className='row';
-  row.innerHTML=`<div class="row-icon" style="background:var(--c6l);">${ic}</div><div class="row-body"><div class="row-title">${sp.replace(/[🚶🏃💪🚴]/g,'').trim()}</div><div class="row-sub">刚刚 · ${dur}分钟${stp?' · '+stp:''}</div></div><div class="row-right" style="color:var(--c6);">${kcal} kcal</div>`;
-  document.getElementById('exlog').appendChild(row);
-  document.getElementById('dur').value='';document.getElementById('stp').value='';
 }
 </script>
 </body>
